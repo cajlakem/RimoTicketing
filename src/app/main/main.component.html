@@ -1,0 +1,50 @@
+
+<div class="container-fluid">
+<nav class="navbar navbar-expand-sm navbar-light" style="background-color: #373838;">
+    <div class="container-fluid mx-4">
+        <ul class="navbar-nav">
+            <li class="nav-item ">
+                <a class="navbar-brand" href="#">
+                    <img src="./assets/images/cropped-symbol_rgb.png" width="30" height="30" alt="">
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><strong>Offene</strong></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><strong>Geschlossene</strong></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><strong>Alle</strong></a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+        <div ngbButtonLabel class="button">
+            <form class="d-flex">
+                <button class="btn btn-success shadow-sm btn-sm" type="submit"><strong>+ Ticket erstellen</strong></button>
+            </form>
+        </div>
+        <div ngbDropdown class="dropdown mx-2 mt-2">
+            <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownUser1">
+                <li><a ngbDropdownItem class="dropdown-item" href="#">Settings</a></li>
+                <li><a ngbDropdownItem class="dropdown-item" href="#">Profile</a></li>
+                <li><a ngbDropdownItem class="dropdown-item" href="#">Sign out</a></li>
+            </ul>
+            <a ngbDropdownToggle href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://avatars.githubusercontent.com/u/39443209?v=4" alt="" width="33" height="33" class="rounded-circle me-2">Emir
+            </a>
+        </div></ul>
+    </div>
+</nav>
+<div class="container-fluid" style="background-color: #e8eaec;">
+<div class="container-fluid mx-1 shadow">
+    <app-breadcrumb></app-breadcrumb>
+</div>
+</div>
+<div class="container">
+    <div class="row mt-5">
+        <app-tickets></app-tickets>
+    </div>
+</div>
+</div>
+
