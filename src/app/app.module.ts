@@ -10,6 +10,7 @@ import { AuthGuardService } from './_helpers/auth.guard';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { TicketComponent } from './ticket/ticket.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TicketComponent } from './ticket/ticket.component';
     TicketsComponent,
     MainComponent,
     BreadcrumbComponent,
-    TicketComponent
+    TicketComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
