@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   username:string;
   password:string;
   retUrl:any="login";
+  isLoggedIn = true;
 
   isLoginFailed(){
     return this.invalidCredentialMsg == null

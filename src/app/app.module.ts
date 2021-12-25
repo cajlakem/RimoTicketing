@@ -11,6 +11,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { TicketComponent } from './ticket/ticket.component';
 import { FooterComponent } from './footer/footer.component';
+import { CreateTicketComponent } from './create-ticket/create-ticket.component';
+import { FormsModule } from '@angular/forms';
+import { CKEditorModule } from 'ckeditor4-angular';
+
 
 @NgModule({
   declarations: [
@@ -20,15 +24,20 @@ import { FooterComponent } from './footer/footer.component';
     MainComponent,
     BreadcrumbComponent,
     TicketComponent,
-    FooterComponent
+    FooterComponent,
+    CreateTicketComponent
+
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    CKEditorModule 
   ],
   providers: [AuthGuardService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+}

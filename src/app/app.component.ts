@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'Rimo Ticketing';
 
+  isLoggedIn = true;
+
   constructor (private authService:AuthserviceService, 
     private router:Router) {
   }
