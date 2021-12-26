@@ -5,12 +5,14 @@ import { MainComponent } from './main/main.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { AuthGuardService } from './_helpers/auth.guard';
 import { CreateTicketComponent} from './create-ticket/create-ticket.component'
+import { TicketComponent } from './ticket/ticket.component';
 
 const routes : Routes = [
   {path: 'main', component:MainComponent, canActivate : [AuthGuardService]},
   {path: 'login', component:LoginComponent},
   {path: 'createTicket', component:CreateTicketComponent},
   {path: 'tickets', component:TicketsComponent},
+  {path: 'edit/:id', component:TicketComponent},
   {path: '', redirectTo: 'main', pathMatch: 'full'}]
 @NgModule({
   declarations: [],

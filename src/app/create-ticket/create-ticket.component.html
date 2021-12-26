@@ -1,3 +1,4 @@
+<div class="container fluid">
 <div class="card shadow">
     <div class="card-header shadow">
         <p class="fs-4">Ticketerstellung</p>
@@ -24,7 +25,7 @@
             </div>
             <div class="row mt-2">
                 <div class="col">
-                    <input class="form-control" placeholder="Kurzbeschreibung">
+                    <input class="form-control" placeholder="Kurzbeschreibung" [(ngModel)]="ticket.shortText" name="shortText">
                 </div>
             </div>
             <div class="row">
@@ -57,9 +58,10 @@
             </div>
             <div class="col-3 text-center">
                 <button type="submit" class="btn btn-secondary shadow btn-sm mx-2" routerLink="/tickets">Abbrechen</button>
-                <button type="submit" class="btn btn-success shadow btn-sm">Abschicken</button>
+                <button type="submit" class="btn btn-success shadow btn-sm" (click)="save()">Abschicken</button>
             </div>
         </div>
     </div>
 </div>
 
+</div>
