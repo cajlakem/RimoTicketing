@@ -1,4 +1,4 @@
-<div class="container-fluid" *ngIf="!isLoggedIn">
+<div class="container-fluid" *ngIf="!isLoggedIn()">
   <div class="row no-gutter">
     <!-- The image half -->
     <div class="col-md-6 d-none d-md-flex bg-image"></div>
@@ -56,11 +56,11 @@
                   Login
                 </button>
                 <div
-                  class="mt-4 alert alert-danger"
+                  class="mt-3 alert alert-warning alert-dismissible show"
                   role="alert"
                   *ngIf="invalidCredentialMsg"
                 >
-                  <p>{{ invalidCredentialMsg }}</p>
+                  {{ invalidCredentialMsg }}
                 </div>
                 <p class="text-center mt-4">
                   <a href="#" class="link-success">
@@ -76,14 +76,12 @@
     </div>
   </div>
 </div>
-<div class="container" *ngIf="isLoggedIn">
+<div class="container" style="padding-top: 120px;" *ngIf="isLoggedIn()">
   <div class="row">
     <div class="alert alert-success" role="alert">
       <h4 class="alert-heading">Well done!</h4>
       <p>
-        Aww yeah, you successfully read this important alert message. This
-        example text is going to run a bit longer so that you can see how
-        spacing within an alert works with this kind of content.
+        You are already logged in!
       </p>
       <hr />
       <p class="mb-0">

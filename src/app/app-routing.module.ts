@@ -8,16 +8,24 @@ import { CreateTicketComponent } from './create-ticket/create-ticket.component'
 import { TicketComponent } from './ticket/ticket.component'
 
 const routes: Routes = [
-  { path: 'main', component: MainComponent },
+  { path: 'main', component: MainComponent, canActivate: [AuthGuardService] },
   { path: 'login', component: LoginComponent },
-  { path: 'createTicket', component: CreateTicketComponent },
+  {
+    path: 'createTicket',
+    component: CreateTicketComponent,
+    canActivate: [AuthGuardService],
+  },
   {
     path: 'tickets',
     component: TicketsComponent,
-    runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuardService],
   },
-  { path: 'edit/:id', component: TicketComponent },
-  { path: '', redirectTo: 'main', pathMatch: 'full' },
+  {
+    path: 'edit/:id',
+    component: TicketComponent,
+    canActivate: [AuthGuardService],
+  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 ]
 @NgModule({
   declarations: [],

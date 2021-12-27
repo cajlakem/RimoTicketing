@@ -10,15 +10,17 @@ import { Router } from '@angular/router'
 export class AppComponent {
   title = 'Rimo Ticketing'
 
-  isLoggedIn = true
-
   constructor(
     private authService: AuthserviceService,
     private router: Router,
   ) {}
 
   logout() {
-    this.authService.loginuser
+    this.authService.logout()
     this.router.navigate(['login'])
+  }
+
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn()
   }
 }

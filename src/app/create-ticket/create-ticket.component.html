@@ -1,4 +1,4 @@
-<div class="container fluid">
+<div class="container fluid" style="padding-top: 120px;">
   <div class="card shadow">
     <div class="card-header shadow">
       <p class="fs-4">Ticketerstellung</p>
@@ -42,7 +42,15 @@
         <div class="row">
           <div class="col mt-2">
             <label class="from-label">Langbeschreibung:</label>
-            <ckeditor [(ngModel)]="model.editorData"></ckeditor>
+            <ckeditor
+              [config]="{
+                filebrowserUploadUrl:
+                  'https://rimo-dev.rimo-saas.com/soap/ckupload.php',
+                filebrowserImageUploadUrl:
+                  'https://rimo-dev.rimo-saas.com/soap/ckupload.php'
+              }"
+              [(ngModel)]="model.editorData"
+            ></ckeditor>
           </div>
         </div>
         <div class="row">

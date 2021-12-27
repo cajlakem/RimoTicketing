@@ -1,4 +1,4 @@
-<div class="fixed-top">
+<div class="fixed-top" *ngIf="isVisible()">
   <nav
     class="navbar navbar-expand-sm navbar-light"
     style="background-color: #373838;"
@@ -28,19 +28,6 @@
         <li class="nav-item">
           <a class="nav-link" href="#"><strong>Geschlossene</strong></a>
         </li>
-        <li class="nav-item">
-          <div ngbButtonLabel class="button">
-            <form class="d-flex">
-              <button
-                class="btn btn-success shadow-sm btn-sm"
-                type="submit"
-                routerLink="/createTicket"
-              >
-                + Erstellen
-              </button>
-            </form>
-          </div>
-        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <div ngbDropdown class="dropdown mx-2 mt-2">
@@ -56,7 +43,14 @@
               <a ngbDropdownItem class="dropdown-item" href="#">Profile</a>
             </li>
             <li>
-              <a ngbDropdownItem class="dropdown-item" href="#">Sign out</a>
+              <a
+                ngbDropdownItem
+                (click)="logout()"
+                class="dropdown-item"
+                href="#"
+              >
+                Sign out
+              </a>
             </li>
           </ul>
           <a

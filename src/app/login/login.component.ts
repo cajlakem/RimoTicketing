@@ -19,10 +19,7 @@ export class LoginComponent implements OnInit {
   submitted = false
 
   invalidCredentialMsg: string
-  username: string
-  password: string
   retUrl: any = 'login'
-  isLoggedIn = true
 
   isLoginFailed() {
     return this.invalidCredentialMsg == null
@@ -41,21 +38,25 @@ export class LoginComponent implements OnInit {
 
       myFormData.append('user', this.registerForm.value.username)
       myFormData.append('password', this.registerForm.value.password)
-      var user = this.userauth.loginuser(myFormData)
-      if (user.userName == 'emir') {
-        this.router.navigateByUrl('/main')
+      var user = this.userauth.loginUser(myFormData)
+      if (user != null) {
+        this.router.navigateByUrl('/tickets')
       } else this.invalidCredentialMsg = 'Failed to login!'
     }
   }
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.retUrl = params.get('retUrl')
-      console.log('LoginComponent/ngOnInit ' + this.retUrl)
+      console.log(this.userauth.isLoggedIn())
     })
     this.invalidCredentialMsg = ''
     this.registerForm = this.formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],
     })
+  }
+
+  isLoggedIn(): boolean {
+    return this.userauth.isLoggedIn()
   }
 }
