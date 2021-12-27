@@ -1,10 +1,7 @@
-
- .navbar-light .navbar-nav .nav-link  {
-    color: rgb(247, 244, 244);
+.navbar-light .navbar-nav .nav-link {
+  color: rgb(247, 244, 244);
 }
 
 .navbar-light .navbar-nav .nav-link.active {
-
-    color: #79d600;
-  
-  }
+  color: #79d600;
+}

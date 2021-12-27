@@ -1,21 +1,19 @@
-import { Injectable } from '@angular/core';
-import { User } from './_models/User';
+import { Injectable } from '@angular/core'
+import { User } from './_models/User'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthserviceService {
-  
-  currentUser : User;
+  currentUser: User
 
-  constructor() { }
-  
-  public loginuser(userData:any)
-  {
-    var aUser = new User;
-    aUser.userName = userData.get('user');
-    aUser.password = userData.get('password');
-    this.currentUser = aUser;
-    return aUser;
+  constructor() {}
+
+  public loginuser(userData: any) {
+    var aUser = new User()
+    aUser.userName = userData.get('user')
+    aUser.password = userData.get('password')
+    this.currentUser = aUser
+    return aUser
   }
 }
