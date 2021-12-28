@@ -3,10 +3,14 @@
   min-height: 100vh;
 }
 .bg-image {
-  background-image: url(support_herov3a.jpg);
+  background-image: url(kontakt_herov1_1.jpg);
   background-size: cover;
   background-position: center;
 }
 .invalid-feedback {
   margin-left: 5px;
+}
+
+.carousel-item {
+  height: 80vh;
 }
