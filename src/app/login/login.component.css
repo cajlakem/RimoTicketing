@@ -3,7 +3,7 @@
   min-height: 100vh;
 }
 .bg-image {
-  background-image: url(kontakt_herov1_1.jpg);
+  background-image: url(/assets/images/kontakt_herov1_1.jpg);
   background-size: cover;
   background-position: center;
 }
