@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   submitted = false
 
   invalidCredentialMsg: string
+  pwdRequestedMsg: string
   retUrl: any = 'login'
 
   isLoginFailed() {
@@ -58,5 +59,10 @@ export class LoginComponent implements OnInit {
 
   isLoggedIn(): boolean {
     return this.userauth.isLoggedIn()
+  }
+
+  requestNewPassword(): void {
+    console.log('Password requested!')
+    this.pwdRequestedMsg = 'Password has been requested. Check your emails!'
   }
 }

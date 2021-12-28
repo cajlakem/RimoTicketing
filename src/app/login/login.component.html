@@ -12,7 +12,7 @@
               <h3 class="display-3 text-center">Rimo Ticketing</h3>
               <p class="display-6 mb-5 text-center">rimo-systems.com</p>
               <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                <div class="form-group mb-3">
+                <div class="form-floating mb-1">
                   <input
                     id="inputEmail"
                     type="input"
@@ -21,8 +21,9 @@
                     placeholder="Username"
                     required=""
                     autofocus="true"
-                    class="form-control border-0 shadow-sm px-4"
+                    class="form-control"
                   />
+                  <label for="floatingInput">Benutzername</label>
                   <div
                     *ngIf="submitted && f.username.errors"
                     class="invalid-feedback"
@@ -32,7 +33,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-floating mb-3">
                   <input
                     id="inputPassword"
                     type="password"
@@ -40,8 +41,9 @@
                     [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
                     placeholder="Password"
                     required=""
-                    class="form-control border-0 shadow-sm px-4 text-secondary"
+                    class="form-control text-secondary rounded shadow"
                   />
+                  <label for="floatingInput">Passwort</label>
                   <div
                     *ngIf="submitted && f.password.errors"
                     class="invalid-feedback"
@@ -63,14 +65,92 @@
                   {{ invalidCredentialMsg }}
                 </div>
                 <p class="text-center mt-4">
-                  <a href="#" class="link-success">
-                    Passwort vergessen (not implemented yet)
+                  <a
+                    href="#"
+                    class="link-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    Neues Passwort anfordern
                   </a>
                 </p>
                 <div class="mt-4 text-center"><p>Coded by 3m1r</p></div>
               </form>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Neues Password anfordern
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-floating mb-3">
+            <input
+              type="input"
+              class="form-control"
+              id="floatingInput"
+              placeholder="Benutzername"
+            />
+            <label for="floatingInput">Benutzername</label>
+            <div
+              class="alert alert-primary d-flex align-items-center mt-3 shadow"
+              role="alert"
+              *ngIf="pwdRequestedMsg"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
+                viewBox="0 0 16 16"
+                role="img"
+                aria-label="Warning:"
+              >
+                <path
+                  d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                />
+              </svg>
+              <div>
+                {{ pwdRequestedMsg }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Schließen
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="requestNewPassword()"
+          >
+            Anfordern
+          </button>
         </div>
       </div>
     </div>
@@ -108,6 +188,17 @@
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img
+            src="assets/images/coming_soon.jpg"
+            class="d-block w-100 rounded"
+            alt="asddsadsadsa"
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Umcoming changes</h5>
+            <p>Here comes the umcoming changes</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img
             src="assets/images/kontakt_herov1.jpg"
             class="d-block w-100 rounded"
             alt="asddassaddsa"
@@ -126,17 +217,6 @@
           <div class="carousel-caption d-none d-md-block">
             <h5>Release Notes</h5>
             <p>Here you can see the last changes that have been implemented</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img
-            src="assets/images/coming_soon.jpg"
-            class="d-block w-100 rounded"
-            alt="asddsadsadsa"
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Umcoming changes</h5>
-            <p>Here comes the umcoming changes</p>
           </div>
         </div>
       </div>

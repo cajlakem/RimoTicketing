@@ -9,6 +9,10 @@ $primary: #198754c0;
 @import 'node_modules/bootstrap/scss/alert';
 @import 'node_modules/bootstrap/scss/buttons';
 
+body {
+  background-color: #f8f9fa;
+}
+
 .breadcrumb > li + li:before {
   padding: 0 5px;
 }
@@ -23,27 +27,18 @@ select:focus,
   outline: 0 none;
 }
 
-input[type='radio']:after {
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-  top: -2px;
-  left: -1px;
-  position: relative;
-  background-color: #d1d3d1;
-  content: '';
-  display: inline-block;
-  visibility: visible;
-  border: 2px solid white;
+.inputfield {
+  height: 20px;
 }
 
-input[type='radio']:checked:after {
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-  top: -2px;
-  left: -1px;
-  position: relative;
-  background-color: $primary;
-  display: inline-block;
+a:visited {
+  color: rgba(0, 0, 0, 0.979);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: $primary;
+  background-color: transparent;
+  text-decoration: underline;
 }
