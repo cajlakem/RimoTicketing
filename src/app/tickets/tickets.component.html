@@ -1,10 +1,39 @@
 <div class="container-fluid mt-5" style="padding-top: 60px;">
   <div class="container-fluid mt-1">
     <div class="row">
-      <div class="d-grid gap-2 d-md-flex d-flex justify-content-between">
-        <div class="justify-content-md-">
-          <p class="fs-5">Offene Tickets</p>
+      <div class="d-grid gap-1 d-md-flex d-flex justify-content-between">
+        <p class="fs-5">Offene Tickets</p>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-secondary">
+            <input
+              type="radio"
+              name="options"
+              id="option1"
+              autocomplete="off"
+              checked
+            />
+            New
+          </label>
+          <label class="btn btn-secondary">
+            <input
+              type="radio"
+              name="options"
+              id="option2"
+              autocomplete="off"
+            />
+            InProgress
+          </label>
+          <label class="btn btn-secondary">
+            <input
+              type="radio"
+              name="options"
+              id="option3"
+              autocomplete="off"
+            />
+            Solved
+          </label>
         </div>
+
         <button
           class="btn btn-secondary shadow-sm btn-sm"
           type="submit"

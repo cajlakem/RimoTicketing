@@ -1,4 +1,5 @@
 $primary: #198754c0;
+
 @import '../node_modules/bootstrap/scss/bootstrap';
 // Required Bootstrap partials
 @import 'node_modules/bootstrap/scss/functions';
@@ -20,4 +21,29 @@ select:focus,
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset,
     0 0 8px rgba(126, 239, 104, 0.6);
   outline: 0 none;
+}
+
+input[type='radio']:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: #d1d3d1;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
+}
+
+input[type='radio']:checked:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: $primary;
+  display: inline-block;
 }
