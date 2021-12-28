@@ -2,6 +2,13 @@
   color: rgb(247, 244, 244);
 }
 
-.navbar-light .navbar-nav .nav-link.active {
-  color: #79d600;
+a:visited {
+  color: #6c757d;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #66ad09;
+  text-decoration: underline;
 }
