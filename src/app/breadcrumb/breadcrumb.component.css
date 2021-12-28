@@ -1,11 +1,11 @@
 a:visited {
-  color: rgba(0, 0, 0, 0.979);
+  color: #6c757d;
   background-color: transparent;
   text-decoration: none;
 }
 
 a:hover {
-  color: #0076d6;
+  color: #66ad09;
   background-color: transparent;
   text-decoration: underline;
 }

@@ -1,16 +1,21 @@
 <div class="container mt-5" style="padding-top: 60px;">
   <div class="container mt-1">
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-      <button
-        class="btn btn-success shadow-sm btn-sm"
-        type="submit"
-        routerLink="/createTicket"
-      >
-        + Ticket erstellen
-      </button>
+    <div class="row">
+      <div class="d-grid gap-2 d-md-flex d-flex justify-content-between">
+        <div class="justify-content-md-">
+          <p class="fs-5">Offene Tickets</p>
+        </div>
+        <button
+          class="btn btn-success shadow-sm btn-sm"
+          type="submit"
+          routerLink="/createTicket"
+        >
+          + Ticket erstellen
+        </button>
+      </div>
     </div>
   </div>
-  <div class="container mt-2">
+  <div class="container mt-4">
     <table
       id="example"
       class="table shadow table-striped"
@@ -19,7 +24,7 @@
       [dtTrigger]="dtTrigger"
       style="width: 100%;"
     >
-      <thead class="table-secondary">
+      <thead class="table">
         <tr>
           <th>Id</th>
           <th>Name</th>
