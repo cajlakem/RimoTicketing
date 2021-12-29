@@ -24,12 +24,13 @@ const routes: Routes = [
     path: 'edit/:id',
     component: TicketComponent,
     canActivate: [AuthGuardService],
+    runGuardsAndResolvers: 'always',
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ]
 @NgModule({
   declarations: [],
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

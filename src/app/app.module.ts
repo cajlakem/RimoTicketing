@@ -15,6 +15,7 @@ import { CreateTicketComponent } from './create-ticket/create-ticket.component'
 import { FormsModule } from '@angular/forms'
 import { CKEditorModule } from 'ckeditor4-angular'
 import { DataTablesModule } from 'angular-datatables'
+import { RouterModule } from '@angular/router'
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { DataTablesModule } from 'angular-datatables'
     NgbModule,
     FormsModule,
     CKEditorModule,
+    RouterModule,
   ],
   providers: [AuthGuardService],
   bootstrap: [AppComponent],

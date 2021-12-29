@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.retUrl = params.get('retUrl')
-      console.log(this.userauth.isLoggedIn())
     })
     this.invalidCredentialMsg = ''
     this.registerForm = this.formBuilder.group({
@@ -62,7 +61,6 @@ export class LoginComponent implements OnInit {
   }
 
   requestNewPassword(): void {
-    console.log('Password requested!')
     this.pwdRequestedMsg = 'Password has been requested. Check your emails!'
   }
 }

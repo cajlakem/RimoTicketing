@@ -1,17 +1,16 @@
-<nav aria-label="breadcrumb shadow-lg">
+<nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item" routerLink="/edit/1245">
-      <a href="#">Ticket 1245</a>
-    </li>
-    <li class="breadcrumb-item" routerLink="/edit/54545">
-      <a href="#">Ticket 54545</a>
-    </li>
     <li
-      class="breadcrumb-item active"
-      routerLink="/edit/54545"
+      class="active breadcrumb-item {{
+        getCurrentBCId() === bci.id ? 'active' : ''
+      }}"
       aria-current="page"
+      *ngFor="let bci of ids"
     >
-      Ticket 54545
+      <a *ngIf="!isActive(bci)" href="/edit/{{ bci.id }}">
+        {{ bci.id }}
+      </a>
+      <span *ngIf="isActive(bci)">{{ bci.id }}</span>
     </li>
   </ol>
 </nav>
