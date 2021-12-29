@@ -12,16 +12,15 @@
               <h3 class="display-3 text-center">Rimo Ticketing System</h3>
               <p class="display-6 mb-5 text-center">rimo-systems.com</p>
               <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                <div class="form-floating mb-1">
+                <div class="form-floating mb-4">
                   <input
                     id="inputEmail"
                     type="input"
                     formControlName="username"
                     [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
                     placeholder="Username"
-                    required=""
                     autofocus="true"
-                    class="form-control"
+                    class="form-control text-secondary rounded shadow"
                   />
                   <label for="floatingInput">Benutzername</label>
                   <div
@@ -33,14 +32,13 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-floating mb-3">
+                <div class="form-floating mb-4">
                   <input
                     id="inputPassword"
                     type="password"
                     formControlName="password"
                     [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
                     placeholder="Password"
-                    required=""
                     class="form-control text-secondary rounded shadow"
                   />
                   <label for="floatingInput">Passwort</label>
