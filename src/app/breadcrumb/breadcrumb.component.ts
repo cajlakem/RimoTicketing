@@ -30,4 +30,8 @@ export class BreadcrumbComponent implements OnInit {
   public isActive(item: BreadCrumbId): Boolean {
     return this.getCurrentBCId() == item.id
   }
+
+  public isIdsEmpty(): Boolean {
+    return this.ids.length === 0
+  }
 }

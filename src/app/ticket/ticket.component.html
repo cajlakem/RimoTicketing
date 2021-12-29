@@ -1,252 +1,272 @@
 <div style="padding-top: 160px;">
-  <div class="container mt-4">
-    <div
-      class="container-fluid fixed-top shadow bg-light"
-      style="margin-top: 80px;"
-    >
-      <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-5">
-        <p class="fs-5">Ticket: {{ ticket.id }}</p>
-        <div>
-          <button class="btn btn-secondary me-md-1 btn-sm shadow" type="button">
-            Kommentar
-          </button>
-          <button class="btn btn-secondary me-md-1 btn-sm shadow" type="button">
-            Öffnen
-          </button>
-          <button class="btn btn-secondary me-md-1 btn-sm shadow" type="button">
-            Erledigt
-          </button>
-          <button class="btn btn-secondary me-md-1 btn-sm shadow" type="button">
-            Beschreibung ändern
-          </button>
-          <button class="btn btn-secondary me-md-1 btn-sm shadow" type="button">
-            Andrer Reporter
-          </button>
+  <div>
+    <nav class="container" aria-label="breadcrumb">
+      <div
+        class="container fixed-top shadow bg-light"
+        style="margin-top: 80px;"
+      >
+        <div
+          class="d-grid gap-2 d-md-flex justify-content-md-between mt-5"
+          style="margin-top: 140px;"
+        >
+          <p class="fs-5">Ticket: {{ ticket.id }}</p>
+          <div>
+            <button
+              class="btn btn-secondary me-md-1 btn-sm shadow"
+              type="button"
+            >
+              Kommentar
+            </button>
+            <button
+              class="btn btn-secondary me-md-1 btn-sm shadow"
+              type="button"
+            >
+              Öffnen
+            </button>
+            <button
+              class="btn btn-secondary me-md-1 btn-sm shadow"
+              type="button"
+            >
+              Erledigt
+            </button>
+            <button
+              class="btn btn-secondary me-md-1 btn-sm shadow"
+              type="button"
+            >
+              Beschreibung ändern
+            </button>
+            <button
+              class="btn btn-secondary me-md-1 btn-sm shadow"
+              type="button"
+            >
+              Andrer Reporter
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </nav>
 
-  <div class="container mt-5">
-    <div class="card shadow-lg">
-      <div class="card-header">
-        <div class="row">
-          <div class="col-2">
-            <a>
-              <img
-                src="https://avatars.githubusercontent.com/u/39443209?v=4"
-                alt=""
-                width="33"
-                height="33"
-                class="rounded-circle me-2"
-              />
-            </a>
-            {{ ticket.id }}
-          </div>
-          <div class="col-8"></div>
-          <div class="col-2">{{ ticket.state }}, Bugtype</div>
-        </div>
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">{{ ticket.shortText }}</h5>
-        <p class="card-text">{{ ticket.longText }}</p>
-      </div>
-      <div class="card-footer text-muted">
-        <div class="row">
-          <div class="col-4">{{ ticket.reporter }}@Erstelldatum</div>
-          <div class="col-7"></div>
-          <div class="col-1"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container mt-3">
-    <div class="row">
-      <div class="col-1 align-text-l">
-        <p class="fw-light">Note#1</p>
-      </div>
-      <div class="col-11">
-        <div class="card shadow">
-          <div class="card-header">
-            <div class="row">
-              <div class="col-2">
-                <a>
-                  <img
-                    src="https://avatars.githubusercontent.com/u/39443209?v=4"
-                    alt=""
-                    width="33"
-                    height="33"
-                    class="rounded-circle me-2"
-                  />
-                  Emir
-                </a>
-              </div>
-              <div class="col-8"></div>
-              <div class="col-2">State, Erstelldatum</div>
+    <div class="container mt-5">
+      <div class="card shadow-lg">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-2">
+              <a>
+                <img
+                  src="https://avatars.githubusercontent.com/u/39443209?v=4"
+                  alt=""
+                  width="33"
+                  height="33"
+                  class="rounded-circle me-2"
+                />
+              </a>
+              {{ ticket.id }}
             </div>
+            <div class="col-8"></div>
+            <div class="col-2">{{ ticket.state }}, Bugtype</div>
           </div>
-          <div class="card-body">
-            <p class="card-text">Langbeschreibung</p>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ ticket.shortText }}</h5>
+          <p class="card-text">{{ ticket.longText }}</p>
+        </div>
+        <div class="card-footer text-muted">
+          <div class="row">
+            <div class="col-4">{{ ticket.reporter }}@Erstelldatum</div>
+            <div class="col-7"></div>
+            <div class="col-1"></div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container mt-3">
-    <div class="row">
-      <div class="col-1 align-text-l">
-        <p class="fw-light">Note#1</p>
-      </div>
-      <div class="col-11">
-        <div class="card shadow">
-          <div class="card-header">
-            <div class="row">
-              <div class="col-2">
-                <a>
-                  <img
-                    src="https://avatars.githubusercontent.com/u/39443209?v=4"
-                    alt=""
-                    width="33"
-                    height="33"
-                    class="rounded-circle me-2"
-                  />
-                  Emir
-                </a>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-1 align-text-l">
+          <p class="fw-light">Note#1</p>
+        </div>
+        <div class="col-11">
+          <div class="card shadow">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-2">
+                  <a>
+                    <img
+                      src="https://avatars.githubusercontent.com/u/39443209?v=4"
+                      alt=""
+                      width="33"
+                      height="33"
+                      class="rounded-circle me-2"
+                    />
+                    Emir
+                  </a>
+                </div>
+                <div class="col-8"></div>
+                <div class="col-2">State, Erstelldatum</div>
               </div>
-              <div class="col-8"></div>
-              <div class="col-2">State, Erstelldatum</div>
             </div>
-          </div>
-          <div class="card-body">
-            <p class="card-text">Langbeschreibung</p>
+            <div class="card-body">
+              <p class="card-text">Langbeschreibung</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container mt-3">
-    <div class="row">
-      <div class="col-1 align-text-l">
-        <p class="fw-light">Note#1</p>
-      </div>
-      <div class="col-11">
-        <div class="card shadow">
-          <div class="card-header">
-            <div class="row">
-              <div class="col-2">
-                <a>
-                  <img
-                    src="https://avatars.githubusercontent.com/u/39443209?v=4"
-                    alt=""
-                    width="33"
-                    height="33"
-                    class="rounded-circle me-2"
-                  />
-                  Emir
-                </a>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-1 align-text-l">
+          <p class="fw-light">Note#1</p>
+        </div>
+        <div class="col-11">
+          <div class="card shadow">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-2">
+                  <a>
+                    <img
+                      src="https://avatars.githubusercontent.com/u/39443209?v=4"
+                      alt=""
+                      width="33"
+                      height="33"
+                      class="rounded-circle me-2"
+                    />
+                    Emir
+                  </a>
+                </div>
+                <div class="col-8"></div>
+                <div class="col-2">State, Erstelldatum</div>
               </div>
-              <div class="col-8"></div>
-              <div class="col-2">State, Erstelldatum</div>
             </div>
-          </div>
-          <div class="card-body">
-            <p class="card-text">Langbeschreibung</p>
+            <div class="card-body">
+              <p class="card-text">Langbeschreibung</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container mt-3">
-    <div class="row">
-      <div class="col-1 align-text-l">
-        <p class="fw-light">Note#1</p>
-      </div>
-      <div class="col-11">
-        <div class="card shadow">
-          <div class="card-header">
-            <div class="row">
-              <div class="col-2">
-                <a>
-                  <img
-                    src="https://avatars.githubusercontent.com/u/39443209?v=4"
-                    alt=""
-                    width="33"
-                    height="33"
-                    class="rounded-circle me-2"
-                  />
-                  Emir
-                </a>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-1 align-text-l">
+          <p class="fw-light">Note#1</p>
+        </div>
+        <div class="col-11">
+          <div class="card shadow">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-2">
+                  <a>
+                    <img
+                      src="https://avatars.githubusercontent.com/u/39443209?v=4"
+                      alt=""
+                      width="33"
+                      height="33"
+                      class="rounded-circle me-2"
+                    />
+                    Emir
+                  </a>
+                </div>
+                <div class="col-8"></div>
+                <div class="col-2">State, Erstelldatum</div>
               </div>
-              <div class="col-8"></div>
-              <div class="col-2">State, Erstelldatum</div>
             </div>
-          </div>
-          <div class="card-body">
-            <p class="card-text">Langbeschreibung</p>
+            <div class="card-body">
+              <p class="card-text">Langbeschreibung</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container mt-3">
-    <div class="row">
-      <div class="col-1 align-text-l">
-        <p class="fw-light">Note#1</p>
-      </div>
-      <div class="col-11">
-        <div class="card shadow">
-          <div class="card-header">
-            <div class="row">
-              <div class="col-2">
-                <a>
-                  <img
-                    src="https://avatars.githubusercontent.com/u/39443209?v=4"
-                    alt=""
-                    width="33"
-                    height="33"
-                    class="rounded-circle me-2"
-                  />
-                  Emir
-                </a>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-1 align-text-l">
+          <p class="fw-light">Note#1</p>
+        </div>
+        <div class="col-11">
+          <div class="card shadow">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-2">
+                  <a>
+                    <img
+                      src="https://avatars.githubusercontent.com/u/39443209?v=4"
+                      alt=""
+                      width="33"
+                      height="33"
+                      class="rounded-circle me-2"
+                    />
+                    Emir
+                  </a>
+                </div>
+                <div class="col-8"></div>
+                <div class="col-2">State, Erstelldatum</div>
               </div>
-              <div class="col-8"></div>
-              <div class="col-2">State, Erstelldatum</div>
             </div>
-          </div>
-          <div class="card-body">
-            <p class="card-text">Langbeschreibung</p>
+            <div class="card-body">
+              <p class="card-text">Langbeschreibung</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container mt-3">
-    <div class="row">
-      <div class="col-1 align-text-l">
-        <p class="fw-light">Note#1</p>
-      </div>
-      <div class="col-11">
-        <div class="card shadow">
-          <div class="card-header">
-            <div class="row">
-              <div class="col-2">
-                <a>
-                  <img
-                    src="https://avatars.githubusercontent.com/u/39443209?v=4"
-                    alt=""
-                    width="33"
-                    height="33"
-                    class="rounded-circle me-2"
-                  />
-                  Emir
-                </a>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-1 align-text-l">
+          <p class="fw-light">Note#1</p>
+        </div>
+        <div class="col-11">
+          <div class="card shadow">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-2">
+                  <a>
+                    <img
+                      src="https://avatars.githubusercontent.com/u/39443209?v=4"
+                      alt=""
+                      width="33"
+                      height="33"
+                      class="rounded-circle me-2"
+                    />
+                    Emir
+                  </a>
+                </div>
+                <div class="col-8"></div>
+                <div class="col-2">State, Erstelldatum</div>
               </div>
-              <div class="col-8"></div>
-              <div class="col-2">State, Erstelldatum</div>
+            </div>
+            <div class="card-body">
+              <p class="card-text">Langbeschreibung</p>
             </div>
           </div>
-          <div class="card-body">
-            <p class="card-text">Langbeschreibung</p>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-1 align-text-l">
+          <p class="fw-light">Note#1</p>
+        </div>
+        <div class="col-11">
+          <div class="card shadow">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-2">
+                  <a>
+                    <img
+                      src="https://avatars.githubusercontent.com/u/39443209?v=4"
+                      alt=""
+                      width="33"
+                      height="33"
+                      class="rounded-circle me-2"
+                    />
+                    Emir
+                  </a>
+                </div>
+                <div class="col-8"></div>
+                <div class="col-2">State, Erstelldatum</div>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="card-text">Langbeschreibung</p>
+            </div>
           </div>
         </div>
       </div>

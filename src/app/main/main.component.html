@@ -1,7 +1,7 @@
 <div class="fixed-top" *ngIf="isVisible()">
   <nav
     class="navbar navbar-expand-sm navbar-light"
-    style="background-color: #373838;"
+    style="background-color: #27526e;"
   >
     <div class="container-fluid mx-4">
       <ul class="navbar-nav">
@@ -20,20 +20,33 @@
             Ticketing
           </a>
         </li>
-
+        <div
+          class="vr"
+          style="border-left: 2px solid rgb(248, 246, 246);"
+        ></div>
         <li class="nav-item">
           <a class="nav-link" aria-current="page" routerLink="/tickets">
             <strong>Offen</strong>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><strong>In Klärung</strong></a>
+          <a class="nav-link" routerLink="/tickets">
+            <strong>In Klärung</strong>
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><strong>Geschlossen</strong></a>
+          <a class="nav-link" routerLink="/tickets">
+            <strong>Geschlossen</strong>
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><strong>Dokumentation</strong></a>
+          <a
+            class="nav-link"
+            href="https://wiki.rimo-systems.com/index.php?title=Hauptseite"
+            target="_blank"
+          >
+            <strong>Dokumentation</strong>
+          </a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

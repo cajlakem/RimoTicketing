@@ -14,7 +14,7 @@ export const Tickets: Ticket[] = [
   {
     id: '54545',
     name: 'ID12565',
-    reporter: 'Rocco Siffridi',
+    reporter: 'John Rambo',
     state: 'inprogress',
     shortText: 'schon wieder...',
     longText: '...kann nicht arbeiten weil...',

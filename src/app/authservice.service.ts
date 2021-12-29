@@ -15,13 +15,13 @@ export class AuthserviceService {
     var aUser = new User()
     aUser.userName = userData.get('user')
     aUser.password = userData.get('password')
-    if (aUser.userName != 'emir') {
-      return null
+    if (aUser.userName === 'emir' && aUser.password === 'ilikeangular') {
+      console.log(aUser.userName)
+      this.currentUser = aUser
+      localStorage.setItem('currentUser', JSON.stringify(aUser))
+      return aUser
     }
-    console.log(aUser.userName)
-    this.currentUser = aUser
-    localStorage.setItem('currentUser', JSON.stringify(aUser))
-    return aUser
+    return null
   }
 
   public logout() {
