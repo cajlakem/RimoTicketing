@@ -1,4 +1,7 @@
 $primary: #198754c0;
+$breadcrumb-divider: quote('|');
+$breadcrumb-item-padding-x: 0.5rem;
+$breadcrumb-font-size: 13px;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
 // Required Bootstrap partials

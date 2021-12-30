@@ -1,4 +1,7 @@
-<nav aria-label="breadcrumb">
+<div
+  class="container-fluid max-width shadow"
+  style="background-color: #e8eaed;"
+>
   <ol class="breadcrumb" *ngIf="isIdsEmpty()"></ol>
   <ol class="breadcrumb">
     <li
@@ -14,4 +17,4 @@
       <span *ngIf="isActive(bci)">{{ bci.id }}</span>
     </li>
   </ol>
-</nav>
+</div>
