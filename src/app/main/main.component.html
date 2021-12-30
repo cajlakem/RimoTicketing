@@ -89,24 +89,52 @@
 </header>
 
 <div
-  class="offcanvas offcanvas-start"
-  tabindex="-1"
+  class="offcanvas offcanvas-top round"
+  style="width: 100%;"
+  tabindex=""
   id="offcanvasExample"
   aria-labelledby="offcanvasExampleLabel"
 >
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Module</h5>
+  <div class="offcanvas-header text-dark align-items-center">
+    <h5 class="offcanvas-title fs-4" id="offcanvasExampleLabel">
+      Module
+    </h5>
     <button
       type="button"
-      class="btn-close text-reset"
+      class="btn-close text-reset text-white"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     ></button>
   </div>
   <div class="offcanvas-body">
-    <div>
-      Some text as placeholder. In real life you can have the elements you have
-      chosen. Like, text, images, lists, etc.
+    <div class="row row-cols-4 row-cols-md-8 g-4">
+      <div class="col">
+        <div class="card shadow round bg-light">
+          <div class="card-body text-center">
+            <i class="fas fa-home" aria-hidden="true"></i>
+            <h5 class="card-title">Home</h5>
+          </div>
+          <a href="/login" class="btn btn-light stretched-link"></a>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card shadow round bg-light">
+          <div class="card-body text-center">
+            <i class="fas fa-ticket-alt" aria-hidden="true"></i>
+            <h5 class="card-title">Ticketing</h5>
+          </div>
+          <a href="/login" class="btn btn-light stretched-link"></a>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card shadow round bg-light">
+          <div class="card-body text-center">
+            <i class="fa fa-tachometer" aria-hidden="true"></i>
+            <h5 class="card-title">Dashboard</h5>
+          </div>
+          <a href="/login" class="btn btn-light stretched-link"></a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

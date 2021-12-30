@@ -18,8 +18,12 @@ $navbar-dark-hover-color: rgba($white, 0.75);
 $navbar-dark-active-color: $white;
 $navbar-dark-disabled-color: rgba($white, 0.25);
 
+$offcanvas-horizontal-width: 800px;
+$offcanvas-vertical-height: 80vh;
+
 body {
   background-color: #f8f9fa;
+  padding-top: 80px;
 }
 
 .breadcrumb > li + li:before {
