@@ -2,14 +2,15 @@
   <div class="fixed-top" *ngIf="isVisible()">
     <nav
       class="navbar navbar-expand-sm navbar-light pt-1 pb-1"
-      style="background-color: #27526e; height: 40px;"
+      style="background-color: #27526e;"
     >
       <div class="container-fluid">
         <ul class="navbar-nav align-items-center">
           <li class="nav-item">
             <a
+              data-bs-toggle="offcanvas"
+              href="#offcanvasExample"
               class="navbar-brand"
-              routerLink="/login"
               style="font-size: 13px; color: #d1d3cf;"
             >
               <img
@@ -18,23 +19,20 @@
                 height="30"
                 alt=""
               />
-              Ticketing
+              <u>Ticketing</u>
             </a>
           </li>
-
+          <div class="d-flex" style="height: 20px; color: white;">
+            <div class="vr"></div>
+          </div>
           <li class="nav-item">
             <a class="nav-link" aria-current="page" routerLink="/tickets">
-              <strong>Offen</strong>
+              <strong>Tickets</strong>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/tickets">
-              <strong>In Klärung</strong>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/tickets">
-              <strong>Geschlossen</strong>
+              <strong>Reporting</strong>
             </a>
           </li>
           <li class="nav-item">
@@ -43,7 +41,7 @@
               href="https://wiki.rimo-systems.com/index.php?title=Hauptseite"
               target="_blank"
             >
-              <strong>Dokumentation</strong>
+              <strong>Info</strong>
             </a>
           </li>
         </ul>
@@ -89,3 +87,26 @@
     <app-breadcrumb></app-breadcrumb>
   </div>
 </header>
+
+<div
+  class="offcanvas offcanvas-start"
+  tabindex="-1"
+  id="offcanvasExample"
+  aria-labelledby="offcanvasExampleLabel"
+>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Module</h5>
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      Some text as placeholder. In real life you can have the elements you have
+      chosen. Like, text, images, lists, etc.
+    </div>
+  </div>
+</div>

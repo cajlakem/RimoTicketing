@@ -1,7 +1,7 @@
 $primary: #198754c0;
 $breadcrumb-divider: quote('|');
 $breadcrumb-item-padding-x: 0.5rem;
-$breadcrumb-font-size: 13px;
+$breadcrumb-font-size: 14px;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
 // Required Bootstrap partials
@@ -11,6 +11,12 @@ $breadcrumb-font-size: 13px;
 @import 'node_modules/bootstrap/scss/reboot';
 @import 'node_modules/bootstrap/scss/alert';
 @import 'node_modules/bootstrap/scss/buttons';
+
+$navbar-dark-toggler-icon-bg: url(assets/images/cropped-symbol_rgb.png);
+$navbar-dark-color: rgba($white, 0.55);
+$navbar-dark-hover-color: rgba($white, 0.75);
+$navbar-dark-active-color: $white;
+$navbar-dark-disabled-color: rgba($white, 0.25);
 
 body {
   background-color: #f8f9fa;
