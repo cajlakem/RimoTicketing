@@ -13,7 +13,7 @@ export class CreateTicketComponent implements OnInit {
   public editor = CKEditorModule
 
   public model = {
-    editorData: '<p>Hello, world!!</p>',
+    editorData: '',
   }
 
   constructor() {}
