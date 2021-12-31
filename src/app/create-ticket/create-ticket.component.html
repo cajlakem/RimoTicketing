@@ -1,21 +1,23 @@
 <div class="container shadow rounded bg-light">
   <div class="row text-center">
     <div class="col d-flex justify-content-left">
-      <p class="fs-4 align-self">Ticketerstellung</p>
+      <p class="fs-4 m-2">Ticketerstellung</p>
     </div>
     <div class="col d-flex justify-content-end">
       <button
         type="submit"
-        class="btn btn-secondary btn-sm m-2 shadow"
+        class="btn btn-outline-secondary btn-sm m-2 shadow"
         routerLink="/tickets"
       >
+        <i class="fas fa-window-close"></i>
         Abbrechen
       </button>
       <button
         type="submit"
-        class="btn btn-success btn-sm m-2 shadow"
+        class="btn btn-outline-success btn-sm m-2 shadow"
         (click)="save()"
       >
+        <i class="fas fa-paper-plane"></i>
         Abschicken
       </button>
     </div>
