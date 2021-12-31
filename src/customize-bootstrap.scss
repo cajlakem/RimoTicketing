@@ -2,6 +2,7 @@ $primary: #198754c0;
 $breadcrumb-divider: quote('|');
 $breadcrumb-item-padding-x: 0.5rem;
 $breadcrumb-font-size: 14px;
+$grid-gutter-width: 1.5rem !default;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
 // Required Bootstrap partials
@@ -22,8 +23,8 @@ $offcanvas-horizontal-width: 800px;
 $offcanvas-vertical-height: 80vh;
 
 body {
-  background-color: #f8f9fa;
-  padding-top: 80px;
+  background-color: #e8eaed;
+  padding-top: 100px;
 }
 
 .breadcrumb > li + li:before {
