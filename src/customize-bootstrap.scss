@@ -21,6 +21,17 @@ $input-padding-x: 0px;
 @import 'node_modules/bootstrap/scss/alert';
 @import 'node_modules/bootstrap/scss/buttons';
 
+$alert-padding-y: 0;
+$alert-padding-x: $spacer;
+$alert-margin-bottom: 0.5rem;
+$alert-border-radius: $border-radius;
+$alert-link-font-weight: $font-weight-bold;
+$alert-border-width: $border-width;
+$alert-bg-scale: -80%;
+$alert-border-scale: -70%;
+$alert-color-scale: 10%;
+$alert-dismissible-padding-r: $alert-padding-x * 3;
+
 .bottom-border {
   border: 0;
   outline: 0;
@@ -52,12 +63,6 @@ $input-padding-x: 0px;
 .form-control:focus {
   border-color: #11ff08;
   box-shadow: 0px 1px 1px rgb(255, 255, 255) inset, 0px 0px 8px #10ff0800;
-}
-
-.alert {
-  background-color: white;
-  border-color: rgb(250, 7, 7);
-  margin: 2px;
 }
 
 $navbar-dark-toggler-icon-bg: url(assets/images/cropped-symbol_rgb.png);
@@ -105,8 +110,8 @@ body {
 }
 
 .apppadding {
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .breadcrumb > li + li:before {
@@ -137,4 +142,10 @@ a:hover {
   color: $primary;
   background-color: transparent;
   text-decoration: underline;
+}
+
+#nav-button-menu-place {
+  position: fixed;
+  left: 0;
+  top: 50%;
 }

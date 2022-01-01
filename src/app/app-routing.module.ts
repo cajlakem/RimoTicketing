@@ -7,6 +7,7 @@ import { AuthGuardService } from './_helpers/auth.guard'
 import { CreateTicketComponent } from './create-ticket/create-ticket.component'
 import { TicketComponent } from './ticket/ticket.component'
 import { UserpofileComponent } from './userpofile/userpofile.component'
+import { NotificationComponent } from './notification/notification.component'
 
 const routes: Routes = [
   { path: 'main', component: MainComponent, canActivate: [AuthGuardService] },
@@ -14,6 +15,11 @@ const routes: Routes = [
   {
     path: 'createTicket',
     component: CreateTicketComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'notifications',
+    component: NotificationComponent,
     canActivate: [AuthGuardService],
   },
   {
@@ -32,7 +38,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
     runGuardsAndResolvers: 'always',
   },
-  { path: '**', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'notifications', pathMatch: 'full' },
 ]
 @NgModule({
   declarations: [],

@@ -16,7 +16,8 @@ import { FormsModule } from '@angular/forms'
 import { CKEditorModule } from 'ckeditor4-angular'
 import { DataTablesModule } from 'angular-datatables'
 import { RouterModule } from '@angular/router';
-import { UserpofileComponent } from './userpofile/userpofile.component'
+import { UserpofileComponent } from './userpofile/userpofile.component';
+import { NotificationComponent } from './notification/notification.component'
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { UserpofileComponent } from './userpofile/userpofile.component'
     FooterComponent,
     CreateTicketComponent,
     UserpofileComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,

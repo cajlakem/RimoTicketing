@@ -20,7 +20,7 @@
               />
 
               Ticketing
-              <i class="fas fa-chevron-down"></i>
+              <i class="fas fa-chevron-down text-success"></i>
             </a>
           </li>
           <div class="d-flex" style="height: 20px; color: white;">
@@ -94,11 +94,14 @@
       </div>
     </nav>
     <app-breadcrumb></app-breadcrumb>
+    <div id="nav-button-menu-place">
+      <i routerLink="/login" class="fas fa-caret-right fa-3x text-success"></i>
+    </div>
   </main>
 </header>
 
 <div
-  class="offcanvas offcanvas-top round"
+  class="offcanvas offcanvas-top"
   style="width: 100%;"
   tabindex=""
   id="offcanvasExample"

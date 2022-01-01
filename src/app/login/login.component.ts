@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   invalidCredentialMsg: string
   pwdRequestedMsg: string
-  retUrl: any = 'login'
+  retUrl: any = 'noticications'
 
   isLoginFailed() {
     return this.invalidCredentialMsg == null
@@ -41,14 +41,14 @@ export class LoginComponent implements OnInit {
       myFormData.append('password', this.registerForm.value.password)
       var user = this.userauth.loginUser(myFormData)
       if (user != null) {
-        this.router.navigateByUrl('/login')
+        this.router.navigateByUrl('/notifications')
       } else this.invalidCredentialMsg = 'Failed to login!'
     }
   }
   ngOnInit(): void {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
-      this.retUrl = params.get('retUrl')
-    })
+    if (this.userauth.isLoggedIn()) {
+      this.router.navigate([this.retUrl])
+    }
     this.invalidCredentialMsg = ''
     this.registerForm = this.formBuilder.group({
       username: ['', [Validators.required]],

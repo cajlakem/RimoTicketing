@@ -1,3 +1,9 @@
-<app-main></app-main>
-<div class="apppadding"><router-outlet></router-outlet></div>
-<div class="apppadding"><app-footer></app-footer></div>
+<app-login *ngIf="!isLoggedIn()"></app-login>
+<app-main *ngIf="isLoggedIn()"></app-main>
+<div class="apppadding" *ngIf="isLoggedIn()">
+  <router-outlet></router-outlet>
+</div>
+<div class="apppadding" *ngIf="isLoggedIn()">
+  >
+  <app-footer></app-footer>
+</div>
