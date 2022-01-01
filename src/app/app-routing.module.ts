@@ -6,6 +6,7 @@ import { TicketsComponent } from './tickets/tickets.component'
 import { AuthGuardService } from './_helpers/auth.guard'
 import { CreateTicketComponent } from './create-ticket/create-ticket.component'
 import { TicketComponent } from './ticket/ticket.component'
+import { UserpofileComponent } from './userpofile/userpofile.component'
 
 const routes: Routes = [
   { path: 'main', component: MainComponent, canActivate: [AuthGuardService] },
@@ -18,6 +19,11 @@ const routes: Routes = [
   {
     path: 'tickets',
     component: TicketsComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'userProfile',
+    component: UserpofileComponent,
     canActivate: [AuthGuardService],
   },
   {

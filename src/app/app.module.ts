@@ -15,7 +15,8 @@ import { CreateTicketComponent } from './create-ticket/create-ticket.component'
 import { FormsModule } from '@angular/forms'
 import { CKEditorModule } from 'ckeditor4-angular'
 import { DataTablesModule } from 'angular-datatables'
-import { RouterModule } from '@angular/router'
+import { RouterModule } from '@angular/router';
+import { UserpofileComponent } from './userpofile/userpofile.component'
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { RouterModule } from '@angular/router'
     TicketComponent,
     FooterComponent,
     CreateTicketComponent,
+    UserpofileComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 <header>
   <main *ngIf="isVisible()">
     <nav
-      class="navbar navbar-expand-sm navbar-light pt-1 pb-1"
+      class="navbar navbar-expand navbar-dark"
       style="background-color: #27526e;"
     >
       <div class="container-fluid">
@@ -10,8 +10,7 @@
             <a
               data-bs-toggle="offcanvas"
               href="#offcanvasExample"
-              class="navbar-brand"
-              style="font-size: 13px; color: #d1d3cf;"
+              class="navbar-brand fs-5"
             >
               <img
                 src="./assets/images/cropped-symbol_rgb.png"
@@ -19,14 +18,20 @@
                 height="30"
                 alt=""
               />
-              <u>Ticketing</u>
+
+              Ticketing
+              <i class="fas fa-chevron-down"></i>
             </a>
           </li>
           <div class="d-flex" style="height: 20px; color: white;">
             <div class="vr"></div>
           </div>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" routerLink="/tickets">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              routerLink="/tickets"
+            >
               <strong>Tickets</strong>
             </a>
           </li>
@@ -70,8 +75,12 @@
               aria-labelledby="navbarDropdown"
             >
               <li>
-                <a ngbDropdownItem class="dropdown-item">
-                  Sesstings
+                <a
+                  ngbDropdownItem
+                  class="dropdown-item"
+                  routerLink="/userProfile"
+                >
+                  Settings
                 </a>
               </li>
               <li>

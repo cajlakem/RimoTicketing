@@ -1,16 +1,129 @@
 <div class="container-fluid" *ngIf="!isLoggedIn()">
   <div class="row no-gutter">
-    <!-- The image half -->
-    <div class="col-md-6 d-none d-md-flex bg-image"></div>
-    <!-- The content half -->
-    <div class="col-md-6 bg-light">
-      <div class="login d-flex align-items-center py-5">
-        <!-- Demo content-->
-        <div class="container">
-          <div class="row">
+    <div
+      class="col-md-6 d-none d-md-flex bg-color-login-left align-items-center"
+    >
+      <div class="container" *ngIf="!isLoggedIn()">
+        <div class="row justify-content-center">
+          <div
+            id="carouselExampleCaptions"
+            class="carousel slide align-self-baseline"
+            data-bs-ride="carousel"
+          >
+            <div class="carousel-indicators">
+              <button
+                type="button"
+                data-bs-target="#carouselExampleCaptions"
+                data-bs-slide-to="0"
+                class="active"
+                aria-current="true"
+                aria-label="Slide 1"
+              ></button>
+              <button
+                type="button"
+                data-bs-target="#carouselExampleCaptions"
+                data-bs-slide-to="1"
+                aria-label="Slide 2"
+              ></button>
+              <button
+                type="button"
+                data-bs-target="#carouselExampleCaptions"
+                data-bs-slide-to="2"
+                aria-label="Slide 3"
+              ></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img
+                  src="/assets/images/release_to_come.png"
+                  class="d-block w-100 rounded"
+                  alt="asddassaddsa"
+                />
+
+                <div class="carousel-caption d-none d-md-block">
+                  <h5 class="text-dark">Liebe User</h5>
+                  <p class="text-dark">
+                    am 02.08.2021 zwischen 07:15 und 07:30 befüllen wir Rimo
+                    wieder mit frischen Ideen und setzen Während dieser Zeit ist
+                    unser Tool nicht verfügbar und alle User werden automatisch
+                    ausgeloggt. Wir bitten um Verständnis.
+                  </p>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <img
+                  src="/assets/images/project_2.png"
+                  class="d-block w-100 rounded"
+                  alt="asddassaddsa"
+                />
+                <div class="carousel-caption">
+                  <h5 class="text-dark">Rimo neu denken.</h5>
+                  <p class="text-dark">
+                    Wir sind gerade dabei, Rimo neu zu denken und zu
+                    überarbeiten. Dabei liegt unser Fokus auf einer moderneren,
+                    intuitiveren und userfreundlicheren Gestaltung und
+                    Ausrichtung des Tools.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleCaptions"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon bg-dark"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleCaptions"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon bg-dark"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="login">
+        <div class="container-fluid">
+          <div class="row pt-4 justify-content-between">
+            <div class="col-2">
+              <img class="img-fluid" src="/assets/images/Logo.png" alt="" />
+            </div>
+            <div class="col-7"></div>
+            <div class="col-2">
+              <select
+                class="form-select form-select-sm"
+                aria-label="Select language"
+              >
+                <option value="1">Deutsch</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-5"></div>
+          <div class="row mb-5"></div>
+          <div class="row mb-5"></div>
+          <div class="row mt-5">
             <div class="col-xl-8 mx-auto">
-              <h3 class="display-3 text-center">Rimo Ticketing System</h3>
-              <p class="display-6 mb-5 text-center">rimo-systems.com</p>
+              <h3 class="display-6 text-center">
+                Willkommen bei Rimo Ticketing
+              </h3>
+              <h3 class="fs-6 text-center text-muted">
+                Bitte um Eingabe der Zugangsdaten:
+              </h3>
+              <p class="display-6 mb-5 text-center"></p>
               <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                 <div class="form-floating mb-4">
                   <input
@@ -18,9 +131,8 @@
                     type="input"
                     formControlName="username"
                     [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
-                    placeholder="Username"
                     autofocus="true"
-                    class="form-control text-secondary rounded shadow"
+                    class="form-control bottom-border"
                   />
                   <label for="floatingInput">Benutzername</label>
                   <div
@@ -38,9 +150,9 @@
                     type="password"
                     formControlName="password"
                     [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
-                    placeholder="Password"
-                    class="form-control text-secondary rounded shadow"
+                    class="form-control bottom-border"
                   />
+
                   <label for="floatingInput">Passwort</label>
                   <div
                     *ngIf="submitted && f.password.errors"
@@ -51,10 +163,12 @@
                     </div>
                   </div>
                 </div>
-
-                <button type="submit" class="btn btn-success shadow-sm btn-lg">
-                  Login
-                </button>
+                <div class="row mt-5">
+                  <button type="submit" class="btn btn-outline-success">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Anmelden
+                  </button>
+                </div>
                 <div
                   class="mt-3 alert alert-warning alert-dismissible show"
                   role="alert"
@@ -62,17 +176,27 @@
                 >
                   {{ invalidCredentialMsg }}
                 </div>
-                <p class="text-center mt-4">
+                <div
+                  class="mt-5 d-flex justify-content-center text-muted gap-2"
+                >
                   <a
                     href="#"
-                    class="link-success"
+                    class="link-success small text-muted"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                   >
                     Neues Passwort anfordern
                   </a>
-                </p>
-                <div class="mt-4 text-center"><p>Coded by 3m1r</p></div>
+                  ●
+                  <a
+                    href="#"
+                    class="link-success small text-muted"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    E-Mail an den Support
+                  </a>
+                </div>
               </form>
             </div>
           </div>
@@ -104,9 +228,8 @@
           <div class="form-floating mb-3">
             <input
               type="input"
-              class="form-control"
+              class="form-control bottom-border"
               id="floatingInput"
-              placeholder="Benutzername"
             />
             <label for="floatingInput">Benutzername</label>
             <div
@@ -137,14 +260,14 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-secondary"
+            class="btn btn-outline-secondary bg-sm"
             data-bs-dismiss="modal"
           >
             Schließen
           </button>
           <button
             type="button"
-            class="btn btn-primary"
+            class="btn btn-outline-primary"
             (click)="requestNewPassword()"
           >
             Anfordern
@@ -154,7 +277,8 @@
     </div>
   </div>
 </div>
-<div class="container" style="padding-top: 110px;" *ngIf="isLoggedIn()">
+
+<div class="container" *ngIf="isLoggedIn()">
   <div class="row">
     <div
       id="carouselExampleCaptions"

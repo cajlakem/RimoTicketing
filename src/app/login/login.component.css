@@ -2,19 +2,29 @@
 .image {
   min-height: 100vh;
 }
+
+.bg-color-login-left {
+  background-color: #cecbcb;
+}
+
 .bg-image {
   background-image: url(/assets/images/kontakt_herov1_1.jpg);
   background-size: cover;
   background-position: center;
 }
+
 .invalid-feedback {
-  margin-left: 5px;
+  margin-left: 1px;
 }
 
 .carousel-item {
   height: 70vh;
 }
 
-body {
-  background-color: #dee3e1;
+@media only screen and (max-width: 576px) {
+  .carousel-caption {
+    h5 {
+      font-size: 1rem;
+    }
+  }
 }
