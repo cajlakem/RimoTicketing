@@ -1,100 +1,122 @@
-<div class="container-fluid shadow rounded bg-light">
-  <div class="row text-center">
-    <div class="col d-flex justify-content-left">
-      <p class="fs-4 m-2">Ticketerstellung</p>
-    </div>
-    <div class="col d-flex justify-content-end">
-      <button
-        type="submit"
-        class="btn btn-secondary btn-sm m-2 shadow"
-        routerLink="/tickets"
-      >
-        <i class="fas fa-window-close"></i>
-        Abbrechen
-      </button>
-      <button
-        type="submit"
-        class="btn btn-success btn-sm m-2 shadow"
-        (click)="save()"
-      >
-        <i class="fas fa-paper-plane"></i>
-        Abschicken
-      </button>
-    </div>
-  </div>
-</div>
-
-<div class="container-fluid bg-light mt-3 pt-3">
-  <div class="row">
-    <div class="col">
-      <div class="form-floating">
-        <select
-          class="form-select"
-          id="floatingSelect"
-          aria-label="Floating label select example"
-        >
-          <option selected>Auswählen</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-        <label for="floatingSelect">Type</label>
+<div class="container-fluid mt-3 pt-3">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="row text-center">
+        <div class="col d-flex justify-content-left">
+          <p class="fs-4 m-2">Ticketerstellung</p>
+        </div>
+        <div class="col d-flex justify-content-end">
+          <button
+            type="submit"
+            class="btn btn-outline-secondary btn-sm m-2"
+            routerLink="/tickets"
+          >
+            <i class="fas fa-window-close"></i>
+            Abbrechen
+          </button>
+          <button type="submit" class="btn btn-outline-success btn-sm m-2">
+            <i class="fas fa-paper-plane"></i>
+            Abschicken
+          </button>
+        </div>
       </div>
     </div>
-    <div class="col">
-      <div class="form-floating">
-        <select
-          class="form-select"
-          id="floatingSelect"
-          aria-label="Floating label select example"
-        >
-          <option selected>Auswählen</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-        <label for="floatingSelect">Priorität</label>
+    <div class="row">
+      <div class="col">
+        <div class="form-floating">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+            [ngClass]="{ 'is-invalid': submitted && f.type.errors }"
+            formControlName="type"
+          >
+            <option selected>Auswählen</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+          <label for="floatingSelect">Type</label>
+          <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+            <div *ngIf="f.type.errors.required">
+              Type auswählen
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            formControlName="prio"
+            [ngClass]="{ 'is-invalid': submitted && f.prio.errors }"
+            aria-label="Floating label select example"
+          >
+            <option selected>Auswählen</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+          <label for="floatingSelect">Priorität</label>
+          <div *ngIf="submitted && f.prio.errors" class="invalid-feedback">
+            <div *ngIf="f.prio.errors.required">
+              Prio auswählen
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row mt-3">
-    <div class="col">
-      <div class="form-floating mb-3">
-        <input
-          type="input"
-          class="form-control"
-          id="floatingInput"
-          placeholder="Kurzbeschreibung"
-          [(ngModel)]="ticket.shortText"
-        />
-        <label for="floatingInput">Kurzbeschreibung</label>
+    <div class="row mt-3">
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input
+            type="input"
+            class="form-control bottom-border"
+            id="floatingInput"
+            [ngClass]="{ 'is-invalid': submitted && f.shortDsc.errors }"
+            formControlName="shortDsc"
+          />
+          <label for="floatingInput">Kurzbeschreibung</label>
+          <div
+            *ngIf="submitted && (f.shortDsc.errors || f.longDsc.errors)"
+            class="invalid-feedback"
+          >
+            <div
+              *ngIf="f.shortDsc.errors.required && f.longDsc.errors.required"
+            >
+              Kurz- und Langbeschreibung hinterlegen
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col mt-4" class="align-self-center">
-      <label class="from-label text-muted small">
-        Langbeschreibung:
-      </label>
-      <ckeditor
-        [config]="{
-          height: '800px',
-          filebrowserUploadUrl:
-            'https://rimo-dev.rimo-saas.com/soap/ckupload.php',
-          filebrowserImageUploadUrl:
-            'https://rimo-dev.rimo-saas.com/soap/ckupload.php'
-        }"
-        [(ngModel)]="model.editorData"
-      ></ckeditor>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div class="alert alert-success mt-3" role="alert">
-        <i class="far fa-smile-wink"></i>
-        Bitte den Fehler möglichst gut beschreiben!
+    <div class="row">
+      <div class="col mt-4" class="align-self-center">
+        <label class="from-label text-muted small">
+          Langbeschreibung:
+        </label>
+        <ckeditor
+          [config]="{
+            height: '800px',
+            filebrowserUploadUrl:
+              'https://rimo-dev.rimo-saas.com/soap/ckupload.php',
+            filebrowserImageUploadUrl:
+              'https://rimo-dev.rimo-saas.com/soap/ckupload.php'
+          }"
+          formControlName="longDsc"
+          [ngClass]="{ 'is-invalid': submitted && f.longDsc.errors }"
+        ></ckeditor>
       </div>
     </div>
-  </div>
-  <div class="row mt-3"></div>
+    <div class="row">
+      <div class="col">
+        <div class="alert alert-success mt-3" role="alert">
+          <i class="far fa-smile-wink"></i>
+          Bitte den Fehler möglichst gut beschreiben!
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3"></div>
+  </form>
 </div>

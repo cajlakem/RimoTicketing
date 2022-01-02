@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
       myFormData.append('password', this.registerForm.value.password)
       var user = this.userauth.loginUser(myFormData)
       if (user != null) {
-        this.router.navigateByUrl('/notifications')
+        this.router.navigateByUrl(this.retUrl)
       } else this.invalidCredentialMsg = 'Failed to login!'
     }
   }
