@@ -1,11 +1,11 @@
-$primary: #11ff08;
+$primary: #7ad700;
 
 $breadcrumb-divider: quote('|');
 $breadcrumb-item-padding-x: 0.5rem;
 $breadcrumb-font-size: 15px;
 
 $danger: #dd0000;
-$success: lime;
+$success: #7ad700;
 $warning: orange;
 $info: aqua;
 
@@ -39,12 +39,12 @@ $form-floating-padding-x: 0;
 }
 
 .form-select:focus {
-  border-color: #11ff08;
+  border-color: $primary;
   box-shadow: 0px 1px 1px rgb(255, 255, 255) inset, 0px 0px 8px #10ff0800;
 }
 
 .form-control:focus {
-  border-color: #11ff08;
+  border-color: $primary;
   box-shadow: 0px 1px 1px rgb(255, 255, 255) inset, 0px 0px 8px #10ff0800;
 }
 
@@ -65,9 +65,8 @@ textarea:focus,
 input[type='search']:focus,
 select:focus,
 .uneditable-input:focus {
-  border-color: rgba(126, 239, 104, 0.8);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset,
-    0 0 8px rgba(126, 239, 104, 0.6);
+  border-color: $primary;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px $primary;
   outline: 0 none;
 }
 
@@ -96,4 +95,33 @@ a:hover {
   text-decoration-style: solid;
   text-decoration-thickness: 5px;
   font-size: 25px;
+}
+
+.login,
+.image {
+  min-height: 100vh;
+}
+
+.bg-color-login-left {
+  background-color: #cecbcb;
+}
+
+.bg-image {
+  background-image: url(/assets/images/kontakt_herov1_1.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.invalid-feedback {
+  margin-left: 1px;
+}
+
+.carousel-item {
+  height: 70vh;
+}
+
+.module-icon {
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
 }
