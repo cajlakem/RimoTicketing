@@ -15,18 +15,22 @@ export class RimoTicketingClientService {
 
   constructor(private http: HttpClient) {}
 
-  public queryOpenTickets(originMIT: string): Observable<Ticket[]> {
+  public queryOpenTickets(
+    originMIT: string,
+    filterKey: string,
+  ): Observable<Ticket[]> {
     const headers = { 'content-type': 'application/json' }
     var body = {
       operation: 'queryOpenTickets',
       token: this.token,
       appName: null,
       tsSend: null,
+
       tsReceived: null,
       queue: null,
       asOop: null,
       errorText: null,
-      requestBody: { originMIT: originMIT },
+      requestBody: { originMIT: originMIT, filterKey: filterKey },
       responseBody: {},
     }
     return this.http.post<Ticket[]>(this.url, body, {
@@ -42,6 +46,7 @@ export class RimoTicketingClientService {
       requestBody: { id: id },
       responseBody: {},
     }
+
     return this.http.post<Ticket>(this.url, body, {
       headers: headers,
     })

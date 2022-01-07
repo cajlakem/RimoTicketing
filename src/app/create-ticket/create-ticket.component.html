@@ -8,7 +8,7 @@
         <div class="col d-flex justify-content-end">
           <button
             type="submit"
-            class="btn btn-outline-secondary shadow btn-sm m-2"
+            class="btn btn-outline-secondary shadow rounded-3 btn-sm m-2"
             routerLink="/tickets"
           >
             <i class="fas fa-window-close"></i>
@@ -16,7 +16,7 @@
           </button>
           <button
             type="submit"
-            class="btn btn-outline-success shadow btn-sm m-2"
+            class="btn btn-outline-success shadow rounded-3 btn-sm m-2"
           >
             <i class="fas fa-paper-plane"></i>
             Abschicken
@@ -28,7 +28,7 @@
       <div class="col">
         <div class="form-floating">
           <select
-            class="form-select"
+            class="form-select shadow rounded-3"
             id="floatingSelect"
             aria-label="Floating label select example"
             [ngClass]="{ 'is-invalid': submitted && f.type.errors }"
@@ -50,7 +50,7 @@
       <div class="col">
         <div class="form-floating">
           <select
-            class="form-select"
+            class="form-select shadow rounded-3"
             id="floatingSelect"
             formControlName="prio"
             [ngClass]="{ 'is-invalid': submitted && f.prio.errors }"
@@ -75,7 +75,7 @@
         <div class="form-floating mb-3">
           <input
             type="input"
-            class="form-control bottom-border"
+            class="form-control bottom-border shadow rounded-3"
             id="floatingInput"
             [ngClass]="{ 'is-invalid': submitted && f.shortDsc.errors }"
             formControlName="shortDsc"
@@ -100,6 +100,7 @@
           Langbeschreibung:
         </label>
         <ckeditor
+          class="shadow rounded-3"
           [config]="{
             height: '800px',
             filebrowserUploadUrl:

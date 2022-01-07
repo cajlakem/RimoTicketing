@@ -49,12 +49,12 @@ $form-floating-padding-x: 0;
 }
 
 body {
-  background-color: #ffffff;
+  background-color: #e4e4e4;
 }
 
 .apppadding {
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .breadcrumb > li + li:before {
@@ -124,4 +124,9 @@ a:hover {
   display: flex;
   justify-content: center; /* align horizontal */
   align-items: center; /* align vertical */
+}
+
+table.display td {
+  padding: 3px 10px;
+  white-space: nowrap;
 }

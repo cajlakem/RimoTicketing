@@ -10,6 +10,7 @@ import { Tickets } from '../_models/Tickets'
 import { DataTableDirective } from 'angular-datatables'
 import { Subject } from 'rxjs'
 import { RimoTicketingClientService } from '../rimo-ticketing-client.service'
+import { AuthserviceService } from '../authservice.service'
 
 @Component({
   selector: 'app-tickets',
@@ -22,16 +23,32 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   dtOptions: DataTables.Settings = {}
 
-  dtTrigger: Subject<any> = new Subject<any>()
+  dtTrigger: Subject<any> = new Subject()
 
-  constructor(private ticketClient: RimoTicketingClientService) {}
+  constructor(
+    private ticketClient: RimoTicketingClientService,
+    private authService: AuthserviceService,
+  ) {}
   ticket = 'Meine Tickets'
-  tickets = Tickets
+  tickets: Ticket[]
+  filterKey: string = 'Pending'
 
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      processing: true,
+    }
+
     this.ticketClient
-      .queryOpenTickets('OEGIG')
-      .subscribe((data) => (this.tickets = data))
+      .queryOpenTickets(
+        this.authService.currentUser?.getUserProfilesMITAsString as string,
+        this.filterKey,
+      )
+      .subscribe((data) => {
+        this.tickets = data
+        this.rerender()
+      })
   }
 
   ngAfterViewInit(): void {
@@ -51,5 +68,10 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
       // Call the dtTrigger to rerender again
       this.dtTrigger.next('')
     })
+  }
+
+  updateTicketList(evt: any) {
+    this.filterKey = evt.target.value
+    this.ngOnInit()
   }
 }

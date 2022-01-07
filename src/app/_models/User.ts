@@ -8,5 +8,5 @@ export class User {
   email: string
   mobile: string
   password: string
-  getUserProfilesMITAsString: String
+  getUserProfilesMITAsString: string | null
 }

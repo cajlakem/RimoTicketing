@@ -1,18 +1,35 @@
 <div class="container-fluid">
-  <div class="row p-3">
+  <div class="row pt-4">
     <div
       class="d-grid gap-1 d-md-flex d-flex justify-content-center align-items-center"
     >
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <div
+        class="btn-group btn-group-toggle rounded-3 shadow bg-light"
+        data-toggle="buttons"
+      >
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="inlineRadioOptions"
+            id="inlineRadio0"
+            value="New"
+            (change)="updateTicketList($event)"
+            [ngModel]="filterKey"
+          />
+          <label class="form-check-label" for="inlineRadio0">Neu</label>
+        </div>
         <div class="form-check form-check-inline">
           <input
             class="form-check-input"
             type="radio"
             name="inlineRadioOptions"
             id="inlineRadio1"
-            value="option1"
+            value="Open"
+            (change)="updateTicketList($event)"
+            [ngModel]="filterKey"
           />
-          <label class="form-check-label" for="inlineRadio1">Neu</label>
+          <label class="form-check-label" for="inlineRadio1">Open</label>
         </div>
         <div class="form-check form-check-inline">
           <input
@@ -20,7 +37,9 @@
             type="radio"
             name="inlineRadioOptions"
             id="inlineRadio2"
-            value="option2"
+            (change)="updateTicketList($event)"
+            value="Pending"
+            [ngModel]="filterKey"
           />
           <label class="form-check-label" for="inlineRadio2">
             In Bearbeitung
@@ -32,10 +51,12 @@
             type="radio"
             name="inlineRadioOptions"
             id="inlineRadio3"
-            value="option3"
+            value="Clarify"
+            (change)="updateTicketList($event)"
+            [ngModel]="filterKey"
           />
           <label class="form-check-label" for="inlineRadio3">
-            Zu verifizieren
+            Abklären
           </label>
         </div>
         <div class="form-check form-check-inline">
@@ -44,10 +65,11 @@
             type="radio"
             name="inlineRadioOptions"
             id="inlineRadio4"
-            value="option4"
+            value="Solved"
+            (change)="updateTicketList($event)"
           />
           <label class="form-check-label" for="inlineRadio4">
-            Meine
+            Solved
           </label>
         </div>
         <div class="form-check form-check-inline">
@@ -56,20 +78,21 @@
             type="radio"
             name="inlineRadioOptions"
             id="inlineRadio5"
-            value="option5"
+            value="Closed"
+            (change)="updateTicketList($event)"
           />
           <label class="form-check-label" for="inlineRadio5">
-            Favoriten
+            Geschlossene
           </label>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row p-3 mt-4">
+  <div class="row p-3 mt-4 bg-light rounded-3">
     <table
       id="example"
-      class="table table-striped display"
+      class="table row-border table-hover striped table-striped"
       datatable
       [dtOptions]="dtOptions"
       [dtTrigger]="dtTrigger"
@@ -90,17 +113,19 @@
             {{ ticket.name }}
           </td>
           <td class="text-muted">
-            {{ ticket.requestor.nameToDisplay }}
+            {{
+              ticket.requestor === null ? '' : ticket.requestor.nameToDisplay
+            }}
           </td>
-          <td class="text-muted">
+          <td class="text-muted" style="white-space: normal;">
             {{ ticket.shortText }}
           </td>
 
           <td class="text-muted">
-            {{ ticket.state.nameToDisplay }}
+            {{ ticket.state === null ? '' : ticket.state.nameToDisplay }}
           </td>
           <td class="text-muted">
-            {{ ticket.type.nameToDisplay }}
+            {{ ticket.type === null ? '' : ticket.type.nameToDisplay }}
           </td>
           <td class="text-muted">
             {{ ticket.priority === null ? '' : ticket.priority.nameToDisplay }}
