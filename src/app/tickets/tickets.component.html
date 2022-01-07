@@ -76,33 +76,34 @@
     >
       <thead class="table">
         <tr class="fw-bolder">
-          <th>Id</th>
           <th>Name</th>
-          <th>Kurztext</th>
-          <th>Langtext</th>
           <th>Reporter</th>
+          <th>Kurztext</th>
           <th>State</th>
+          <th>Type</th>
+          <th>Priorität</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let ticket of tickets" routerLink="/edit/{{ ticket.id }}">
-          <td class="fw-bold">
-            {{ ticket.id }}
-          </td>
           <td class="text-muted">
             {{ ticket.name }}
           </td>
           <td class="text-muted">
+            {{ ticket.requestor.nameToDisplay }}
+          </td>
+          <td class="text-muted">
             {{ ticket.shortText }}
           </td>
+
           <td class="text-muted">
-            {{ ticket.longText }}
+            {{ ticket.state.nameToDisplay }}
           </td>
           <td class="text-muted">
-            {{ ticket.reporter }}
+            {{ ticket.type.nameToDisplay }}
           </td>
           <td class="text-muted">
-            {{ ticket.state }}
+            {{ ticket.priority === null ? '' : ticket.priority.nameToDisplay }}
           </td>
         </tr>
       </tbody>

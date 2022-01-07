@@ -5,6 +5,8 @@ import { Tickets } from '../_models/Tickets'
 import { TicketComment } from '../_models/TicketComment'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
+import { EnumList } from '../_models/EnumList'
+import { Reporter } from '../_models/Reporter'
 
 @Component({
   selector: 'app-create-ticket',
@@ -29,11 +31,18 @@ export class CreateTicketComponent implements OnInit {
   public ticket: Ticket = {
     id: '1245',
     name: 'ID12565',
-    reporter: 'Emir Cajlakovic',
-    state: 'New',
+    reporter: new Reporter(),
+    state: new EnumList(),
+    type: new EnumList(),
     shortText: 'ich brauche Hilfe!',
     longText: 'Das Problem ist...',
-    comments: [new TicketComment()],
+    priority: new EnumList(),
+    requestor: new Reporter(),
+    originMIT: '',
+    contacts: [new Reporter()],
+    creationTime: '',
+    creationDate: '',
+    notes: [new TicketComment()],
   }
 
   get f() {

@@ -12,9 +12,9 @@
       *ngFor="let bci of ids"
     >
       <a *ngIf="!isActive(bci)" href="/edit/{{ bci.id }}">
-        {{ bci.id }}
+        {{ bci.name }}
       </a>
-      <span *ngIf="isActive(bci)">{{ bci.id }}</span>
+      <span *ngIf="isActive(bci)">{{ bci.name }}</span>
     </li>
   </ol>
 </div>

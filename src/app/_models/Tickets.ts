@@ -1,3 +1,5 @@
+import { EnumList } from './EnumList'
+import { Reporter } from './Reporter'
 import { Ticket } from './Ticket'
 import { TicketComment } from './TicketComment'
 
@@ -5,19 +7,17 @@ export const Tickets: Ticket[] = [
   {
     id: '1245',
     name: 'ID12565',
-    reporter: 'Emir Cajlakovic',
-    state: 'New',
+    reporter: new Reporter(),
     shortText: 'ich brauche Hilfe!',
-    longText: 'Das Problem ist...',
-    comments: [new TicketComment()],
-  },
-  {
-    id: '54545',
-    name: 'ID12565',
-    reporter: 'John Rambo',
-    state: 'inprogress',
-    shortText: 'schon wieder...',
-    longText: '...kann nicht arbeiten weil...',
-    comments: [new TicketComment()],
+    state: new EnumList(),
+    priority: new EnumList(),
+    requestor: new Reporter(),
+    originMIT: '',
+    contacts: [new Reporter()],
+    creationTime: '',
+    creationDate: '',
+    longText: 'sss',
+    type: new EnumList(),
+    notes: [new TicketComment()],
   },
 ]

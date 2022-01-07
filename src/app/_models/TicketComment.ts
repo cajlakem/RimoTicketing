@@ -1,7 +1,12 @@
+import { EnumList } from './EnumList'
+import { Reporter } from './Reporter'
+
 export class TicketComment {
-  id: string
-  state: string
+  externalID: string
+  text: String
   reporter: string
-  shortText: String
-  longText: String
+  creationDate: string
+  creationTime: string
+  createdBy: Reporter
+  state: EnumList
 }
