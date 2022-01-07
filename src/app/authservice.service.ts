@@ -1,4 +1,7 @@
-import { Injectable } from '@angular/core'
+import { HttpErrorResponse } from '@angular/common/http'
+import { Injectable, ResolvedReflectiveFactory } from '@angular/core'
+import { lastValueFrom } from 'rxjs'
+import { LicenseServerClientService } from './license-server-client.service'
 import { User } from './_models/User'
 
 @Injectable({
@@ -7,21 +10,29 @@ import { User } from './_models/User'
 export class AuthserviceService {
   currentUser: User | null
 
-  constructor() {
+  constructor(private licenseClient: LicenseServerClientService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser')!)
   }
 
-  public loginUser(userData: any) {
+  public async loginUser(userData: any) {
     var aUser = new User()
-    aUser.userName = userData.get('user')
+    var error: string | undefined
+    aUser.user = userData.get('user')
     aUser.password = userData.get('password')
-    if (aUser.userName === 'emir' && aUser.password === 'ilikeangular') {
-      console.log(aUser.userName)
+    const response = this.licenseClient.loginUser(aUser)
+    try {
+      aUser = await lastValueFrom(await response)
+      console.log(aUser)
+    } catch (e) {
+      const u = e as HttpErrorResponse
+      error = Object.values(u.error)[0] as string
+      throw new Error(error)
+    }
+    if (error === undefined) {
       this.currentUser = aUser
       localStorage.setItem('currentUser', JSON.stringify(aUser))
       return aUser
-    }
-    return null
+    } else return error
   }
 
   public logout() {

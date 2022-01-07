@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthserviceService } from '../authservice.service'
 import { Router, ActivatedRoute } from '@angular/router'
+import { User } from '../_models/User'
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
   get f() {
     return this.registerForm.controls
   }
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true
     if (this.registerForm.invalid) {
       return
@@ -39,10 +40,14 @@ export class LoginComponent implements OnInit {
 
       myFormData.append('user', this.registerForm.value.username)
       myFormData.append('password', this.registerForm.value.password)
-      var user = this.userauth.loginUser(myFormData)
-      if (user != null) {
+
+      try {
+        await this.userauth.loginUser(myFormData)
         this.router.navigateByUrl(this.retUrl)
-      } else this.invalidCredentialMsg = 'Failed to login!'
+      } catch (error) {
+        const e = error as Error
+        this.invalidCredentialMsg = e.message
+      }
     }
   }
   ngOnInit(): void {

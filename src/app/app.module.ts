@@ -15,9 +15,10 @@ import { CreateTicketComponent } from './create-ticket/create-ticket.component'
 import { FormsModule } from '@angular/forms'
 import { CKEditorModule } from 'ckeditor4-angular'
 import { DataTablesModule } from 'angular-datatables'
-import { RouterModule } from '@angular/router';
-import { UserpofileComponent } from './userpofile/userpofile.component';
+import { RouterModule } from '@angular/router'
+import { UserpofileComponent } from './userpofile/userpofile.component'
 import { NotificationComponent } from './notification/notification.component'
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { NotificationComponent } from './notification/notification.component'
     FormsModule,
     CKEditorModule,
     RouterModule,
+    HttpClientModule,
   ],
   providers: [AuthGuardService],
   bootstrap: [AppComponent],
