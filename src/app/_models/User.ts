@@ -10,6 +10,7 @@ export class User {
   password: string
   nameToDisplay: string
   getUserProfilesMITAsString: string | null
+  profilePictureUrl: string
 
   public getInitials(): string {
     return this.christianName.charAt(0) + this.lastName.charAt(0)!
