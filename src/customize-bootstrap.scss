@@ -130,3 +130,11 @@ table.display td {
   padding: 3px 10px;
   white-space: nowrap;
 }
+
+hr {
+  margin: 1rem 0;
+  color: inherit;
+  background-color: currentColor;
+  border: 0;
+  opacity: 0.25;
+}

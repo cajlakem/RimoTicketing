@@ -8,5 +8,14 @@ export class User {
   email: string
   mobile: string
   password: string
+  nameToDisplay: string
   getUserProfilesMITAsString: string | null
+
+  public getInitials(): string {
+    return this.christianName.charAt(0) + this.lastName.charAt(0)!
+  }
+
+  getFullName(): string {
+    return this.christianName + ' ' + this.lastName
+  }
 }

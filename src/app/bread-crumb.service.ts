@@ -39,7 +39,7 @@ export class BreadCrumbService {
     })
     if (result === null) {
       ids.push(id)
-      if (ids.length >= 10) ids.pop
+      if (ids.length >= 10) ids.shift()
       return this.saveBreadCrumbIds(ids)
     } else return ids
   }

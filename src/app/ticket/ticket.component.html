@@ -83,14 +83,12 @@
       <div class="col">
         <div class="row">
           <div class="col-3 align-self-center">
-            <img
-              src="https://avatars.githubusercontent.com/u/39443209?v=4"
-              alt=""
-              width="38"
-              height="38"
-              class="rounded-circle"
-            />
+            <ngx-avatar
+              size="35"
+              name="{{ ticket.requestor.nameToDisplay }}"
+            ></ngx-avatar>
           </div>
+
           <div class="col text-center">
             <div class="row small text-muted">Reporter</div>
             <div class="row">{{ ticket.requestor.nameToDisplay }}</div>
@@ -100,17 +98,14 @@
       <div class="col">
         <div class="row">
           <div class="col-3 align-self-center">
-            <img
-              src="https://avatars.githubusercontent.com/u/39443209?v=4"
-              alt=""
-              width="38"
-              height="38"
-              class="rounded-circle"
-            />
+            <ngx-avatar
+              size="35"
+              name="{{ ticket.assignedTo.nameToDisplay }}"
+            ></ngx-avatar>
           </div>
           <div class="col text-center">
             <div class="row small text-muted">Zugewiesen</div>
-            <div class="row">{{ ticket.reporter }}</div>
+            <div class="row">{{ ticket.assignedTo.nameToDisplay }}</div>
           </div>
         </div>
       </div>
@@ -201,6 +196,7 @@
           </a>
         </li>
       </ul>
+      <hr class="border-1 border-top border-secondary" />
       <div class="tab-content" id="pills-tabContent">
         <div
           class="tab-pane fade show active"
@@ -214,21 +210,18 @@
               *ngFor="let note of ticket.notes"
             >
               <div class="card-header">
-                <div class="row">
-                  <div class="col-2">
-                    <a>
-                      <img
-                        src="https://avatars.githubusercontent.com/u/39443209?v=4"
-                        alt=""
-                        width="44"
-                        height="44"
-                        class="rounded-circle me-2"
-                      />
-                      {{ note.createdBy.nameToDisplay }}
-                    </a>
+                <div class="row d-flex bd-highlight align-items-center">
+                  <div
+                    class="col d-flex justify-content-start align-items-center"
+                  >
+                    <ngx-avatar
+                      size="35"
+                      name="{{ note.createdBy.nameToDisplay }}"
+                    ></ngx-avatar>
+                    {{ note.createdBy.nameToDisplay }}
                   </div>
-                  <div class="col-8"></div>
-                  <div class="col-2">
+
+                  <div class="col d-flex justify-content-end">
                     {{ note.state.nameToDisplay }}, {{ note.creationDate }}
                   </div>
                 </div>

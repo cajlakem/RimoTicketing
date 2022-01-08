@@ -7,4 +7,12 @@ export class Reporter {
   email: string
   department: string
   asOop: BigInteger
+
+  public getInitials(): string {
+    return this.christianName.charAt(0) + this.name.charAt(0)
+  }
+
+  getFullName(): string {
+    return this.christianName + ' ' + this.name
+  }
 }

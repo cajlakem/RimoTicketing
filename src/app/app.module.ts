@@ -19,6 +19,7 @@ import { RouterModule } from '@angular/router'
 import { UserpofileComponent } from './userpofile/userpofile.component'
 import { NotificationComponent } from './notification/notification.component'
 import { HttpClientModule } from '@angular/common/http'
+import { AvatarModule } from 'ngx-avatar'
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { HttpClientModule } from '@angular/common/http'
     CKEditorModule,
     RouterModule,
     HttpClientModule,
+    AvatarModule,
   ],
   providers: [AuthGuardService],
   bootstrap: [AppComponent],

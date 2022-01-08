@@ -1,29 +1,28 @@
 <div class="container-fluid mt-3 pt-3">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div class="row">
-      <div class="row text-center">
-        <div class="col d-flex justify-content-left">
-          <p class="fs-4 m-2">Ticketerstellung</p>
-        </div>
-        <div class="col d-flex justify-content-end">
-          <button
-            type="submit"
-            class="btn btn-outline-secondary shadow rounded-3 btn-sm m-2"
-            routerLink="/tickets"
-          >
-            <i class="fas fa-window-close"></i>
-            Abbrechen
-          </button>
-          <button
-            type="submit"
-            class="btn btn-outline-success shadow rounded-3 btn-sm m-2"
-          >
-            <i class="fas fa-paper-plane"></i>
-            Abschicken
-          </button>
-        </div>
+    <div class="row d-flex bd-highlight mb-3">
+      <div class="col d-flex justify-content-start">
+        <p class="fs-3 m-2">Ticketerstellung</p>
+      </div>
+      <div class="col d-flex justify-content-end">
+        <button
+          type="submit"
+          class="btn btn-outline-secondary shadow rounded-3 btn-sm m-2"
+          routerLink="/tickets"
+        >
+          <i class="fas fa-window-close"></i>
+          Abbrechen
+        </button>
+        <button
+          type="submit"
+          class="btn btn-outline-success shadow rounded-3 btn-sm m-2"
+        >
+          <i class="fas fa-paper-plane"></i>
+          Abschicken
+        </button>
       </div>
     </div>
+
     <div class="row">
       <div class="col">
         <div class="form-floating">
@@ -102,7 +101,7 @@
         <ckeditor
           class="shadow rounded-3"
           [config]="{
-            height: '800px',
+            height: '400px',
             filebrowserUploadUrl:
               'https://rimo-dev.rimo-saas.com/soap/ckupload.php',
             filebrowserImageUploadUrl:

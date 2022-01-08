@@ -36,7 +36,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10,
+      pageLength: 25,
       processing: true,
     }
 

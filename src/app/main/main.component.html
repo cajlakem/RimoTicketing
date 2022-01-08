@@ -68,14 +68,10 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <img
-                src="https://avatars.githubusercontent.com/u/39443209?v=4"
-                alt=""
-                width="44"
-                height="44"
-                class="rounded-circle me-2"
-              />
-              Emir
+              <ngx-avatar
+                size="40"
+                name="{{ this.getCurrentUser().getFullName() }}"
+              ></ngx-avatar>
             </a>
             <ul
               ngbDropdownMenu

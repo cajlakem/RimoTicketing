@@ -11,7 +11,16 @@ export class AuthserviceService {
   currentUser: User | null
 
   constructor(private licenseClient: LicenseServerClientService) {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser')!)
+    this.currentUserloadUserSettingFromLocalStorage()
+  }
+  currentUserloadUserSettingFromLocalStorage() {
+    var userData = JSON.parse(localStorage.getItem('currentUser')!)
+    if (userData) {
+      this.currentUser = Object.assign(
+        new User(),
+        JSON.parse(localStorage.getItem('currentUser')!),
+      )
+    } else this.currentUser = null
   }
 
   public async loginUser(userData: any) {
@@ -22,16 +31,15 @@ export class AuthserviceService {
     const response = this.licenseClient.loginUser(aUser)
     try {
       aUser = await lastValueFrom(await response)
-      console.log(aUser)
     } catch (e) {
       const u = e as HttpErrorResponse
       error = Object.values(u.error)[0] as string
       throw new Error(error)
     }
     if (error === undefined) {
-      this.currentUser = aUser
+      this.currentUser = Object.assign(new User(), aUser)
       localStorage.setItem('currentUser', JSON.stringify(aUser))
-      return aUser
+      return this.currentUser
     } else return error
   }
 

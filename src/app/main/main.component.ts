@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { AuthserviceService } from '../authservice.service'
 import { Router } from '@angular/router'
+import { User } from '../_models/User'
 
 @Component({
   selector: 'app-main',
@@ -26,5 +27,9 @@ export class MainComponent implements OnInit {
 
   isVisible(): boolean {
     return localStorage.getItem('currentUser') != null
+  }
+
+  getCurrentUser(): User {
+    return this.authService.currentUser!
   }
 }

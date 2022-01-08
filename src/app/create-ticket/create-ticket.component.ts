@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { EnumList } from '../_models/EnumList'
 import { Reporter } from '../_models/Reporter'
+import { User } from '../_models/User'
 
 @Component({
   selector: 'app-create-ticket',
@@ -31,7 +32,7 @@ export class CreateTicketComponent implements OnInit {
   public ticket: Ticket = {
     id: '1245',
     name: 'ID12565',
-    reporter: new Reporter(),
+    assignedTo: new User(),
     state: new EnumList(),
     type: new EnumList(),
     shortText: 'ich brauche Hilfe!',
