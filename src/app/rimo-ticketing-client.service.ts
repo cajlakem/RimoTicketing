@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
+import { environment } from 'src/environments/environment'
 import { Ticket } from './_models/Ticket'
 import { User } from './_models/User'
 
@@ -9,10 +10,11 @@ import { User } from './_models/User'
 })
 export class RimoTicketingClientService {
   private url =
-    'https://rimo-dev.rimo-saas.com/api/MIT/SDRimoTicketingController'
+    'https://' +
+    (environment.apiTicketingServer as string) +
+    '/api/MIT/SDRimoTicketingController'
 
-  private token: String =
-    '42E05A5B0EDDA0AACB38FC19C4B8E5AA70C4B4B3E6C7297F5A97C0046CC633E3'
+  private token: String = environment.apiTicketingServerToken as string
 
   constructor(private http: HttpClient) {}
 

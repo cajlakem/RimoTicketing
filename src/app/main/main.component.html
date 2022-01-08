@@ -18,10 +18,10 @@
             <a
               data-bs-toggle="offcanvas"
               href="#offcanvasExample"
-              class="navbar-brand fs-5"
+              class="navbar-brand fs-6"
             >
               Ticketing
-              <i class="fas fa-chevron-down text-success"></i>
+              <i class="fas fa-chevron-down text-light"></i>
             </a>
           </li>
           <div class="d-flex" style="height: 20px; color: white;">
@@ -58,7 +58,9 @@
               Ticket
             </button>
           </li>
-
+          <div class="d-flex" style="height: 20px; color: white;">
+            <div class="vr mx-2"></div>
+          </div>
           <li ngbDropdown class="nav-item dropdown">
             <a
               ngbDropdownToggle
@@ -127,19 +129,19 @@
           <div class="col-3">
             <div class="card shadow round btn-outline-success">
               <div class="card-body text-center">
-                <i class="fas fa-home" aria-hidden="true"></i>
-                <h5 class="card-title">Home</h5>
-              </div>
-              <a href="/notifications" class="stretched-link"></a>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="card shadow round btn-outline-success">
-              <div class="card-body text-center">
                 <i class="fas fa-ticket-alt"></i>
                 <h5 class="card-title">Ticketing</h5>
               </div>
               <a href="/tickets" class="stretched-link"></a>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="card shadow round bg-light">
+              <div class="card-body text-center">
+                <i class="fas fa-spinner"></i>
+                <h5 class="card-title">...</h5>
+              </div>
+              <a href="/login" class="stretched-link"></a>
             </div>
           </div>
           <div class="col-3">

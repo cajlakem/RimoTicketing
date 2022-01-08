@@ -3,17 +3,18 @@ import { HttpClient } from '@angular/common/http'
 import { HttpHeaders } from '@angular/common/http'
 import { User } from './_models/User'
 import { map, Observable } from 'rxjs'
+import { environment } from 'src/environments/environment'
 
 @Injectable({
   providedIn: 'root',
 })
 export class LicenseServerClientService {
   private url =
-    'http://rimo-dev.rimo-saas.com/api/MIT/SDRimoWebGlobalLicenseRestService'
+    'http://' +
+    (environment.apiLicenseServer as string) +
+    '/api/MIT/SDRimoWebGlobalLicenseRestService'
 
-  private userName: String = 'license_server_client'
-  private token: String =
-    '42E05A5B0EDDA0AACB38FC19C4B8E5AA70C4B4B3E6C7297F5A97C0046CC633E3'
+  private token: String = environment.apiLicenseServerToken as string
 
   constructor(private http: HttpClient) {}
 
@@ -35,6 +36,7 @@ export class LicenseServerClientService {
       },
       responseBody: {},
     }
+
     return this.http
       .post<User>(this.url, body, {
         headers: headers,

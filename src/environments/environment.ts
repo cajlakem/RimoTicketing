@@ -3,8 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
-};
+  production: false,
+  apiLicenseServer: 'rimo-dev.rimo-saas.com',
+  apiLicenseServerToken:
+    '42E05A5B0EDDA0AACB38FC19C4B8E5AA70C4B4B3E6C7297F5A97C0046CC633E3',
+  apiTicketingServer: 'rimo-dev.rimo-saas.com',
+  apiTicketingServerToken:
+    '42E05A5B0EDDA0AACB38FC19C4B8E5AA70C4B4B3E6C7297F5A97C0046CC633E3',
+}
 
 /*
  * For easier debugging in development mode, you can import the following file
@@ -13,4 +19,3 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

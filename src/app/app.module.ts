@@ -20,6 +20,8 @@ import { UserpofileComponent } from './userpofile/userpofile.component'
 import { NotificationComponent } from './notification/notification.component'
 import { HttpClientModule } from '@angular/common/http'
 import { AvatarModule } from 'ngx-avatar'
+import { environment } from 'src/environments/environment'
+import { NgxSpinnerModule } from 'ngx-spinner'
 
 @NgModule({
   declarations: [
@@ -45,8 +47,10 @@ import { AvatarModule } from 'ngx-avatar'
     RouterModule,
     HttpClientModule,
     AvatarModule,
+    NgxSpinnerModule,
   ],
   providers: [AuthGuardService],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

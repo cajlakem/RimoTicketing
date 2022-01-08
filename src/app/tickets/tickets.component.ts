@@ -10,6 +10,7 @@ import { DataTableDirective } from 'angular-datatables'
 import { Subject } from 'rxjs'
 import { RimoTicketingClientService } from '../rimo-ticketing-client.service'
 import { AuthserviceService } from '../authservice.service'
+import { NgxSpinnerService } from 'ngx-spinner'
 
 @Component({
   selector: 'app-tickets',
@@ -27,6 +28,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private ticketClient: RimoTicketingClientService,
     private authService: AuthserviceService,
+    private spinner: NgxSpinnerService,
   ) {}
   ticket = 'Meine Tickets'
   tickets: Ticket[]
@@ -36,10 +38,15 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 25,
+      scrollY: '60vh',
       processing: true,
       order: [[0, 'desc']],
     }
-
+    this.spinner.show()
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide()
+    }, 10000)
     this.ticketClient
       .queryOpenTickets(
         this.authService.currentUser?.getUserProfilesMITAsString as string,
@@ -48,6 +55,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((data) => {
         this.tickets = data
         this.rerender()
+        this.spinner.hide()
       })
   }
 

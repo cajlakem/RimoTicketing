@@ -130,13 +130,9 @@
                 !ticket.priority ? 'black' : ticket.priority.colorValue
               "
             >
-              {{
-                ticket.priority === null ? '' : ticket.priority.nameToDisplay
-              }}
+              {{ !ticket.priority ? '' : ticket.priority.nameToDisplay }}
               <i
-                class="{{
-                  ticket.priority === null ? '' : ticket.priority.faIcon
-                }}"
+                class="{{ !ticket.priority ? '' : ticket.priority.faIcon }}"
               ></i>
             </span>
           </div>
@@ -165,10 +161,8 @@
                   !ticket.type ? 'black' : ticket.type.colorValue
                 "
               >
-                {{ ticket.type === null ? '' : ticket.type.nameToDisplay }}
-                <i
-                  class="{{ ticket.type === null ? '' : ticket.type.faIcon }}"
-                ></i>
+                {{ !ticket.type ? '' : ticket.type.nameToDisplay }}
+                <i class="{{ !ticket.type ? '' : ticket.type.faIcon }}"></i>
               </span>
             </span>
           </div>
