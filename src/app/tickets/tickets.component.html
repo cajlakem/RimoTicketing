@@ -94,7 +94,6 @@
       <div></div>
       <div></div>
       <div></div>
-      <div></div>
     </div>
   </ngx-spinner>
   <div class="row p-3 mt-4 bg-light rounded-3">
@@ -109,8 +108,9 @@
         <tr class="fw-bolder">
           <th>Name</th>
           <th>Reporter</th>
+          <th>Erstelldatum</th>
           <th>Kurztext</th>
-          <th>State</th>
+          <th>Zugewiesen</th>
           <th>Type</th>
           <th>Priorität</th>
         </tr>
@@ -125,23 +125,21 @@
               ticket.requestor === null ? '' : ticket.requestor.nameToDisplay
             }}
           </td>
-          <td class="text-muted" style="white-space: normal;">
+
+          <td class="text-muted">
+            {{ ticket.creationDate }} ({{ ticket.creationDate | DayAgo }})
+          </td>
+
+          <td class="text-muted">
             {{ ticket.shortText }}
           </td>
 
-          <td class="">
-            <span
-              class="badge text-wrap text-light"
-              [style.background-color]="
-                !ticket.state ? 'black' : ticket.state.colorValue
-              "
-            >
-              {{ ticket.state === null ? '' : ticket.state.nameToDisplay }}
-              <i
-                class="{{ ticket.state === null ? '' : ticket.state.faIcon }}"
-              ></i>
-            </span>
+          <td class="text-muted">
+            {{
+              ticket.assignedTo === null ? '' : ticket.assignedTo.nameToDisplay
+            }}
           </td>
+
           <td class="text-muted">
             <span
               class="badge text-wrap text-light"

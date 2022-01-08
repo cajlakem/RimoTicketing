@@ -30,7 +30,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     private authService: AuthserviceService,
     private spinner: NgxSpinnerService,
   ) {}
-  ticket = 'Meine Tickets'
+  ticket = 'Meine'
   tickets: Ticket[]
   filterKey: string = 'Pending'
 
@@ -44,7 +44,6 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.spinner.show()
     setTimeout(() => {
-      /** spinner ends after 5 seconds */
       this.spinner.hide()
     }, 10000)
     this.ticketClient
@@ -65,15 +64,13 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe()
   }
 
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
       dtInstance.destroy()
-      // Call the dtTrigger to rerender again
+
       this.dtTrigger.next('')
     })
   }

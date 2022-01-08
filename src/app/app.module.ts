@@ -22,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { AvatarModule } from 'ngx-avatar'
 import { environment } from 'src/environments/environment'
 import { NgxSpinnerModule } from 'ngx-spinner'
+import { DayAgoPipe } from './_helpers/day-ago-pipe'
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { NgxSpinnerModule } from 'ngx-spinner'
     CreateTicketComponent,
     UserpofileComponent,
     NotificationComponent,
+    DayAgoPipe,
   ],
   imports: [
     BrowserModule,

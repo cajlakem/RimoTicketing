@@ -144,7 +144,11 @@
             <span class="text-left">Erstelldatum</span>
           </div>
           <div class="row">
-            <span class="text-left">{{ ticket.creationDate }}</span>
+            <span class="text-left">
+              <div class="text-muted text-left mx-1 small">
+                {{ ticket.creationDate }} ({{ ticket.creationDate | DayAgo }})
+              </div>
+            </span>
           </div>
         </div>
       </div>
@@ -195,7 +199,7 @@
       </div>
     </div>
 
-    <div class="row mt-5">
+    <div class="row mt-5 bg-light rounded-3">
       <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
           <button
@@ -209,7 +213,7 @@
             aria-selected="true"
           >
             <i class="fas fa-comments"></i>
-            Kommentare
+            Kommentare ({{ ticket.notes.length }})
           </button>
         </li>
         <li class="nav-item">
@@ -227,25 +231,25 @@
           </a>
         </li>
       </ul>
-      <hr class="border-1 border-top border-secondary" />
+
       <div class="tab-content" id="pills-tabContent">
         <div
-          class="tab-pane fade show active"
+          class="tab-pane active bg-light"
           id="pills-home"
           role="tabpanel"
           aria-labelledby="pills-home-tab"
         >
-          <div class="row">
-            <div
-              class="card shadow mt-3 rounded-3"
-              *ngFor="let note of ticket.notes"
-            >
-              <div class="card-header">
-                <div class="row d-flex bd-highlight align-items-center">
+          <div class="row bg-light">
+            <div class="card bg-light" *ngFor="let note of ticket.notes">
+              <div class="bg-light">
+                <div
+                  class="row d-flex bd-highlight align-items-center mt-2 text-center"
+                >
                   <div
                     class="col d-flex justify-content-start align-items-center"
                   >
                     <ngx-avatar
+                      class="mx-2"
                       size="35"
                       name="{{ note.createdBy.nameToDisplay }}"
                     ></ngx-avatar>
@@ -254,12 +258,21 @@
                   </div>
 
                   <div class="col d-flex justify-content-end">
-                    {{ !note.state ? '' : note.state.nameToDisplay }},
-                    {{ note.creationDate }}
+                    <div class="text-muted text-center mx-1">
+                      {{ note.creationDate }} ({{ note.creationDate | DayAgo }})
+                    </div>
+                    <div
+                      class="text-left badge text-wrap p-2"
+                      [style.background-color]="
+                        !note.state ? 'black' : note.state.colorValue
+                      "
+                    >
+                      {{ !ticket.state ? '' : ticket.state.nameToDisplay }}
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="card-body">
+              <div class="card-body bg-light">
                 <div
                   class="scrollable overflow-auto"
                   [innerHTML]="note.text"

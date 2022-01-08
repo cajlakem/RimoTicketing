@@ -5,7 +5,7 @@ export class TicketComment {
   externalID: string
   text: String
   reporter: string
-  creationDate: string
+  creationDate: Date
   creationTime: string
   createdBy: Reporter
   state: EnumList

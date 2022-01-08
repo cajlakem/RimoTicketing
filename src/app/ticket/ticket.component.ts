@@ -31,11 +31,11 @@ export class TicketComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.ticket.state)
     var id = this.activatedRoute.snapshot.paramMap.get('id')
     this.ticketingClient.queryTicketWithlId(id as string).subscribe((data) => {
       this.ticket = Object.assign(new Ticket(), data)
       this.bcs.pasivateBreadCrumbId(this.ticket)
+      console.log(this.ticket)
     })
   }
 
