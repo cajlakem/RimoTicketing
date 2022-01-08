@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { BreadCrumbService } from '../bread-crumb.service'
 import { BreadCrumbId } from '../_models/BreadCrumbId'
 import { RouterModule } from '@angular/router'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-breadcrumb',
@@ -10,11 +11,17 @@ import { RouterModule } from '@angular/router'
 })
 export class BreadcrumbComponent implements OnInit {
   ids: BreadCrumbId[]
+  private subscriptionName: Subscription
 
   constructor(private breadCrumbService: BreadCrumbService) {}
 
   ngOnInit(): void {
     this.ids = this.breadCrumbService.getBreadCrumIds()
+    this.subscriptionName = this.breadCrumbService
+      .getUpdate()
+      .subscribe((message) => {
+        this.ids = this.breadCrumbService.getBreadCrumIds()
+      })
   }
 
   public getCurrentBC(): BreadCrumbId {
@@ -33,5 +40,8 @@ export class BreadcrumbComponent implements OnInit {
 
   public isIdsEmpty(): Boolean {
     return this.ids.length === 0
+  }
+  ngOnDestroy() {
+    this.subscriptionName.unsubscribe()
   }
 }

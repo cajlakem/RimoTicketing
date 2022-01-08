@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+import { Observable, Subject } from 'rxjs'
 import { BreadCrumbId } from './_models/BreadCrumbId'
 
 @Injectable({
@@ -8,8 +9,18 @@ export class BreadCrumbService {
   private breadCrumbIds: BreadCrumbId[]
   private currentBreadCrumb: BreadCrumbId
 
+  private subjectName = new Subject<any>()
+
   constructor() {
     this.breadCrumbIds = this.loadBreadCrumIds()
+  }
+
+  sendUpdate(message: BreadCrumbId) {
+    this.subjectName.next({ message })
+  }
+
+  getUpdate(): Observable<any> {
+    return this.subjectName.asObservable()
   }
 
   private loadBreadCrumIds(): BreadCrumbId[] {
@@ -31,6 +42,7 @@ export class BreadCrumbService {
   }
 
   public pasivateBreadCrumbId(id: BreadCrumbId) {
+    this.sendUpdate(id)
     this.currentBreadCrumb = id
     var ids = this.getBreadCrumIds()
     var result = null
