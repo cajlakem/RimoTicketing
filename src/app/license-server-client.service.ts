@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment'
 })
 export class LicenseServerClientService {
   private url =
-    'http://' +
+    'https://' +
     (environment.apiLicenseServer as string) +
     '/api/MIT/SDRimoWebGlobalLicenseRestService'
 
