@@ -75,7 +75,7 @@
               class="text-left badge bg-primary text-wrap"
               style="width: 6rem;"
             >
-              {{ ticket.state.nameToDisplay }}
+              {{ !ticket.state ? '' : ticket.state.nameToDisplay }}
             </div>
           </span>
         </div>
@@ -85,13 +85,17 @@
           <div class="col-3 align-self-center">
             <ngx-avatar
               size="35"
-              name="{{ ticket.requestor.nameToDisplay }}"
+              name="{{
+                !ticket.requestor ? '' : ticket.requestor.nameToDisplay
+              }}"
             ></ngx-avatar>
           </div>
 
           <div class="col text-center">
             <div class="row small text-muted">Reporter</div>
-            <div class="row">{{ ticket.requestor.nameToDisplay }}</div>
+            <div class="row">
+              {{ !ticket.requestor ? '' : ticket.requestor.nameToDisplay }}
+            </div>
           </div>
         </div>
       </div>
@@ -100,12 +104,16 @@
           <div class="col-3 align-self-center">
             <ngx-avatar
               size="35"
-              name="{{ ticket.assignedTo.nameToDisplay }}"
+              name="{{
+                !ticket.assignedTo ? '' : ticket.assignedTo.nameToDisplay
+              }}"
             ></ngx-avatar>
           </div>
           <div class="col text-center">
             <div class="row small text-muted">Zugewiesen</div>
-            <div class="row">{{ ticket.assignedTo.nameToDisplay }}</div>
+            <div class="row">
+              {{ !ticket.assignedTo ? '' : ticket.assignedTo.nameToDisplay }}
+            </div>
           </div>
         </div>
       </div>
@@ -113,7 +121,7 @@
         <div class="col text-center">
           <div class="row small text-muted">Priorität</div>
           <div class="row">
-            {{ ticket.priority === null ? '' : ticket.priority.nameToDisplay }}
+            {{ !ticket.priority ? '' : ticket.priority.nameToDisplay }}
           </div>
         </div>
       </div>
@@ -133,7 +141,9 @@
             <span class="text-left">Type</span>
           </div>
           <div class="row">
-            <span class="text-left">{{ ticket.type.nameToDisplay }}</span>
+            <span class="text-left">
+              {{ !ticket.type ? '' : ticket.type.nameToDisplay }}
+            </span>
           </div>
         </div>
       </div>
@@ -218,11 +228,13 @@
                       size="35"
                       name="{{ note.createdBy.nameToDisplay }}"
                     ></ngx-avatar>
-                    {{ note.createdBy.nameToDisplay }}
+
+                    {{ !note.createdBy ? '' : note.createdBy.nameToDisplay }}
                   </div>
 
                   <div class="col d-flex justify-content-end">
-                    {{ note.state.nameToDisplay }}, {{ note.creationDate }}
+                    {{ !note.state ? '' : note.state.nameToDisplay }},
+                    {{ note.creationDate }}
                   </div>
                 </div>
               </div>

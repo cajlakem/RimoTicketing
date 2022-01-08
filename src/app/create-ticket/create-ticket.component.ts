@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core'
 import { Ticket } from '../_models/Ticket'
 import { CKEditorModule } from 'ckeditor4-angular'
-import { Tickets } from '../_models/Tickets'
 import { TicketComment } from '../_models/TicketComment'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { EnumList } from '../_models/EnumList'
 import { Reporter } from '../_models/Reporter'
 import { User } from '../_models/User'
+import { RimoTicketingClientService } from '../rimo-ticketing-client.service'
+import { AuthserviceService } from '../authservice.service'
 
 @Component({
   selector: 'app-create-ticket',
@@ -21,30 +22,20 @@ export class CreateTicketComponent implements OnInit {
     editorData: '',
   }
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  public msg: string | null
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private ticketingClient: RimoTicketingClientService,
+    private authService: AuthserviceService,
+  ) {}
 
   registerForm: any = FormGroup
   submitted = false
 
   errorMsg: string
   retUrl: any = 'tickets'
-
-  public ticket: Ticket = {
-    id: '1245',
-    name: 'ID12565',
-    assignedTo: new User(),
-    state: new EnumList(),
-    type: new EnumList(),
-    shortText: 'ich brauche Hilfe!',
-    longText: 'Das Problem ist...',
-    priority: new EnumList(),
-    requestor: new Reporter(),
-    originMIT: '',
-    contacts: [new Reporter()],
-    creationTime: '',
-    creationDate: '',
-    notes: [new TicketComment()],
-  }
 
   get f() {
     return this.registerForm.controls
@@ -54,7 +45,6 @@ export class CreateTicketComponent implements OnInit {
     this.errorMsg = ''
     this.registerForm = this.formBuilder.group({
       prio: ['', [Validators.required]],
-      type: ['', [Validators.required]],
       shortDsc: ['', [Validators.required]],
       longDsc: ['', [Validators.required]],
     })
@@ -70,8 +60,7 @@ export class CreateTicketComponent implements OnInit {
       myFormData.append('prio', this.registerForm.value.prio)
       myFormData.append('shortDsc', this.registerForm.value.shortDsc)
       myFormData.append('longDsc', this.registerForm.value.longDsc)
-      myFormData.append('type', this.registerForm.value.type)
-      if (this.createTicket(myFormData) != null) {
+      if (this.createTicket(myFormData) === null) {
         this.router.navigateByUrl(this.retUrl)
       } else this.errorMsg = 'Failed to create Ticket!'
     }
@@ -81,10 +70,34 @@ export class CreateTicketComponent implements OnInit {
     this.onSubmit()
   }
 
-  createTicket(fd: FormData): Ticket {
-    console.log(fd.get('prio'))
-    Tickets.push(this.ticket)
+  createTicket(fd: FormData): void {
+    this.ticketingClient
+      .createTicket(
+        fd.get('longDsc') as string,
+        fd.get('shortDsc') as string,
+        fd.get('originMIT') as string,
+        fd.get('prio') as string,
+        fd.get('type') as string,
+        fd.get('firstName') as string,
+        fd.get('lastName') as string,
+        fd.get('email') as string,
+        fd.get('mobile') as string,
+        this.authService.getCurrentUser(),
+      )
+      .subscribe({
+        next: (ticket) => this.handleCreationResponse(ticket),
+        error: (error) => this.handleCreationErrorResponse(error),
+      })
+  }
 
-    return this.ticket
+  private handleCreationResponse(ticket: Ticket) {
+    if (ticket) {
+      this.router.navigateByUrl('/edit/' + ticket.id)
+    }
+  }
+
+  private handleCreationErrorResponse(error: any) {
+    console.log(error)
+    this.errorMsg = 'Failed to create ticket!'
   }
 }

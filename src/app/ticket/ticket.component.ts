@@ -5,7 +5,6 @@ import { filter, distinctUntilChanged } from 'rxjs/operators'
 import { BreadCrumbService } from '../bread-crumb.service'
 import { RimoTicketingClientService } from '../rimo-ticketing-client.service'
 import { Ticket } from '../_models/Ticket'
-import { Tickets } from '../_models/Tickets'
 
 @Component({
   selector: 'app-ticket',
@@ -16,7 +15,7 @@ export class TicketComponent implements OnInit, OnDestroy {
   report$: Observable<Ticket>
   navigationSubscription: any
   subscription: Subscription
-  ticket: Ticket
+  ticket: Ticket = new Ticket()
 
   constructor(
     private router: Router,
@@ -32,13 +31,7 @@ export class TicketComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const keyDowns = fromEvent(document, 'keydown').pipe(distinctUntilChanged())
-    this.subscription = keyDowns.subscribe((escpress) => {
-      if (escpress.type === 'keydown') {
-        // Do your thing
-        this.router.navigateByUrl('tickets')
-      }
-    })
+    console.log(this.ticket.state)
     var id = this.activatedRoute.snapshot.paramMap.get('id')
     this.ticketingClient.queryTicketWithlId(id as string).subscribe((data) => {
       this.ticket = Object.assign(new Ticket(), data)

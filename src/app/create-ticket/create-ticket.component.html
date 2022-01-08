@@ -29,36 +29,16 @@
           <select
             class="form-select shadow rounded-3"
             id="floatingSelect"
-            aria-label="Floating label select example"
-            [ngClass]="{ 'is-invalid': submitted && f.type.errors }"
-            formControlName="type"
-          >
-            <option selected>Auswählen</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-          <label for="floatingSelect">Type</label>
-          <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
-            <div *ngIf="f.type.errors.required">
-              Type auswählen
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-floating">
-          <select
-            class="form-select shadow rounded-3"
-            id="floatingSelect"
             formControlName="prio"
             [ngClass]="{ 'is-invalid': submitted && f.prio.errors }"
             aria-label="Floating label select example"
           >
-            <option selected>Auswählen</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option value="Critical Fault">Critical Fault</option>
+            <option value="Major Fault">Major Fault</option>
+            <option value="Minor Fault">Minor Fault</option>
+            <option value="Technical Request">Technical Request</option>
+            <option value="Improvement">Improvement</option>
+            <option value="User Request">User Request</option>
           </select>
           <label for="floatingSelect">Priorität</label>
           <div *ngIf="submitted && f.prio.errors" class="invalid-feedback">

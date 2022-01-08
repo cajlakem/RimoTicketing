@@ -6,7 +6,6 @@ import {
   ViewChild,
 } from '@angular/core'
 import { Ticket } from '../_models/Ticket'
-import { Tickets } from '../_models/Tickets'
 import { DataTableDirective } from 'angular-datatables'
 import { Subject } from 'rxjs'
 import { RimoTicketingClientService } from '../rimo-ticketing-client.service'
@@ -38,6 +37,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
       pagingType: 'full_numbers',
       pageLength: 25,
       processing: true,
+      order: [[0, 'desc']],
     }
 
     this.ticketClient
