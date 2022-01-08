@@ -92,7 +92,7 @@
   <div class="row p-3 mt-4 bg-light rounded-3">
     <table
       id="example"
-      class="table row-border table-hover striped table-striped"
+      class="table row-border table-hover"
       datatable
       [dtOptions]="dtOptions"
       [dtTrigger]="dtTrigger"
@@ -121,14 +121,49 @@
             {{ ticket.shortText }}
           </td>
 
-          <td class="text-muted">
-            {{ ticket.state === null ? '' : ticket.state.nameToDisplay }}
+          <td class="">
+            <span
+              class="badge text-wrap text-light"
+              [style.background-color]="
+                !ticket.state ? 'black' : ticket.state.colorValue
+              "
+            >
+              {{ ticket.state === null ? '' : ticket.state.nameToDisplay }}
+              <i
+                class="{{ ticket.state === null ? '' : ticket.state.faIcon }}"
+              ></i>
+            </span>
           </td>
           <td class="text-muted">
-            {{ ticket.type === null ? '' : ticket.type.nameToDisplay }}
+            <span
+              class="badge text-wrap text-light"
+              [style.background-color]="
+                !ticket.type ? 'black' : ticket.type.colorValue
+              "
+            >
+              {{ ticket.type === null ? '' : ticket.type.nameToDisplay }}
+              <i
+                class="{{ ticket.type === null ? '' : ticket.type.faIcon }}"
+              ></i>
+            </span>
           </td>
+
           <td class="text-muted">
-            {{ ticket.priority === null ? '' : ticket.priority.nameToDisplay }}
+            <span
+              class="badge text-wrap text-light"
+              [style.background-color]="
+                !ticket.priority ? 'black' : ticket.priority.colorValue
+              "
+            >
+              {{
+                ticket.priority === null ? '' : ticket.priority.nameToDisplay
+              }}
+              <i
+                class="{{
+                  ticket.priority === null ? '' : ticket.priority.faIcon
+                }}"
+              ></i>
+            </span>
           </td>
         </tr>
       </tbody>

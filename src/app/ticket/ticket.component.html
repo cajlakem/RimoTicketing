@@ -72,8 +72,11 @@
         <div class="row">
           <span class="text-left">
             <div
-              class="text-left badge bg-primary text-wrap"
+              class="text-left badge text-wrap"
               style="width: 6rem;"
+              [style.background-color]="
+                !ticket.state ? 'black' : ticket.state.colorValue
+              "
             >
               {{ !ticket.state ? '' : ticket.state.nameToDisplay }}
             </div>
@@ -118,10 +121,24 @@
         </div>
       </div>
       <div class="col">
-        <div class="col text-center">
+        <div class="col">
           <div class="row small text-muted">Priorität</div>
-          <div class="row">
-            {{ !ticket.priority ? '' : ticket.priority.nameToDisplay }}
+          <div class="row d-inline-flex">
+            <span
+              class="badge text-wrap text-light text-left"
+              [style.background-color]="
+                !ticket.priority ? 'black' : ticket.priority.colorValue
+              "
+            >
+              {{
+                ticket.priority === null ? '' : ticket.priority.nameToDisplay
+              }}
+              <i
+                class="{{
+                  ticket.priority === null ? '' : ticket.priority.faIcon
+                }}"
+              ></i>
+            </span>
           </div>
         </div>
       </div>
@@ -142,7 +159,17 @@
           </div>
           <div class="row">
             <span class="text-left">
-              {{ !ticket.type ? '' : ticket.type.nameToDisplay }}
+              <span
+                class="badge text-wrap text-light"
+                [style.background-color]="
+                  !ticket.type ? 'black' : ticket.type.colorValue
+                "
+              >
+                {{ ticket.type === null ? '' : ticket.type.nameToDisplay }}
+                <i
+                  class="{{ ticket.type === null ? '' : ticket.type.faIcon }}"
+                ></i>
+              </span>
             </span>
           </div>
         </div>
@@ -154,9 +181,9 @@
         <div class="row text-muted mt-1">
           <div>Kurzbeschreibung</div>
         </div>
-        <div class="row fw-bold mt-1">
+        <div class="row mt-1">
           <div>
-            <p>{{ ticket.shortText }}</p>
+            {{ ticket.shortText }}
           </div>
         </div>
       </div>
