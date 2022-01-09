@@ -63,8 +63,9 @@ export class AssignReporterModalComponent implements OnInit {
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
-    this.ngOnInit()
+
     $('#commentModal').modal('hide')
+    this.ngOnInit()
   }
 
   handleCreationErrorResponse(error: any) {

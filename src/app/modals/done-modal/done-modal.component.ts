@@ -31,8 +31,9 @@ export class DoneModalComponent implements OnInit {
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
-    this.ngOnInit()
+
     $('#doneModal').modal('hide')
+    this.ngOnInit()
   }
 
   handleCreationErrorResponse(error: any) {

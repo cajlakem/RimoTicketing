@@ -62,8 +62,9 @@ export class ReopenModalComponent implements OnInit {
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
-    this.ngOnInit()
+
     $('#reopenModal').modal('hide')
+    this.ngOnInit()
   }
 
   handleCreationErrorResponse(error: any) {

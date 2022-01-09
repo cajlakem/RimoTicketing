@@ -56,8 +56,6 @@ export class CreateComentModalComponent implements OnInit {
           next: (ticket) => this.handleCreationResponse(ticket),
           error: (error) => this.handleCreationErrorResponse(error),
         })
-      this.errorMsg = 'Failed to create Ticket!'
-      console.log(myFormData.get('text'))
     }
   }
 
