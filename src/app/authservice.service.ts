@@ -36,11 +36,10 @@ export class AuthserviceService {
       error = Object.values(u.error)[0] as string
       throw new Error(error)
     }
-    if (error === undefined) {
-      this.currentUser = Object.assign(new User(), aUser)
-      localStorage.setItem('currentUser', JSON.stringify(aUser))
-      return this.currentUser
-    } else return error
+
+    this.currentUser = Object.assign(new User(), aUser)
+    localStorage.setItem('currentUser', JSON.stringify(aUser))
+    return this.currentUser
   }
 
   public logout() {

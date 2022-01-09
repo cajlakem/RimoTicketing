@@ -36,7 +36,7 @@ export class RimoTicketingClientService {
       queue: null,
       asOop: null,
       errorText: null,
-      requestBody: { originMIT: originMIT, filterKey: filterKey },
+      requestBody: { originMIT: 'MIT_Powerlines_SM', filterKey: filterKey },
       responseBody: {},
     }
     return this.http.post<Ticket[]>(this.url, body, {
@@ -81,7 +81,7 @@ export class RimoTicketingClientService {
       requestBody: {
         htmlText: text,
         subject: subject,
-        originMIT: reporter.getUserProfilesMITAsString,
+        originMIT: 'MIT_Powerlines_SM',
         prio: prio,
         firstName: reporter.christianName,
         lastName: reporter.lastName,
@@ -152,7 +152,7 @@ export class RimoTicketingClientService {
         htmlCommentText: text,
         ticketID: ticketID,
         sendMail: true,
-        originMIT: originMIT,
+        originMIT: 'MIT_Powerlines_SM',
         firstName: firstName,
         lastName: lastName,
       },
@@ -177,7 +177,7 @@ export class RimoTicketingClientService {
       requestBody: {
         ticketID: ticketID,
         rejectText: rejectText,
-        originMIT: originMIT,
+        originMIT: 'MIT_Powerlines_SM',
         firstName: firstName,
         lastName: lastName,
       },
@@ -209,7 +209,7 @@ export class RimoTicketingClientService {
       operation: 'queryContacts',
       token: this.token,
       requestBody: {
-        originMIT: originMIT,
+        originMIT: 'MIT_Powerlines_SM',
       },
       responseBody: {},
     }
@@ -231,7 +231,7 @@ export class RimoTicketingClientService {
       operation: 'changeTicketRequestor',
       token: this.token,
       requestBody: {
-        originMIT: originMIT,
+        originMIT: 'MIT_Powerlines_SM',
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -247,7 +247,7 @@ export class RimoTicketingClientService {
   }
 
   public addCCReporter(
-    originMIT: string,
+    originMIT: 'MIT_Powerlines_SM',
     firstName: string,
     lastName: string,
     email: string,
