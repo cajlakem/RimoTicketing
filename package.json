@@ -42,6 +42,7 @@
     "@angular-devkit/build-angular": "~13.1.2",
     "@angular/cli": "~13.1.2",
     "@angular/compiler-cli": "~13.1.0",
+    "@types/bootstrap": "^5.1.8",
     "@types/ckeditor__ckeditor5-build-classic": "^29.0.1",
     "@types/datatables.net": "^1.10.21",
     "@types/jasmine": "~3.10.0",

@@ -1,10 +1,16 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core'
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { fromEvent, Observable, Subscription } from 'rxjs'
 import { filter, distinctUntilChanged } from 'rxjs/operators'
 import { BreadCrumbService } from '../bread-crumb.service'
 import { RimoTicketingClientService } from '../rimo-ticketing-client.service'
 import { Ticket } from '../_models/Ticket'
+import { CKEditorModule } from 'ckeditor4-angular'
+
+import * as bootstrap from 'bootstrap'
+import { TicketComment } from '../_models/TicketComment'
+import { tick } from '@angular/core/testing'
 
 @Component({
   selector: 'app-ticket',
@@ -16,6 +22,12 @@ export class TicketComponent implements OnInit, OnDestroy {
   navigationSubscription: any
   subscription: Subscription
   ticket: Ticket = new Ticket()
+
+  public editor = CKEditorModule
+
+  public model = {
+    editorData: '',
+  }
 
   constructor(
     private router: Router,
@@ -48,5 +60,9 @@ export class TicketComponent implements OnInit, OnDestroy {
 
   initLoad() {
     window.scrollTo(0, 0)
+  }
+
+  onStateChange(ticket: Ticket) {
+    this.ticket = Object.assign(new Ticket(), ticket)
   }
 }

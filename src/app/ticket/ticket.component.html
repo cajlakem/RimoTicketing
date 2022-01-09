@@ -17,19 +17,42 @@
               <i class="fas fa-arrow-left"></i>
               Zurück
             </button>
-            <button type="button" class="btn btn-secondary shadow btn-sm">
+            <button
+              type="button"
+              class="btn btn-secondary shadow btn-sm"
+              data-bs-target="#commentModal"
+              data-bs-toggle="modal"
+            >
               <i class="far fa-comment"></i>
               Kommentar
             </button>
-            <button type="button" class="btn btn-secondary shadow btn-sm">
+            <button
+              type="button"
+              class="btn btn-secondary shadow btn-sm"
+              href="#"
+              data-bs-toggle="modal"
+              data-bs-target="#reopenModal"
+            >
               <i class="fas fa-undo"></i>
               Reopen
             </button>
-            <button type="button" class="btn btn-secondary shadow btn-sm">
+            <button
+              type="button"
+              class="btn btn-secondary shadow btn-sm"
+              href="#"
+              data-bs-toggle="modal"
+              data-bs-target="#doneModal"
+            >
               <i class="fas fa-check"></i>
               Erledigt
             </button>
-            <button type="button" class="btn btn-secondary shadow btn-sm">
+            <button
+              type="button"
+              class="btn btn-secondary shadow btn-sm"
+              href="#"
+              data-bs-toggle="modal"
+              data-bs-target="#deleteModal"
+            >
               <i class="fas fa-trash-alt"></i>
               Löschen
             </button>
@@ -46,13 +69,23 @@
               </button>
               <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <li>
-                  <a class="dropdown-item" href="#">
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#changeTitelModal"
+                  >
                     <i class="fas fa-edit"></i>
                     Titel ändern
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="#">
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#changeTicketRequestorlModal"
+                  >
                     <i class="fas fa-people-arrows"></i>
                     Andrer Reporter
                   </a>
@@ -213,7 +246,7 @@
             aria-selected="true"
           >
             <i class="fas fa-comments"></i>
-            Kommentare ({{ ticket.notes.length }})
+            Kommentare ({{ !ticket.notes ? '' : ticket.notes.length }})
           </button>
         </li>
         <li class="nav-item">
@@ -294,3 +327,14 @@
     </div>
   </div>
 </div>
+
+<app-create-coment-modal
+  (stateChanged)="onStateChange($event)"
+  [forTicket]="ticket"
+></app-create-coment-modal>
+<app-discard-modal></app-discard-modal>
+<app-done-modal></app-done-modal>
+<app-reopen-modal></app-reopen-modal>
+<app-assign-reporter-modal></app-assign-reporter-modal>
+<app-change-ticket-title-modal></app-change-ticket-title-modal>
+<app-assign-reporter-modal></app-assign-reporter-modal>

@@ -16,12 +16,6 @@ import { AuthserviceService } from '../authservice.service'
   styleUrls: ['./create-ticket.component.css'],
 })
 export class CreateTicketComponent implements OnInit {
-  public editor = CKEditorModule
-
-  public model = {
-    editorData: '',
-  }
-
   public msg: string | null
 
   constructor(
