@@ -5,34 +5,59 @@
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
-          Ticket wieder öffnen
-        </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <p>Sind Sie sich sicher?</p>
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-outline-secondary bg-sm"
-          data-bs-dismiss="modal"
+  <form [formGroup]="createCommentForm" (ngSubmit)="onSubmit()">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Ticket wieder öffnen
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-floating mb-3">
+            <ckeditor
+              id="comment"
+              class="shadow rounded-3"
+              formControlName="text"
+              [ngClass]="{ 'is-invalid': true }"
+              [config]="{
+                height: '400px',
+
+                filebrowserUploadUrl:
+                  'https://rimo-dev.rimo-saas.com/soap/ckupload.php',
+                filebrowserImageUploadUrl:
+                  'https://rimo-dev.rimo-saas.com/soap/ckupload.php'
+              }"
+            ></ckeditor>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-outline-secondary bg-sm"
+            data-bs-dismiss="modal"
+          >
+            Abbrechen
+          </button>
+          <button type="submit" class="btn btn-outline-primary">
+            Ticket öffnen
+          </button>
+        </div>
+        <div
+          class="mt-2 mx-3 alert alert-danger alert-dismissible fade show fade show p-1"
+          role="alert"
+          *ngIf="errorMsg"
         >
-          Abbrechen
-        </button>
-        <button type="button" class="btn btn-outline-primary">
-          Ticket öffnen
-        </button>
+          <i class="fas fa-exclamation-circle"></i>
+          {{ errorMsg }}
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>

@@ -167,6 +167,9 @@ export class RimoTicketingClientService {
   public reOpenTicket(
     ticketID: string,
     rejectText: string,
+    originMIT: string,
+    firstName: string,
+    lastName: string,
   ): Observable<Ticket> {
     var body = {
       operation: 'reOpenTicket',
@@ -174,6 +177,9 @@ export class RimoTicketingClientService {
       requestBody: {
         ticketID: ticketID,
         rejectText: rejectText,
+        originMIT: originMIT,
+        firstName: firstName,
+        lastName: lastName,
       },
       responseBody: {},
     }
@@ -183,13 +189,12 @@ export class RimoTicketingClientService {
     })
   }
 
-  public closeTicket(ticketID: string, rejectText: string): Observable<Ticket> {
+  public closeTicket(ticketID: string): Observable<Ticket> {
     var body = {
       operation: 'closeTicket',
       token: this.token,
       requestBody: {
         ticketID: ticketID,
-        rejectText: rejectText,
       },
       responseBody: {},
     }

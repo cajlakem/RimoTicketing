@@ -18,4 +18,7 @@ export class Ticket {
   creationTime: string
   type: EnumList
   notes: TicketComment[]
+  isOpenAble: boolean
+  isNotPending: boolean
+  isClosed: boolean
 }

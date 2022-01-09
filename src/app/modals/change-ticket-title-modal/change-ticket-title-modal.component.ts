@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthserviceService } from 'src/app/authservice.service'
@@ -12,10 +13,9 @@ import { User } from 'src/app/_models/User'
 })
 export class ChangeTicketTitleModalComponent implements OnInit {
   @Output() stateChanged = new EventEmitter<any>()
-  createCommentForm: any = FormGroup
+  titleForm: any = FormGroup
   @Input()
   forTicket: Ticket
-
   submitted = false
   errorMsg: string
   constructor(
@@ -24,50 +24,48 @@ export class ChangeTicketTitleModalComponent implements OnInit {
     private httpTicketingClient: RimoTicketingClientService,
   ) {}
 
+  registerForm: any = FormGroup
+
+  invalidCredentialMsg: string
+  pwdRequestedMsg: string
+
   get f() {
-    return this.createCommentForm.controls
+    return this.registerForm.controls
   }
 
-  ngOnInit(): void {
-    this.errorMsg = ''
-    this.createCommentForm = this.formBuilder.group({
-      text: ['', [Validators.required]],
-    })
-  }
-
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true
-    if (this.createCommentForm.invalid) {
+    if (this.registerForm.invalid) {
       return
     }
     if (this.submitted) {
-      var myFormData = new FormData()
-      myFormData.append('text', this.createCommentForm.value.text)
-      var user: User = this.authService.getCurrentUser()
       this.httpTicketingClient
-        .createNote(
-          myFormData.get('text') as string,
+        .changeTicketTitle(
           this.forTicket.name,
-          user.getUserProfilesMITAsString!,
-          user.christianName,
-          user.lastName,
+          this.registerForm.value.username,
         )
         .subscribe({
           next: (ticket) => this.handleCreationResponse(ticket),
           error: (error) => this.handleCreationErrorResponse(error),
         })
-      this.errorMsg = 'Failed to create Ticket!'
-      console.log(myFormData.get('text'))
     }
+  }
+
+  ngOnInit(): void {
+    this.invalidCredentialMsg = ''
+    this.registerForm = this.formBuilder.group({
+      username: ['', [Validators.required]],
+    })
   }
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
     this.ngOnInit()
-    $('#commentModal').modal('hide')
+    $('#changeTitelModal').modal('hide')
   }
 
   handleCreationErrorResponse(error: any) {
-    console.log(error)
+    const u = error as HttpErrorResponse
+    this.errorMsg = Object.values(u.error)[0] as string
   }
 }

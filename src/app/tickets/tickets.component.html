@@ -67,6 +67,7 @@
             id="inlineRadio4"
             value="Solved"
             (change)="updateTicketList($event)"
+            [ngModel]="filterKey"
           />
           <label class="form-check-label" for="inlineRadio4">
             Solved
@@ -80,6 +81,7 @@
             id="inlineRadio5"
             value="Closed"
             (change)="updateTicketList($event)"
+            [ngModel]="filterKey"
           />
           <label class="form-check-label" for="inlineRadio5">
             Geschlossene

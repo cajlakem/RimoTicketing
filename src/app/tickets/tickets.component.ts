@@ -32,9 +32,12 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
   ticket = 'Meine'
   tickets: Ticket[]
-  filterKey: string = 'Pending'
+  filterKey: string
 
   ngOnInit(): void {
+    var lsk = localStorage.getItem('ticketFilterKey')
+    lsk = lsk ? lsk : 'New'
+    this.filterKey = lsk as string
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 25,
@@ -77,6 +80,9 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   updateTicketList(evt: any) {
     this.filterKey = evt.target.value
+    localStorage.setItem('ticketFilterKey', this.filterKey)
     this.ngOnInit()
   }
+
+  setFilterKey(key: any) {}
 }

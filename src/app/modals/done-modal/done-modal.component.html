@@ -19,7 +19,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <p>Bitte das Passwort in RIMO ändern.</p>
+        <p>Sind sie sich sicher?</p>
       </div>
       <div class="modal-footer">
         <button
@@ -27,11 +27,23 @@
           class="btn btn-outline-secondary bg-sm"
           data-bs-dismiss="modal"
         >
-          Schließen
+          Abbrechen
         </button>
-        <button type="button" class="btn btn-outline-primary">
-          OK
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="onSubmit()"
+        >
+          Ja
         </button>
+      </div>
+      <div
+        class="mt-2 mx-3 alert alert-danger alert-dismissible fade show fade show p-1"
+        role="alert"
+        *ngIf="errorMsg"
+      >
+        <i class="fas fa-exclamation-circle"></i>
+        {{ errorMsg }}
       </div>
     </div>
   </div>

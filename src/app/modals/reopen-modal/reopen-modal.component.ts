@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthserviceService } from 'src/app/authservice.service'
@@ -36,6 +37,7 @@ export class ReopenModalComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true
+
     if (this.createCommentForm.invalid) {
       return
     }
@@ -44,9 +46,9 @@ export class ReopenModalComponent implements OnInit {
       myFormData.append('text', this.createCommentForm.value.text)
       var user: User = this.authService.getCurrentUser()
       this.httpTicketingClient
-        .createNote(
-          myFormData.get('text') as string,
+        .reOpenTicket(
           this.forTicket.name,
+          myFormData.get('text') as string,
           user.getUserProfilesMITAsString!,
           user.christianName,
           user.lastName,
@@ -55,18 +57,17 @@ export class ReopenModalComponent implements OnInit {
           next: (ticket) => this.handleCreationResponse(ticket),
           error: (error) => this.handleCreationErrorResponse(error),
         })
-      this.errorMsg = 'Failed to create Ticket!'
-      console.log(myFormData.get('text'))
     }
   }
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
     this.ngOnInit()
-    $('#commentModal').modal('hide')
+    $('#reopenModal').modal('hide')
   }
 
   handleCreationErrorResponse(error: any) {
-    console.log(error)
+    const u = error as HttpErrorResponse
+    this.errorMsg = Object.values(u.error)[0] as string
   }
 }

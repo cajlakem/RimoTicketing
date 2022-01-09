@@ -37,6 +37,7 @@ export class CreateComentModalComponent implements OnInit {
   onSubmit() {
     this.submitted = true
     if (this.createCommentForm.invalid) {
+      this.errorMsg = 'Bitte Kommentar eingeben!'
       return
     }
     if (this.submitted) {

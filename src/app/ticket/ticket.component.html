@@ -22,6 +22,7 @@
               class="btn btn-secondary shadow btn-sm"
               data-bs-target="#commentModal"
               data-bs-toggle="modal"
+              [disabled]="ticket.isClosed"
             >
               <i class="far fa-comment"></i>
               Kommentar
@@ -32,6 +33,7 @@
               href="#"
               data-bs-toggle="modal"
               data-bs-target="#reopenModal"
+              [disabled]="!ticket.isOpenAble"
             >
               <i class="fas fa-undo"></i>
               Reopen
@@ -42,6 +44,7 @@
               href="#"
               data-bs-toggle="modal"
               data-bs-target="#doneModal"
+              [disabled]="!ticket.isOpenAble"
             >
               <i class="fas fa-check"></i>
               Erledigt
@@ -52,6 +55,7 @@
               href="#"
               data-bs-toggle="modal"
               data-bs-target="#deleteModal"
+              [disabled]="!ticket.isNotPending"
             >
               <i class="fas fa-trash-alt"></i>
               Löschen
@@ -69,26 +73,28 @@
               </button>
               <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <li>
-                  <a
+                  <button
                     class="dropdown-item"
                     href="#"
                     data-bs-toggle="modal"
                     data-bs-target="#changeTitelModal"
+                    [disabled]="ticket.isClosed"
                   >
                     <i class="fas fa-edit"></i>
                     Titel ändern
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
+                  <button
                     class="dropdown-item"
                     href="#"
                     data-bs-toggle="modal"
                     data-bs-target="#changeTicketRequestorlModal"
+                    [disabled]="ticket.isClosed"
                   >
-                    <i class="fas fa-people-arrows"></i>
-                    Andrer Reporter
-                  </a>
+                    <i class="fas fa-users"></i>
+                    Anderer Reporter
+                  </button>
                 </li>
               </ul>
             </div>
@@ -332,9 +338,27 @@
   (stateChanged)="onStateChange($event)"
   [forTicket]="ticket"
 ></app-create-coment-modal>
-<app-discard-modal></app-discard-modal>
-<app-done-modal></app-done-modal>
-<app-reopen-modal></app-reopen-modal>
-<app-assign-reporter-modal></app-assign-reporter-modal>
-<app-change-ticket-title-modal></app-change-ticket-title-modal>
-<app-assign-reporter-modal></app-assign-reporter-modal>
+<app-discard-modal
+  (stateChanged)="onStateChange($event)"
+  [forTicket]="ticket"
+></app-discard-modal>
+<app-done-modal
+  (stateChanged)="onStateChange($event)"
+  [forTicket]="ticket"
+></app-done-modal>
+<app-reopen-modal
+  (stateChanged)="onStateChange($event)"
+  [forTicket]="ticket"
+></app-reopen-modal>
+<app-assign-reporter-modal
+  (stateChanged)="onStateChange($event)"
+  [forTicket]="ticket"
+></app-assign-reporter-modal>
+<app-change-ticket-title-modal
+  (stateChanged)="onStateChange($event)"
+  [forTicket]="ticket"
+></app-change-ticket-title-modal>
+<app-assign-reporter-modal
+  (stateChanged)="onStateChange($event)"
+  [forTicket]="ticket"
+></app-assign-reporter-modal>

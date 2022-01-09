@@ -22,13 +22,14 @@ import { HttpClientModule } from '@angular/common/http'
 import { AvatarModule } from 'ngx-avatar'
 import { environment } from 'src/environments/environment'
 import { NgxSpinnerModule } from 'ngx-spinner'
-import { DayAgoPipe } from './_helpers/day-ago-pipe';
-import { CreateComentModalComponent } from './create-coment-modal/create-coment-modal.component';
-import { ReopenModalComponent } from './modals/reopen-modal/reopen-modal.component';
-import { DoneModalComponent } from './modals/done-modal/done-modal.component';
-import { DiscardModalComponent } from './modals/discard-modal/discard-modal.component';
-import { ChangeTicketTitleModalComponent } from './modals/change-ticket-title-modal/change-ticket-title-modal.component';
+import { DayAgoPipe } from './_helpers/day-ago-pipe'
+import { CreateComentModalComponent } from './create-coment-modal/create-coment-modal.component'
+import { ReopenModalComponent } from './modals/reopen-modal/reopen-modal.component'
+import { DoneModalComponent } from './modals/done-modal/done-modal.component'
+import { DiscardModalComponent } from './modals/discard-modal/discard-modal.component'
+import { ChangeTicketTitleModalComponent } from './modals/change-ticket-title-modal/change-ticket-title-modal.component'
 import { AssignReporterModalComponent } from './modals/assign-reporter-modal/assign-reporter-modal.component'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { AssignReporterModalComponent } from './modals/assign-reporter-modal/ass
     HttpClientModule,
     AvatarModule,
     NgxSpinnerModule,
+    BrowserAnimationsModule,
   ],
   providers: [AuthGuardService],
 
