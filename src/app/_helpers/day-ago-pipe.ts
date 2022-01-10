@@ -31,9 +31,9 @@ export class DayAgoPipe implements PipeTransform {
         Math.abs((firstDate.getTime() - secondDate.getTime()) / oneDay),
       )
       if (diffDays === 0) {
-        return 'Today'
+        return 'Heute'
       } else {
-        return diffDays + ' days ago'
+        return 'vor ' + diffDays + ' Tagen'
       }
     }
     return value
