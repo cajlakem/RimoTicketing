@@ -30,6 +30,7 @@ import { DiscardModalComponent } from './modals/discard-modal/discard-modal.comp
 import { ChangeTicketTitleModalComponent } from './modals/change-ticket-title-modal/change-ticket-title-modal.component'
 import { AssignReporterModalComponent } from './modals/assign-reporter-modal/assign-reporter-modal.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { CommonModule } from '@angular/common'
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     HttpClientModule,
     AvatarModule,
     NgxSpinnerModule,
+    CommonModule,
     BrowserAnimationsModule,
   ],
   providers: [AuthGuardService],
