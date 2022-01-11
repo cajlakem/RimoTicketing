@@ -1,25 +1,13 @@
 <header>
   <main *ngIf="isVisible()">
-    <nav
-      class="navbar navbar-expand navbar-dark"
-      style="background-color: #27526e;"
-    >
+    <nav class="navbar navbar-expand navbar-dark" style="background-color: #27526e;">
       <div class="container-fluid">
         <ul class="navbar-nav align-items-center">
           <li class="nav-item">
             <a routerLink="/notifications" class="navbar-brand fs-5">
-              <img
-                src="./assets/images/cropped-symbol_rgb.png"
-                width="30"
-                height="30"
-                alt=""
-              />
+              <img src="./assets/images/cropped-symbol_rgb.png" width="30" height="30" alt="" />
             </a>
-            <a
-              data-bs-toggle="offcanvas"
-              href="#offcanvasExample"
-              class="navbar-brand fs-6"
-            >
+            <a data-bs-toggle="offcanvas" href="#offcanvasExample" class="navbar-brand fs-6">
               Ticketing
               <i class="fas fa-chevron-down text-light"></i>
             </a>
@@ -28,32 +16,20 @@
             <div class="vr"></div>
           </div>
           <li class="nav-item">
-            <a
-              class="nav-link active"
-              aria-current="page"
-              routerLink="/tickets"
-            >
+            <a class="nav-link active" aria-current="page" routerLink="/tickets">
               <strong>Tickets</strong>
             </a>
           </li>
 
           <li class="nav-item">
-            <a
-              class="nav-link"
-              href="https://wiki.rimo-systems.com/index.php?title=Hauptseite"
-              target="_blank"
-            >
-              <strong>Info</strong>
+            <a class="nav-link" href="https://wiki.rimo-systems.com/index.php?title=Hauptseite" target="_blank">
+              <strong>Wiki</strong>
             </a>
           </li>
         </ul>
         <ul class="navbar-nav align-items-center">
           <li>
-            <button
-              class="btn btn-primary btn-sm m-2 shadow"
-              type="submit"
-              routerLink="/createTicket"
-            >
+            <button class="btn btn-primary btn-sm m-2 shadow" type="submit" routerLink="/createTicket">
               <i class="fas fa-plus-square"></i>
               Ticket
             </button>
@@ -62,30 +38,14 @@
             <div class="vr mx-2"></div>
           </div>
           <li ngbDropdown class="nav-item dropdown">
-            <a
-              ngbDropdownToggle
-              href="#"
-              class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-              id="dropdownUser1"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <ngx-avatar
-                size="40"
-                name="{{ this.getCurrentUser().getFullName() }}"
-              ></ngx-avatar>
+            <a ngbDropdownToggle href="#"
+              class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <ngx-avatar size="40" name="{{ this.getCurrentUser().getFullName() }}"></ngx-avatar>
             </a>
-            <ul
-              ngbDropdownMenu
-              class="dropdown-menu dropdown-menu-end shadow"
-              aria-labelledby="navbarDropdown"
-            >
+            <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="navbarDropdown">
               <li>
-                <a
-                  ngbDropdownItem
-                  class="dropdown-item"
-                  routerLink="/userProfile"
-                >
+                <a ngbDropdownItem class="dropdown-item" routerLink="/userProfile">
                   Einstellungen
                 </a>
               </li>
@@ -106,21 +66,12 @@
   </main>
 </header>
 
-<div
-  class="offcanvas offcanvas-top"
-  style="width: 100%; height: 100%; background-color: #e8eaed;"
-  tabindex=""
-  id="offcanvasExample"
-  aria-labelledby="offcanvasExampleLabel"
->
+<div class="offcanvas offcanvas-top" style="width: 100%; height: 100%; background-color: #e8eaed;" tabindex=""
+  id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
   <div class="offcanvas-header text-dark align-items-center">
     <h5 class="offcanvas-title fs-4" id="offcanvasExampleLabel"></h5>
-    <button
-      type="button"
-      class="btn-close text-reset text-white"
-      data-bs-dismiss="offcanvas"
-      aria-label="Close"
-    ></button>
+    <button type="button" class="btn-close text-reset text-white" data-bs-dismiss="offcanvas"
+      aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
     <div class="offcanvas-body">
