@@ -4,94 +4,48 @@
       <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
-          <div
-            class="btn-group d-flex flex-row"
-            role="group"
-            aria-label="Button group with nested dropdown"
-          >
-            <button
-              type="button"
-              class="btn btn-secondary shadow btn-sm"
-              routerLink="/tickets"
-            >
+          <div class="btn-group d-flex flex-row" role="group" aria-label="Button group with nested dropdown">
+            <button type="button" class="btn btn-secondary shadow btn-sm" routerLink="/tickets">
               <i class="fas fa-arrow-left"></i>
               Zurück
             </button>
-            <button
-              type="button"
-              class="btn btn-secondary shadow btn-sm"
-              data-bs-target="#commentModal"
-              data-bs-toggle="modal"
-              [disabled]="ticket.isClosed"
-            >
+            <button type="button" class="btn btn-secondary shadow btn-sm" data-bs-target="#commentModal"
+              data-bs-toggle="modal" [disabled]="ticket.isClosed">
               <i class="far fa-comment"></i>
               Kommentar
             </button>
-            <button
-              type="button"
-              class="btn btn-secondary shadow btn-sm"
-              href="#"
-              data-bs-toggle="modal"
-              data-bs-target="#reopenModal"
-              [disabled]="!ticket.isOpenAble"
-            >
+            <button type="button" class="btn btn-secondary shadow btn-sm" href="#" data-bs-toggle="modal"
+              data-bs-target="#reopenModal" [disabled]="!ticket.isOpenAble">
               <i class="fas fa-undo"></i>
               Reopen
             </button>
-            <button
-              type="button"
-              class="btn btn-secondary shadow btn-sm"
-              href="#"
-              data-bs-toggle="modal"
-              data-bs-target="#doneModal"
-              [disabled]="!ticket.isOpenAble"
-            >
+            <button type="button" class="btn btn-secondary shadow btn-sm" href="#" data-bs-toggle="modal"
+              data-bs-target="#doneModal" [disabled]="!ticket.isOpenAble">
               <i class="fas fa-check"></i>
               Erledigt
             </button>
-            <button
-              type="button"
-              class="btn btn-secondary shadow btn-sm"
-              href="#"
-              data-bs-toggle="modal"
-              data-bs-target="#deleteModal"
-              [disabled]="!ticket.isNotPending"
-            >
+            <button type="button" class="btn btn-secondary shadow btn-sm" href="#" data-bs-toggle="modal"
+              data-bs-target="#deleteModal" [disabled]="!ticket.isNotPending">
               <i class="fas fa-trash-alt"></i>
               Löschen
             </button>
 
             <div class="btn-group" role="group">
-              <button
-                id="btnGroupDrop1"
-                type="button"
-                class="btn btn-secondary dropdown-toggle shadow-lg btn-sm"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
+              <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle shadow-lg btn-sm"
+                data-bs-toggle="dropdown" aria-expanded="false">
                 Weitere
               </button>
               <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <li>
-                  <button
-                    class="dropdown-item"
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#changeTitelModal"
-                    [disabled]="ticket.isClosed"
-                  >
+                  <button class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changeTitelModal"
+                    [disabled]="ticket.isClosed">
                     <i class="fas fa-edit"></i>
                     Titel ändern
                   </button>
                 </li>
                 <li>
-                  <button
-                    class="dropdown-item"
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#changeTicketRequestorlModal"
-                    [disabled]="ticket.isClosed"
-                  >
+                  <button class="dropdown-item" href="#" data-bs-toggle="modal"
+                    data-bs-target="#changeTicketRequestorlModal" [disabled]="ticket.isClosed">
                     <i class="fas fa-users"></i>
                     Anderer Reporter
                   </button>
@@ -112,13 +66,9 @@
         </div>
         <div class="row">
           <span class="text-left">
-            <div
-              class="text-left badge text-wrap"
-              style="width: 6rem;"
-              [style.background-color]="
+            <div class="text-left badge text-wrap" style="width: 6rem;" [style.background-color]="
                 !ticket.state ? 'black' : ticket.state.colorValue
-              "
-            >
+              ">
               {{ !ticket.state ? '' : ticket.state.nameToDisplay }}
             </div>
           </span>
@@ -127,12 +77,9 @@
       <div class="col">
         <div class="row">
           <div class="col-3 align-self-center">
-            <ngx-avatar
-              size="35"
-              name="{{
+            <ngx-avatar size="35" name="{{
                 !ticket.requestor ? '' : ticket.requestor.nameToDisplay
-              }}"
-            ></ngx-avatar>
+              }}"></ngx-avatar>
           </div>
 
           <div class="col text-center">
@@ -146,12 +93,9 @@
       <div class="col">
         <div class="row">
           <div class="col-3 align-self-center">
-            <ngx-avatar
-              size="35"
-              name="{{
+            <ngx-avatar size="35" name="{{
                 !ticket.assignedTo ? '' : ticket.assignedTo.nameToDisplay
-              }}"
-            ></ngx-avatar>
+              }}"></ngx-avatar>
           </div>
           <div class="col text-center">
             <div class="row small text-muted">Zugewiesen</div>
@@ -165,16 +109,11 @@
         <div class="col">
           <div class="row small text-muted">Priorität</div>
           <div class="row d-inline-flex">
-            <span
-              class="badge text-wrap text-light text-left"
-              [style.background-color]="
+            <span class="badge text-wrap text-light text-left" [style.background-color]="
                 !ticket.priority ? 'black' : ticket.priority.colorValue
-              "
-            >
+              ">
               {{ !ticket.priority ? '' : ticket.priority.nameToDisplay }}
-              <i
-                class="{{ !ticket.priority ? '' : ticket.priority.faIcon }}"
-              ></i>
+              <i class="{{ !ticket.priority ? '' : ticket.priority.faIcon }}"></i>
             </span>
           </div>
         </div>
@@ -200,12 +139,9 @@
           </div>
           <div class="row">
             <span class="text-left">
-              <span
-                class="badge text-wrap text-light"
-                [style.background-color]="
+              <span class="badge text-wrap text-light" [style.background-color]="
                   !ticket.type ? 'black' : ticket.type.colorValue
-                "
-              >
+                ">
                 {{ !ticket.type ? '' : ticket.type.nameToDisplay }}
                 <i class="{{ !ticket.type ? '' : ticket.type.faIcon }}"></i>
               </span>
@@ -231,11 +167,7 @@
           <div>Langbeschreibung</div>
         </div>
         <div class="row mt-1 pb-1">
-          <div
-            class="scrollable overflow-auto"
-            [innerHTML]="ticket.longText"
-            style="height: auto;"
-          ></div>
+          <div class="scrollable overflow-auto" [innerHTML]="ticket.longText" style="height: auto;"></div>
         </div>
       </div>
     </div>
@@ -243,57 +175,28 @@
     <div class="row mt-5 bg-light rounded-3">
       <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
-          <button
-            class="nav-link active"
-            id="pills-home-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#pills-home"
-            type="button"
-            role="tab"
-            aria-controls="pills-home"
-            aria-selected="true"
-          >
+          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+            type="button" role="tab" aria-controls="pills-home" aria-selected="true">
             <i class="fas fa-comments"></i>
             Kommentare ({{ !ticket.notes ? '' : ticket.notes.length }})
           </button>
         </li>
         <li class="nav-item">
-          <a
-            class="nav-link"
-            id="pills-contact-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#pills-contact"
-            type="button"
-            role="tab"
-            aria-controls="pills-contact"
-            aria-selected="false"
-          >
+          <a class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button"
+            role="tab" aria-controls="pills-contact" aria-selected="false">
             Kontakte
           </a>
         </li>
       </ul>
 
       <div class="tab-content" id="pills-tabContent">
-        <div
-          class="tab-pane active bg-light"
-          id="pills-home"
-          role="tabpanel"
-          aria-labelledby="pills-home-tab"
-        >
+        <div class="tab-pane active bg-light" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
           <div class="row bg-light">
-            <div class="card bg-light" *ngFor="let note of ticket.notes">
+            <div class="card bg-light" *ngFor="let note of ticket.notes.reverse()">
               <div class="bg-light">
-                <div
-                  class="row d-flex bd-highlight align-items-center mt-2 text-center"
-                >
-                  <div
-                    class="col d-flex justify-content-start align-items-center"
-                  >
-                    <ngx-avatar
-                      class="mx-2"
-                      size="35"
-                      name="{{ note.createdBy.nameToDisplay }}"
-                    ></ngx-avatar>
+                <div class="row d-flex bd-highlight align-items-center mt-2 text-center">
+                  <div class="col d-flex justify-content-start align-items-center">
+                    <ngx-avatar class="mx-2" size="35" name="{{ note.createdBy.nameToDisplay }}"></ngx-avatar>
 
                     {{ !note.createdBy ? '' : note.createdBy.nameToDisplay }}
                   </div>
@@ -302,33 +205,21 @@
                     <div class="text-muted text-center mx-1">
                       {{ note.creationDate }} ({{ note.creationDate | DayAgo }})
                     </div>
-                    <div
-                      class="text-left badge text-wrap p-2"
-                      [style.background-color]="
+                    <div class="text-left badge text-wrap p-2" [style.background-color]="
                         !note.state ? 'black' : note.state.colorValue
-                      "
-                    >
+                      ">
                       {{ !ticket.state ? '' : ticket.state.nameToDisplay }}
                     </div>
                   </div>
                 </div>
               </div>
               <div class="card-body bg-light">
-                <div
-                  class="scrollable overflow-auto"
-                  [innerHTML]="note.text"
-                  style="height: auto;"
-                ></div>
+                <div class="scrollable overflow-auto" [innerHTML]="note.text" style="height: auto;"></div>
               </div>
             </div>
           </div>
         </div>
-        <div
-          class="tab-pane fade"
-          id="pills-contact"
-          role="tabpanel"
-          aria-labelledby="pills-contact-tab"
-        >
+        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
           In Arbeit
         </div>
       </div>
@@ -336,31 +227,11 @@
   </div>
 </div>
 
-<app-create-coment-modal
-  (stateChanged)="onStateChange($event)"
-  [forTicket]="ticket"
-></app-create-coment-modal>
-<app-discard-modal
-  (stateChanged)="onStateChange($event)"
-  [forTicket]="ticket"
-></app-discard-modal>
-<app-done-modal
-  (stateChanged)="onStateChange($event)"
-  [forTicket]="ticket"
-></app-done-modal>
-<app-reopen-modal
-  (stateChanged)="onStateChange($event)"
-  [forTicket]="ticket"
-></app-reopen-modal>
-<app-assign-reporter-modal
-  (stateChanged)="onStateChange($event)"
-  [forTicket]="ticket"
-></app-assign-reporter-modal>
-<app-change-ticket-title-modal
-  (stateChanged)="onStateChange($event)"
-  [forTicket]="ticket"
-></app-change-ticket-title-modal>
-<app-assign-reporter-modal
-  (stateChanged)="onStateChange($event)"
-  [forTicket]="ticket"
-></app-assign-reporter-modal>
+<app-create-coment-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-create-coment-modal>
+<app-discard-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-discard-modal>
+<app-done-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-done-modal>
+<app-reopen-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-reopen-modal>
+<app-assign-reporter-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-assign-reporter-modal>
+<app-change-ticket-title-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket">
+</app-change-ticket-title-modal>
+<app-assign-reporter-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-assign-reporter-modal>
