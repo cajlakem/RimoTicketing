@@ -29,7 +29,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     private ticketClient: RimoTicketingClientService,
     private authService: AuthserviceService,
     private spinner: NgxSpinnerService,
-  ) {}
+  ) { }
   ticket = 'Meine'
   tickets: Ticket[]
   filterKey: string
@@ -64,6 +64,19 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.dtTrigger.next('')
     this.rerender()
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.columns().every(function () {
+        const that = this;
+        $('input', this.footer()).on('keyup change', function () {
+          var value = this as HTMLInputElement
+          if (that.search() !== value['value']) {
+            that
+              .search(value['value'])
+              .draw();
+          }
+        });
+      });
+    });
   }
 
   ngOnDestroy(): void {
@@ -84,5 +97,5 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ngOnInit()
   }
 
-  setFilterKey(key: any) {}
+  setFilterKey(key: any) { }
 }

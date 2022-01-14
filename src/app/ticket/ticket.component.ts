@@ -51,6 +51,8 @@ export class TicketComponent implements OnInit, OnDestroy {
     })
   }
 
+
+
   ngOnDestroy(): void {
     // Destroy navigationSubscription to avoid memory leaks
     if (this.navigationSubscription) {

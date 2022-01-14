@@ -239,6 +239,9 @@ hr {
   width: 120px;
   height: 96px;
 }
+.cdk-overlay-container {
+    z-index: 1100 !important;
+}
 .la-line-scale-pulse-out.la-3x > div {
   width: 12px;
   height: 96px;

@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { AuthserviceService } from 'src/app/authservice.service'
 import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service'
+import { Reporter } from 'src/app/_models/Reporter'
 import { Ticket } from 'src/app/_models/Ticket'
 import { User } from 'src/app/_models/User'
+
+
 
 @Component({
   selector: 'app-assign-reporter-modal',
@@ -22,13 +25,22 @@ export class AssignReporterModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthserviceService,
     private httpTicketingClient: RimoTicketingClientService,
-  ) {}
+  ) { }
+
 
   get f() {
     return this.createCommentForm.controls
   }
 
+  contacts = new FormControl();
+  contactList: Reporter[];
+
+
   ngOnInit(): void {
+    this.httpTicketingClient.queryContacts('').subscribe((data) => {
+      this.contactList = data;
+    });
+
     this.errorMsg = ''
     this.createCommentForm = this.formBuilder.group({
       text: ['', [Validators.required]],

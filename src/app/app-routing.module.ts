@@ -38,11 +38,11 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
     runGuardsAndResolvers: 'always',
   },
-  { path: '**', redirectTo: 'notifications', pathMatch: 'full' },
+  { path: '**', redirectTo: 'tickets', pathMatch: 'full' },
 ]
 @NgModule({
   declarations: [],
   imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
