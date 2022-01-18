@@ -36,7 +36,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort'
 import { MatSelectModule } from '@angular/material/select'
 import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatInputModule } from '@angular/material/input'
+import { MatInputModule } from '@angular/material/input';
+import { RemoveReporterModalComponent } from './modals/remove-reporter-modal/remove-reporter-modal.component';
+import { NewRequestorModalComponent } from './modals/new-requestor-modal/new-requestor-modal.component'
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { MatInputModule } from '@angular/material/input'
     DiscardModalComponent,
     ChangeTicketTitleModalComponent,
     AssignReporterModalComponent,
+    RemoveReporterModalComponent,
+    NewRequestorModalComponent,
   ],
   imports: [
     BrowserModule,

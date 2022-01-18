@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { AuthserviceService } from 'src/app/authservice.service'
@@ -17,10 +18,14 @@ export class AssignReporterModalComponent implements OnInit {
   @Output() stateChanged = new EventEmitter<any>()
   createCommentForm: any = FormGroup
   @Input()
-  forTicket: Ticket
+  forTicket: Ticket;
+  selected: string;
+  submitted: boolean = false;
+  error: boolean = false
+  contacts = new FormControl();
+  contactList: Reporter[];
+  errorMsg: string;
 
-  submitted = false
-  errorMsg: string
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthserviceService,
@@ -28,59 +33,52 @@ export class AssignReporterModalComponent implements OnInit {
   ) { }
 
 
-  get f() {
-    return this.createCommentForm.controls
-  }
-
-  contacts = new FormControl();
-  contactList: Reporter[];
-
-
   ngOnInit(): void {
     this.httpTicketingClient.queryContacts('').subscribe((data) => {
       this.contactList = data;
+      console.log(data);
     });
-
-    this.errorMsg = ''
-    this.createCommentForm = this.formBuilder.group({
-      text: ['', [Validators.required]],
-    })
+  }
+  getErrorMessage() {
+    if (this.contacts.hasError('required')) {
+      return 'Neue Kontakte auswählen';
+    }
+    return this.contacts.hasError('email') ? 'Not a valid email' : '';
   }
 
   onSubmit() {
-    this.submitted = true
-    if (this.createCommentForm.invalid) {
+    this.submitted = true;
+    this.contacts.markAllAsTouched()
+    if (this.contacts.invalid) {
       return
     }
     if (this.submitted) {
-      var myFormData = new FormData()
-      myFormData.append('text', this.createCommentForm.value.text)
-      var user: User = this.authService.getCurrentUser()
-      this.httpTicketingClient
-        .createNote(
-          myFormData.get('text') as string,
+      for (let selectedContact of this.selected) {
+        let contact = selectedContact.split(",")
+        this.httpTicketingClient.addCCReporter(
+          "MIT_Powerlines_SM",
+          contact[0],
+          contact[1],
+          contact[2],
           this.forTicket.name,
-          user.getUserProfilesMITAsString!,
-          user.christianName,
-          user.lastName,
-        )
-        .subscribe({
+          contact[3]
+        ).subscribe({
           next: (ticket) => this.handleCreationResponse(ticket),
           error: (error) => this.handleCreationErrorResponse(error),
         })
-      this.errorMsg = 'Failed to create Ticket!'
-      console.log(myFormData.get('text'))
+      }
     }
   }
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
-
-    $('#commentModal').modal('hide')
+    $('#newTicketContact').modal('hide')
     this.ngOnInit()
   }
 
   handleCreationErrorResponse(error: any) {
-    console.log(error)
+    const u = error as HttpErrorResponse
+    this.errorMsg = Object.values(u.error)[0] as string
   }
+
 }

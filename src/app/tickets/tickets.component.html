@@ -40,6 +40,13 @@
             Geschlossene
           </label>
         </div>
+        <div class="form-check form-check-inline" *ngIf="displaySearchResuts">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio6" value="Searched"
+            (change)="updateTicketList($event)" [ngModel]="filterKey" />
+          <label class="form-check-label" for="inlineRadio6">
+            Suchergebnisse
+          </label>
+        </div>
       </div>
     </div>
   </div>
@@ -63,6 +70,17 @@
           <th>Zugewiesen</th>
           <th>Type</th>
           <th>Priorität</th>
+        </tr>
+
+
+        <tr id="columnSearches">
+          <th><input type="text" placeholder="Namen durchsuchen" name="search-name" /></th>
+          <th><input type="text" placeholder="Reporter durchsuchen" name="search-reporter" /></th>
+          <th><input type="text" placeholder="Erstelldatum durchsuchen" name="search-creationdate" /></th>
+          <th><input type="text" placeholder="Kurztext durchsuchen" name="search-shorttext" /></th>
+          <th><input type="text" placeholder="Zugewiesen durchsuchen" name="search-assignedto" /></th>
+          <th><input type="text" placeholder="Type durchsuchen" name="search-types" /></th>
+          <th><input type="text" placeholder="Priorität durchsuchen" name="search-priority" /></th>
         </tr>
       </thead>
       <tbody>
@@ -113,17 +131,6 @@
           </td>
         </tr>
       </tbody>
-      <tfoot>
-        <tr>
-          <th><input type="text" placeholder="Namen durchsuchen" name="search-name" /></th>
-          <th><input type="text" placeholder="Reporter durchsuchen" name="search-reporter" /></th>
-          <th><input type="text" placeholder="Erstelldatum durchsuchen" name="search-creationdate" /></th>
-          <th><input type="text" placeholder="Kurztext durchsuchen" name="search-shorttext" /></th>
-          <th><input type="text" placeholder="Zugewiesen durchsuchen" name="search-assignedto" /></th>
-          <th><input type="text" placeholder="Type durchsuchen" name="search-types" /></th>
-          <th><input type="text" placeholder="Priorität durchsuchen" name="search-priority" /></th>
-        </tr>
-      </tfoot>
     </table>
   </div>
 </div>

@@ -47,7 +47,8 @@ export class TicketComponent implements OnInit, OnDestroy {
     this.ticketingClient.queryTicketWithlId(id as string).subscribe((data) => {
       this.ticket = Object.assign(new Ticket(), data)
       this.bcs.pasivateBreadCrumbId(this.ticket)
-      console.log(this.ticket)
+      console.log(this.ticket);
+      
     })
   }
 

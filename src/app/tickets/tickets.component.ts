@@ -33,8 +33,17 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   ticket = 'Meine'
   tickets: Ticket[]
   filterKey: string
+  displaySearchResuts: boolean = false;
 
   ngOnInit(): void {
+    $('#example thead #columnSearchesye th').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder=' + title + ' />');
+    });
+    if ((<HTMLInputElement>document.getElementById("globalSearch")).value !== "") {
+      this.ticketsAfterGlobalSearch((<HTMLInputElement>document.getElementById("globalSearch")).value)
+      return
+    }
     var lsk = localStorage.getItem('ticketFilterKey')
     lsk = lsk ? lsk : 'New'
     this.filterKey = lsk as string
@@ -61,19 +70,22 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
       })
   }
 
+
   ngAfterViewInit(): void {
     this.dtTrigger.next('')
     this.rerender()
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.columns().every(function () {
-        const that = this;
-        $('input', this.footer()).on('keyup change', function () {
-          var value = this as HTMLInputElement
-          if (that.search() !== value['value']) {
-            that
-              .search(value['value'])
-              .draw();
-          }
+    this.dtTrigger.subscribe(() => {
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.columns().every(function () {
+          const that = this;
+          $('input', this.header()).on('keyup change', function () {
+            var valueElement = this as HTMLInputElement
+            if (that.search() !== valueElement['value']) {
+              that
+                .search(valueElement['value'])
+                .draw();
+            }
+          });
         });
       });
     });
@@ -92,10 +104,43 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updateTicketList(evt: any) {
+    (<HTMLInputElement>document.getElementById("globalSearch")).value = ""
+    this.displaySearchResuts = false;
     this.filterKey = evt.target.value
     localStorage.setItem('ticketFilterKey', this.filterKey)
     this.ngOnInit()
   }
 
   setFilterKey(key: any) { }
+
+  async ticketsAfterGlobalSearch(searchResult: string) {
+    this.displaySearchResuts = true;
+    this.filterKey = "Searched"
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 25,
+      scrollY: '60vh',
+      processing: true,
+      order: [[0, 'desc']],
+      search: {
+        search: searchResult
+      }
+    }
+    this.spinner.show()
+    setTimeout(() => {
+      this.spinner.hide()
+    }, 10000)
+    this.ticketClient
+      .queryOpenTickets(
+        this.authService.currentUser?.getUserProfilesMITAsString as string,
+        "Pending",
+      )
+      .subscribe((data) => {
+        this.tickets = data
+        this.rerender()
+        this.spinner.hide()
+      })
+  }
+
+
 }
