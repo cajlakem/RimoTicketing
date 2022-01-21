@@ -36,7 +36,8 @@ export class AssignReporterModalComponent implements OnInit {
   ngOnInit(): void {
     this.httpTicketingClient.queryContacts('').subscribe((data) => {
       this.contactList = data;
-      console.log(data);
+      console.log(this.contactList);
+
     });
   }
   getErrorMessage() {

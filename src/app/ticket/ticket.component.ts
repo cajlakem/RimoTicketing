@@ -11,6 +11,7 @@ import { CKEditorModule } from 'ckeditor4-angular'
 import * as bootstrap from 'bootstrap'
 import { TicketComment } from '../_models/TicketComment'
 import { tick } from '@angular/core/testing'
+import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component'
 
 @Component({
   selector: 'app-ticket',
@@ -20,6 +21,7 @@ import { tick } from '@angular/core/testing'
 export class TicketComponent implements OnInit, OnDestroy {
   report$: Observable<Ticket>
   navigationSubscription: any
+  bcsSubscrpition: any
   subscription: Subscription
   ticket: Ticket = new Ticket()
 
@@ -44,11 +46,10 @@ export class TicketComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     var id = this.activatedRoute.snapshot.paramMap.get('id')
-    this.ticketingClient.queryTicketWithlId(id as string).subscribe((data) => {
+    this.ticketingClient.queryTicketWithlId(id as string).subscribe(async (data) => {
       this.ticket = Object.assign(new Ticket(), data)
       this.bcs.pasivateBreadCrumbId(this.ticket)
-      console.log(this.ticket);
-      
+      this.bcs.sendUpdate(this.ticket);
     })
   }
 

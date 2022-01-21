@@ -4,6 +4,8 @@ import { Router } from '@angular/router'
 import { User } from '../_models/User'
 import { TicketsComponent } from '../tickets/tickets.component'
 import { Ticket } from '../_models/Ticket'
+import { never } from 'rxjs'
+import { GlobalSearchServiceService } from '../global-search-service.service'
 
 @Component({
   selector: 'app-main',
@@ -14,6 +16,7 @@ export class MainComponent implements OnInit {
   constructor(
     private authService: AuthserviceService,
     private router: Router,
+    private ticketTable: GlobalSearchServiceService
   ) { }
 
   ngOnInit(): void {
@@ -37,10 +40,11 @@ export class MainComponent implements OnInit {
     return this.authService.currentUser!
   }
 
-  onSubmit() {
-    if (this.router.url == '/tickets') {
-      this.router.navigate(['login'])
+  async onSubmit() {
+    if (this.router.url === "/tickets") {
+      this.ticketTable.sendUpdate()
+    } else {
+      this.router.navigate(["/tickets"])
     }
-    this.router.navigate(['tickets'])
   }
 }

@@ -31,10 +31,7 @@ export class RemoveReporterModalComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.forTicket.contacts);
     this.contactList = this.forTicket.contacts
-    console.log(this.contactList);
-    
   }
   getErrorMessage() {
     if (this.contacts.hasError('required')) {
@@ -43,28 +40,29 @@ export class RemoveReporterModalComponent implements OnInit {
     return this.contacts.hasError('email') ? 'Not a valid email' : '';
   }
 
-  onSubmit() { 
+  onSubmit() {
     this.submitted = true;
     this.contacts.markAllAsTouched()
     if (this.contacts.invalid) {
       return
     }
-    if (this.submitted) { 
+    if (this.submitted) {
       for (let selectedContact of this.selected) {
-    let contact = selectedContact.split(",")
-    this.httpTicketingClient.removeCCReporter(
-      "MIT_Powerlines_SM",
-      contact[1],
-      contact[0].trim(),
-      contact[2],
-      this.forTicket.name,
-      contact[3]
-    ).subscribe({
-      next: (ticket) => this.handleCreationResponse(ticket),
-      error: (error) => this.handleCreationErrorResponse(error),
-    })
-  }
-  }
+        let contact = selectedContact.split(",")
+
+        this.httpTicketingClient.removeCCReporter(
+          "MIT_Powerlines_SM",
+          contact[0],
+          contact[1].trim(),
+          contact[2],
+          this.forTicket.name,
+          contact[3]
+        ).subscribe({
+          next: (ticket) => this.handleCreationResponse(ticket),
+          error: (error) => this.handleCreationErrorResponse(error),
+        })
+      }
+    }
   }
 
   handleCreationResponse(ticket: Ticket) {

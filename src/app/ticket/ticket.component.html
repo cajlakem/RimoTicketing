@@ -40,8 +40,8 @@
               </button>
               <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <li>
-                  <button class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changeTicketRequestorlModal"
-                    [disabled]="ticket.isClosed">
+                  <button class="dropdown-item" href="#" data-bs-toggle="modal"
+                    data-bs-target="#changeTicketRequestorlModal" [disabled]="ticket.isClosed">
                     <i class="fas fa-user"></i>
                     Requestor ändern
                   </button>
@@ -54,15 +54,15 @@
                   </button>
                 </li>
                 <li>
-                  <button class="dropdown-item" href="#" data-bs-toggle="modal"
-                    data-bs-target="#newTicketContact" [disabled]="ticket.isClosed">
+                  <button class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#newTicketContact"
+                    [disabled]="ticket.isClosed">
                     <i class="fas fa-user-plus"></i>
                     Kontakte hinzufügen
                   </button>
                 </li>
-                 <li>
-                  <button class="dropdown-item" href="#" data-bs-toggle="modal"
-                    data-bs-target="#removeTicketContact" [disabled]="ticket.isClosed">
+                <li>
+                  <button class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#removeTicketContact"
+                    [disabled]="ticket.isClosed">
                     <i class="fas fa-user-minus"></i>
                     Kontakte entfernen
                   </button>
@@ -212,7 +212,7 @@
                     <div class="text-left badge text-wrap p-2" [style.background-color]="
                         !note.state ? 'black' : note.state.colorValue
                       ">
-                      {{ !ticket.state ? '' : ticket.state.nameToDisplay }}
+                      {{ !note.state ? '' : note.state.nameToDisplay }}
                     </div>
                   </div>
                 </div>
@@ -254,19 +254,19 @@
                 Telefon
               </th>
             </tr>
-            <tr *ngFor = "let contact of this.ticket.contacts">
+            <tr *ngFor="let contact of this.ticket.contacts">
               <td>
                 <ngx-avatar class="me-2 d-inline-flex" size="35" name="{{ contact.nameToDisplay }}"></ngx-avatar>
-         {{ contact.nameToDisplay }}
-        </td>
-        <td>
-          {{ contact.email }}
-         </td>
-         <td>
-          {{ contact.mobile }}
-         </td>
-        </tr>
-        </table>
+                {{ contact.nameToDisplay }}
+              </td>
+              <td>
+                {{ contact.email }}
+              </td>
+              <td>
+                {{ contact.mobile }}
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>

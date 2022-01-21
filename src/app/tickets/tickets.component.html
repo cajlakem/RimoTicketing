@@ -84,7 +84,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ticket of tickets" routerLink="/edit/{{ ticket.id }}">
+        <tr *ngFor="let ticket of tickets" routerLink="/edit/{{ ticket.id }}"
+          class="{{ !ticket.hasReadByRequestor ? ' fw-bold' : ''}}">
           <td class="text-muted">
             {{ ticket.name }}
           </td>

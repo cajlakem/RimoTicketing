@@ -29,8 +29,9 @@
         <ul class="navbar-nav align-items-center">
           <li>
             <button (click)="onSubmit()" class="fas fa-search text-white bg-transparent border-0"></button>
-            <mat-form-field class="text-white">
-              <input class="text-white" id="globalSearch" matInput placeholder="Offene Tickets durchsuchen...">
+            <mat-form-field class="text-white pe-3" floatLabel="never">
+              <mat-label>Offene Tickets durchsuchen</mat-label>
+              <input class="text-white" id="globalSearch" matInput>
             </mat-form-field>
           </li>
           <li>
@@ -49,11 +50,6 @@
               <ngx-avatar size="40" name="{{ this.getCurrentUser().getFullName() }}"></ngx-avatar>
             </a>
             <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="navbarDropdown">
-              <li>
-                <a ngbDropdownItem class="dropdown-item" routerLink="/userProfile">
-                  Einstellungen
-                </a>
-              </li>
               <li>
                 <a ngbDropdownItem class="dropdown-item" (click)="logout()">
                   Abmelden

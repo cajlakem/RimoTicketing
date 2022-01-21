@@ -1,0 +1,17 @@
+::ng-deep .mat-form-field-label{
+    color:rgba(255, 255, 255, 0.55) !important;
+    font-size: 10px;
+}
+
+::ng-deep .mat-form-field-underline .mat-form-field-ripple{
+
+  background-color:#fff !important;
+}
+
+::ng-deep .mat-form-field-underline{
+  background-color:rgba(255, 255, 255, 0.55) !important;
+}
+
+.labelGoneOnFocus:focus {
+    display: none !important;
+}

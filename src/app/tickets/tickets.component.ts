@@ -11,6 +11,7 @@ import { Subject } from 'rxjs'
 import { RimoTicketingClientService } from '../rimo-ticketing-client.service'
 import { AuthserviceService } from '../authservice.service'
 import { NgxSpinnerService } from 'ngx-spinner'
+import { GlobalSearchServiceService } from '../global-search-service.service'
 
 @Component({
   selector: 'app-tickets',
@@ -24,11 +25,14 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   dtOptions: DataTables.Settings = {}
 
   dtTrigger: Subject<any> = new Subject()
+  subscriptionName: any
+  ids: any
 
   constructor(
     private ticketClient: RimoTicketingClientService,
     private authService: AuthserviceService,
     private spinner: NgxSpinnerService,
+    private ticketTable: GlobalSearchServiceService
   ) { }
   ticket = 'Meine'
   tickets: Ticket[]
@@ -67,6 +71,11 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.tickets = data
         this.rerender()
         this.spinner.hide()
+      })
+    this.subscriptionName = this.ticketTable
+      .getUpdate()
+      .subscribe(() => {
+        this.ngOnInit()
       })
   }
 
@@ -133,10 +142,12 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ticketClient
       .queryOpenTickets(
         this.authService.currentUser?.getUserProfilesMITAsString as string,
-        "Pending",
+        "Open",
       )
       .subscribe((data) => {
-        this.tickets = data
+        for (let ticket of data) {
+          this.tickets.push(ticket)
+        }
         this.rerender()
         this.spinner.hide()
       })
