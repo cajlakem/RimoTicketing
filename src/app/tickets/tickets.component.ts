@@ -77,6 +77,8 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(() => {
         this.ngOnInit()
       })
+
+
   }
 
 
