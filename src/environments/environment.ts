@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  apiLicenseServer: 'rimo-dev.rimo-saas.com',
+  apiLicenseServer: 'license-dev.rimo-systems.eu',
   apiLicenseServerToken:
-    'FCD377B4B47F45FC020773BEA1A918A74E303EBAEC3887F1FDB93CD6899EDA57',
+    '586F3F2622FB4DE827A1D7D9FDEA4258',
   apiTicketingServer: 'rimo-dev.rimo-saas.com',
   apiTicketingServerToken:
     'FCD377B4B47F45FC020773BEA1A918A74E303EBAEC3887F1FDB93CD6899EDA57',
