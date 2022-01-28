@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <ul class="navbar-nav align-items-center">
           <li class="nav-item">
-            <a routerLink="/notifications" class="navbar-brand fs-5">
+            <a class="navbar-brand fs-5">
               <img src="./assets/images/cropped-symbol_rgb.png" width="30" height="30" alt="" />
             </a>
             <a class="navbar-brand fs-6">
@@ -28,6 +28,13 @@
         </ul>
         <ul class="navbar-nav align-items-center">
           <li>
+            <button (click)="onSubmit()" class="fas fa-search text-white bg-transparent border-0"></button>
+            <mat-form-field class="text-white pe-3" floatLabel="never">
+              <mat-label>Offene Tickets durchsuchen</mat-label>
+              <input class="text-white" id="globalSearch" matInput>
+            </mat-form-field>
+          </li>
+          <li>
             <button class="btn btn-primary btn-sm m-2 shadow" type="submit" routerLink="/createTicket">
               <i class="fas fa-plus-square"></i>
               Ticket
@@ -44,11 +51,6 @@
             </a>
             <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="navbarDropdown">
               <li>
-                <a ngbDropdownItem class="dropdown-item" routerLink="/userProfile">
-                  Einstellungen
-                </a>
-              </li>
-              <li>
                 <a ngbDropdownItem class="dropdown-item" (click)="logout()">
                   Abmelden
                 </a>
@@ -59,9 +61,6 @@
       </div>
     </nav>
     <app-breadcrumb></app-breadcrumb>
-    <div id="nav-button-menu-place">
-      <i routerLink="/login" class="fas fa-caret-right fa-3x text-success"></i>
-    </div>
   </main>
 </header>
 

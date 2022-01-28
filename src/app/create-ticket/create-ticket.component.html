@@ -5,18 +5,11 @@
         <p class="fs-3 m-2">Ticketerstellung</p>
       </div>
       <div class="col d-flex justify-content-end">
-        <button
-          type="submit"
-          class="btn btn-outline-secondary shadow rounded-3 btn-sm m-2"
-          routerLink="/tickets"
-        >
+        <button type="submit" class="btn btn-outline-secondary shadow rounded-3 btn-sm m-2" routerLink="/tickets">
           <i class="fas fa-window-close"></i>
           Abbrechen
         </button>
-        <button
-          type="submit"
-          class="btn btn-outline-success shadow rounded-3 btn-sm m-2"
-        >
+        <button type="submit" class="btn btn-outline-success shadow rounded-3 btn-sm m-2">
           <i class="fas fa-paper-plane"></i>
           Abschicken
         </button>
@@ -26,13 +19,8 @@
     <div class="row">
       <div class="col">
         <div class="form-floating">
-          <select
-            class="form-select shadow rounded-3"
-            id="floatingSelect"
-            formControlName="prio"
-            [ngClass]="{ 'is-invalid': submitted && f.prio.errors }"
-            aria-label="Floating label select example"
-          >
+          <select class="form-select shadow rounded-3" id="floatingSelect" formControlName="prio"
+            [ngClass]="{ 'is-invalid': submitted && f.prio.errors }" aria-label="Floating label select example">
             <option value="Critical Fault">Critical Fault</option>
             <option value="Major Fault">Major Fault</option>
             <option value="Minor Fault">Minor Fault</option>
@@ -52,21 +40,11 @@
     <div class="row mt-3">
       <div class="col">
         <div class="form-floating mb-3">
-          <input
-            type="input"
-            class="form-control bottom-border shadow rounded-3"
-            id="floatingInput"
-            [ngClass]="{ 'is-invalid': submitted && f.shortDsc.errors }"
-            formControlName="shortDsc"
-          />
+          <input type="input" class="form-control bottom-border shadow rounded-3" id="floatingInput"
+            [ngClass]="{ 'is-invalid': submitted && f.shortDsc.errors }" formControlName="shortDsc" />
           <label for="floatingInput">Kurzbeschreibung</label>
-          <div
-            *ngIf="submitted && (f.shortDsc.errors || f.longDsc.errors)"
-            class="invalid-feedback"
-          >
-            <div
-              *ngIf="f.shortDsc.errors.required && f.longDsc.errors.required"
-            >
+          <div *ngIf="submitted && (f.shortDsc.errors || f.longDsc.errors)" class="invalid-feedback">
+            <div *ngIf="f.shortDsc.errors.required && f.longDsc.errors.required">
               Kurz- und Langbeschreibung hinterlegen
             </div>
           </div>
@@ -78,18 +56,13 @@
         <label class="from-label text-muted small">
           Langbeschreibung:
         </label>
-        <ckeditor
-          class="shadow rounded-3"
-          [config]="{
+        <ckeditor class="shadow rounded-3" [config]="{
             height: '400px',
             filebrowserUploadUrl:
               'https://rimo-dev.rimo-saas.com/soap/ckupload.php',
             filebrowserImageUploadUrl:
               'https://rimo-dev.rimo-saas.com/soap/ckupload.php'
-          }"
-          formControlName="longDsc"
-          [ngClass]="{ 'is-invalid': submitted && f.longDsc.errors }"
-        ></ckeditor>
+          }" formControlName="longDsc" [ngClass]="{ 'is-invalid': submitted && f.longDsc.errors }"></ckeditor>
       </div>
     </div>
     <div class="row">

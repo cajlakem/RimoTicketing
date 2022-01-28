@@ -1,22 +1,18 @@
-import { HttpErrorResponse } from '@angular/common/http'
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
-import { AuthserviceService } from 'src/app/authservice.service'
-import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service'
-import { Reporter } from 'src/app/_models/Reporter'
-import { Ticket } from 'src/app/_models/Ticket'
-import { User } from 'src/app/_models/User'
-
-
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { AuthserviceService } from 'src/app/authservice.service';
+import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service';
+import { Reporter } from 'src/app/_models/Reporter';
+import { Ticket } from 'src/app/_models/Ticket';
 
 @Component({
-  selector: 'app-assign-reporter-modal',
-  templateUrl: './assign-reporter-modal.component.html',
-  styleUrls: ['./assign-reporter-modal.component.css'],
+  selector: 'app-remove-reporter-modal',
+  templateUrl: './remove-reporter-modal.component.html',
+  styleUrls: ['./remove-reporter-modal.component.css']
 })
-export class AssignReporterModalComponent implements OnInit {
+export class RemoveReporterModalComponent implements OnInit {
   @Output() stateChanged = new EventEmitter<any>()
-  createCommentForm: any = FormGroup
   @Input()
   forTicket: Ticket;
   selected: string;
@@ -33,16 +29,13 @@ export class AssignReporterModalComponent implements OnInit {
   ) { }
 
 
-  ngOnInit(): void {
-    this.httpTicketingClient.queryContacts('').subscribe((data) => {
-      this.contactList = data;
-      console.log(this.contactList);
 
-    });
+  ngOnInit(): void {
+    this.contactList = this.forTicket.contacts
   }
   getErrorMessage() {
     if (this.contacts.hasError('required')) {
-      return 'Neue Kontakte auswählen';
+      return 'Kontakte auswählen';
     }
     return this.contacts.hasError('email') ? 'Not a valid email' : '';
   }
@@ -56,10 +49,11 @@ export class AssignReporterModalComponent implements OnInit {
     if (this.submitted) {
       for (let selectedContact of this.selected) {
         let contact = selectedContact.split(",")
-        this.httpTicketingClient.addCCReporter(
+
+        this.httpTicketingClient.removeCCReporter(
           "MIT_Powerlines_SM",
           contact[0],
-          contact[1],
+          contact[1].trim(),
           contact[2],
           this.forTicket.name,
           contact[3]
@@ -73,7 +67,7 @@ export class AssignReporterModalComponent implements OnInit {
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
-    $('#newTicketContact').modal('hide')
+    $('#removeTicketContact').modal('hide')
     this.ngOnInit()
   }
 

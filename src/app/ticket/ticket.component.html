@@ -9,6 +9,10 @@
               <i class="fas fa-arrow-left"></i>
               Zurück
             </button>
+            <button type="button" class="btn btn-secondary shadow btn-sm" (click)="ngOnInit()">
+              <i class="fas fa-sync"></i>
+              Erneut laden
+            </button>
             <button type="button" class="btn btn-secondary shadow btn-sm" data-bs-target="#commentModal"
               data-bs-toggle="modal" [disabled]="ticket.isClosed">
               <i class="far fa-comment"></i>
@@ -17,7 +21,7 @@
             <button type="button" class="btn btn-secondary shadow btn-sm" href="#" data-bs-toggle="modal"
               data-bs-target="#reopenModal" [disabled]="!ticket.isOpenAble">
               <i class="fas fa-undo"></i>
-              Reopen
+              Erneut öffnen
             </button>
             <button type="button" class="btn btn-secondary shadow btn-sm" href="#" data-bs-toggle="modal"
               data-bs-target="#doneModal" [disabled]="!ticket.isOpenAble">
@@ -29,13 +33,19 @@
               <i class="fas fa-trash-alt"></i>
               Löschen
             </button>
-
             <div class="btn-group" role="group">
               <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle shadow-lg btn-sm"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 Weitere
               </button>
               <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <li>
+                  <button class="dropdown-item" href="#" data-bs-toggle="modal"
+                    data-bs-target="#changeTicketRequestorlModal" [disabled]="ticket.isClosed">
+                    <i class="fas fa-user"></i>
+                    Requestor ändern
+                  </button>
+                </li>
                 <li>
                   <button class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changeTitelModal"
                     [disabled]="ticket.isClosed">
@@ -44,10 +54,17 @@
                   </button>
                 </li>
                 <li>
-                  <button class="dropdown-item" href="#" data-bs-toggle="modal"
-                    data-bs-target="#changeTicketRequestorlModal" [disabled]="ticket.isClosed">
-                    <i class="fas fa-users"></i>
-                    Anderer Reporter
+                  <button class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#newTicketContact"
+                    [disabled]="ticket.isClosed">
+                    <i class="fas fa-user-plus"></i>
+                    Kontakte hinzufügen
+                  </button>
+                </li>
+                <li>
+                  <button class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#removeTicketContact"
+                    [disabled]="ticket.isClosed">
+                    <i class="fas fa-user-minus"></i>
+                    Kontakte entfernen
                   </button>
                 </li>
               </ul>
@@ -135,7 +152,7 @@
       <div class="col">
         <div class="col">
           <div class="row small text-muted al">
-            <span class="text-left">Type</span>
+            <span class="text-left">Typ</span>
           </div>
           <div class="row">
             <span class="text-left">
@@ -151,27 +168,6 @@
       </div>
     </div>
 
-    <div class="row p-4 mt-4 shadow bg-light rounded-3">
-      <div class="row">
-        <div class="row text-muted mt-1">
-          <div>Kurzbeschreibung</div>
-        </div>
-        <div class="row mt-1">
-          <div>
-            {{ ticket.shortText }}
-          </div>
-        </div>
-      </div>
-      <div class="row mt-2">
-        <div class="row text-muted mt-1">
-          <div>Langbeschreibung</div>
-        </div>
-        <div class="row mt-1 pb-1">
-          <div class="scrollable overflow-auto" [innerHTML]="ticket.longText" style="height: auto;"></div>
-        </div>
-      </div>
-    </div>
-
     <div class="row mt-5 bg-light rounded-3">
       <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
@@ -182,9 +178,17 @@
           </button>
         </li>
         <li class="nav-item">
+          <a class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-einmeldetext"
+            type="button" role="tab" aria-controls="pills-contact" aria-selected="false">
+            <i class="fas fa-sticky-note"></i>
+            Einmeldetext
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button"
             role="tab" aria-controls="pills-contact" aria-selected="false">
-            Kontakte
+            <i class="fas fa-address-book"></i>
+            Kontakte ({{ !ticket.contacts ? '' : ticket.contacts.length }})
           </a>
         </li>
       </ul>
@@ -208,7 +212,7 @@
                     <div class="text-left badge text-wrap p-2" [style.background-color]="
                         !note.state ? 'black' : note.state.colorValue
                       ">
-                      {{ !ticket.state ? '' : ticket.state.nameToDisplay }}
+                      {{ !note.state ? '' : note.state.nameToDisplay }}
                     </div>
                   </div>
                 </div>
@@ -219,8 +223,50 @@
             </div>
           </div>
         </div>
+        <div class="tab-pane fade" id="pills-einmeldetext" role="tabpanel" aria-labelledby="pills-contact-tab">
+          <div class="row text-muted mt-1">
+            <div>Kurzbeschreibung</div>
+          </div>
+          <div class="row mt-1">
+            <div>
+              {{ ticket.shortText }}
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="row text-muted mt-1">
+              <div>Langbeschreibung</div>
+            </div>
+            <div class="row mt-1 pb-1">
+              <div class="scrollable overflow-auto" [innerHTML]="ticket.longText" style="height: auto;"></div>
+            </div>
+          </div>
+        </div>
         <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-          In Arbeit
+          <table class="table">
+            <tr>
+              <th>
+                Name
+              </th>
+              <th>
+                E-mail
+              </th>
+              <th>
+                Telefon
+              </th>
+            </tr>
+            <tr *ngFor="let contact of this.ticket.contacts">
+              <td>
+                <ngx-avatar class="me-2 d-inline-flex" size="35" name="{{ contact.nameToDisplay }}"></ngx-avatar>
+                {{ contact.nameToDisplay }}
+              </td>
+              <td>
+                {{ contact.email }}
+              </td>
+              <td>
+                {{ contact.mobile }}
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
@@ -235,3 +281,5 @@
 <app-change-ticket-title-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket">
 </app-change-ticket-title-modal>
 <app-assign-reporter-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-assign-reporter-modal>
+<app-new-requestor-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-new-requestor-modal>
+<app-remove-reporter-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-remove-reporter-modal>

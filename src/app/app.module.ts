@@ -30,7 +30,15 @@ import { DiscardModalComponent } from './modals/discard-modal/discard-modal.comp
 import { ChangeTicketTitleModalComponent } from './modals/change-ticket-title-modal/change-ticket-title-modal.component'
 import { AssignReporterModalComponent } from './modals/assign-reporter-modal/assign-reporter-modal.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { CommonModule } from '@angular/common'
+import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort'
+import { MatSelectModule } from '@angular/material/select'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input';
+import { RemoveReporterModalComponent } from './modals/remove-reporter-modal/remove-reporter-modal.component';
+import { NewRequestorModalComponent } from './modals/new-requestor-modal/new-requestor-modal.component'
 
 @NgModule({
   declarations: [
@@ -51,6 +59,8 @@ import { CommonModule } from '@angular/common'
     DiscardModalComponent,
     ChangeTicketTitleModalComponent,
     AssignReporterModalComponent,
+    RemoveReporterModalComponent,
+    NewRequestorModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,9 +76,15 @@ import { CommonModule } from '@angular/common'
     NgxSpinnerModule,
     CommonModule,
     BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule
   ],
   providers: [AuthGuardService],
 
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

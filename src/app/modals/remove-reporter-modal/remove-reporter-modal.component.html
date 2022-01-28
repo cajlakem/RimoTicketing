@@ -1,9 +1,9 @@
-<div class="modal fade" id="newTicketContact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="removeTicketContact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-          Kontakte hinzufügen
+          Kontakte entfernen
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -12,8 +12,8 @@
           <mat-label>Kontakte</mat-label>
           <mat-select [formControl]="contacts" [(value)]="selected" [formControl]="contacts" required multiple>
             <mat-option *ngFor="let contact of contactList"
-              [value]="contact.christianName + ',' + contact.lastName + ',' + contact.email + ',' + contact.mobile">
-              {{contact.christianName + ' ' + contact.lastName}}
+              [value]="contact.nameToDisplay + ',' + contact.email + ',' + contact.mobile">
+              {{contact.nameToDisplay}}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="contacts.invalid">{{getErrorMessage()}}</mat-error>

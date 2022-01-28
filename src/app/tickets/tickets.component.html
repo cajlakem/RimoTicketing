@@ -1,90 +1,50 @@
 <div class="container-fluid">
   <div class="row pt-4">
-    <div
-      class="d-grid gap-1 d-md-flex d-flex justify-content-center align-items-center"
-    >
-      <div
-        class="btn-group btn-group-toggle rounded-3 shadow bg-light"
-        data-toggle="buttons"
-      >
+    <div class="d-grid gap-1 d-md-flex d-flex justify-content-center align-items-center">
+      <div class="px-2 py-1 btn-group btn-group-toggle rounded-3 shadow bg-light" data-toggle="buttons">
         <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio0"
-            value="New"
-            (change)="updateTicketList($event)"
-            [ngModel]="filterKey"
-          />
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio0" value="New"
+            (change)="updateTicketList($event)" [ngModel]="filterKey" />
           <label class="form-check-label" for="inlineRadio0">Neu</label>
         </div>
         <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio1"
-            value="Open"
-            (change)="updateTicketList($event)"
-            [ngModel]="filterKey"
-          />
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Open"
+            (change)="updateTicketList($event)" [ngModel]="filterKey" />
           <label class="form-check-label" for="inlineRadio1">Open</label>
         </div>
         <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio2"
-            (change)="updateTicketList($event)"
-            value="Pending"
-            [ngModel]="filterKey"
-          />
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+            (change)="updateTicketList($event)" value="Pending" [ngModel]="filterKey" />
           <label class="form-check-label" for="inlineRadio2">
             In Bearbeitung
           </label>
         </div>
         <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio3"
-            value="Clarify"
-            (change)="updateTicketList($event)"
-            [ngModel]="filterKey"
-          />
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Clarify"
+            (change)="updateTicketList($event)" [ngModel]="filterKey" />
           <label class="form-check-label" for="inlineRadio3">
             Abklären
           </label>
         </div>
         <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio4"
-            value="Solved"
-            (change)="updateTicketList($event)"
-            [ngModel]="filterKey"
-          />
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="Solved"
+            (change)="updateTicketList($event)" [ngModel]="filterKey" />
           <label class="form-check-label" for="inlineRadio4">
             Solved
           </label>
         </div>
         <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio5"
-            value="Closed"
-            (change)="updateTicketList($event)"
-            [ngModel]="filterKey"
-          />
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="Closed"
+            (change)="updateTicketList($event)" [ngModel]="filterKey" />
           <label class="form-check-label" for="inlineRadio5">
             Geschlossene
+          </label>
+        </div>
+        <div class="form-check form-check-inline" *ngIf="displaySearchResuts">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio6" value="Searched"
+            (change)="updateTicketList($event)" [ngModel]="filterKey" />
+          <label class="form-check-label" for="inlineRadio6">
+            Suchergebnisse
           </label>
         </div>
       </div>
@@ -99,14 +59,8 @@
     </div>
   </ngx-spinner>
   <div class="row p-3 mt-4 bg-light rounded-3">
-    <table
-      id="example"
-      class="table row-border table-hover"
-      style="width: 100%;"
-      datatable
-      [dtOptions]="dtOptions"
-      [dtTrigger]="dtTrigger"
-    >
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="example" class="table row-border table-hover"
+      style="width: 100%;">
       <thead>
         <tr class="fw-bolder">
           <th>Name</th>
@@ -117,15 +71,27 @@
           <th>Type</th>
           <th>Priorität</th>
         </tr>
+
+
+        <tr id="columnSearches">
+          <th><input type="text" placeholder="Namen durchsuchen" name="search-name" /></th>
+          <th><input type="text" placeholder="Reporter durchsuchen" name="search-reporter" /></th>
+          <th><input type="text" placeholder="Erstelldatum durchsuchen" name="search-creationdate" /></th>
+          <th><input type="text" placeholder="Kurztext durchsuchen" name="search-shorttext" /></th>
+          <th><input type="text" placeholder="Zugewiesen durchsuchen" name="search-assignedto" /></th>
+          <th><input type="text" placeholder="Type durchsuchen" name="search-types" /></th>
+          <th><input type="text" placeholder="Priorität durchsuchen" name="search-priority" /></th>
+        </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ticket of tickets" routerLink="/edit/{{ ticket.id }}">
+        <tr *ngFor="let ticket of tickets" routerLink="/edit/{{ ticket.id }}"
+          class="{{ !ticket.hasReadByRequestor ? ' fw-bold' : ''}}">
           <td class="text-muted">
             {{ ticket.name }}
           </td>
           <td class="text-muted">
             {{
-              ticket.requestor === null ? '' : ticket.requestor.nameToDisplay
+            ticket.requestor === null ? '' : ticket.requestor.nameToDisplay
             }}
           </td>
 
@@ -139,39 +105,29 @@
 
           <td class="text-muted">
             {{
-              ticket.assignedTo === null ? '' : ticket.assignedTo.nameToDisplay
+            ticket.assignedTo === null ? '' : ticket.assignedTo.nameToDisplay
             }}
           </td>
 
           <td class="text-muted">
-            <span
-              class="badge text-wrap text-light"
-              [style.background-color]="
+            <span class="badge text-wrap text-light" [style.background-color]="
                 !ticket.type ? 'black' : ticket.type.colorValue
-              "
-            >
+              ">
               {{ ticket.type === null ? '' : ticket.type.nameToDisplay }}
-              <i
-                class="{{ ticket.type === null ? '' : ticket.type.faIcon }}"
-              ></i>
+              <i class="{{ ticket.type === null ? '' : ticket.type.faIcon }}"></i>
             </span>
           </td>
 
           <td class="text-muted">
-            <span
-              class="badge text-wrap text-light"
-              [style.background-color]="
+            <span class="badge text-wrap text-light" [style.background-color]="
                 !ticket.priority ? 'black' : ticket.priority.colorValue
-              "
-            >
+              ">
               {{
-                ticket.priority === null ? '' : ticket.priority.nameToDisplay
+              ticket.priority === null ? '' : ticket.priority.nameToDisplay
               }}
-              <i
-                class="{{
+              <i class="{{
                   ticket.priority === null ? '' : ticket.priority.faIcon
-                }}"
-              ></i>
+                }}"></i>
             </span>
           </td>
         </tr>

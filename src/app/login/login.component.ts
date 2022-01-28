@@ -15,13 +15,13 @@ export class LoginComponent implements OnInit {
     private userauth: AuthserviceService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-  ) {}
+  ) { }
   registerForm: any = FormGroup
   submitted = false
 
   invalidCredentialMsg: string
   pwdRequestedMsg: string
-  retUrl: any = 'noticications'
+  retUrl: any = 'tickets'
 
   isLoginFailed() {
     return this.invalidCredentialMsg == null
