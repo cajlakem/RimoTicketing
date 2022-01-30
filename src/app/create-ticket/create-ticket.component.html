@@ -18,6 +18,27 @@
 
     <div class="row">
       <div class="col">
+        <div class="form-floating mb-3">
+          <div class="form-control shadow rounded-3 ps-2" *ngIf="contracts.length == 1">{{contracts}}
+          </div>
+          <select *ngIf="contracts.length > 1" class="form-select shadow rounded-3" id="floatingSelect"
+            formControlName="prio" [ngClass]="{ 'is-invalid': submitted && f.prio.errors }"
+            aria-label="Floating label select example">
+            <option *ngFor="let contract of contracts" [value]="contract">
+              {{contract}}
+            </option>
+          </select>
+          <label for="floatingSelect">Vertrag</label>
+          <div *ngIf="submitted && f.prio.errors" class="invalid-feedback">
+            <div *ngIf="f.prio.errors.required">
+              Vertrag auswählen
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <div class="form-floating">
           <select class="form-select shadow rounded-3" id="floatingSelect" formControlName="prio"
             [ngClass]="{ 'is-invalid': submitted && f.prio.errors }" aria-label="Floating label select example">

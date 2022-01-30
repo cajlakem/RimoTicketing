@@ -23,13 +23,16 @@ export class CreateTicketComponent implements OnInit {
     private router: Router,
     private ticketingClient: RimoTicketingClientService,
     private authService: AuthserviceService,
-  ) {}
+  ) { }
 
   registerForm: any = FormGroup
   submitted = false
 
   errorMsg: string
   retUrl: any = 'tickets'
+  user: User = this.authService.getCurrentUser()
+  contracts: any = this.user.getUserProfilesMITAsString?.split(", ")
+
 
   get f() {
     return this.registerForm.controls
