@@ -6,10 +6,10 @@ export const environment = {
   production: false,
   apiLicenseServer: 'license-dev.rimo-systems.eu',
   apiLicenseServerToken:
-    '586F3F2622FB4DE827A1D7D9FDEA4258',
-  apiTicketingServer: 'rimo-dev.rimo-saas.com',
+    'E073875D3773662FD86B9FBD2CD2826BEC6F522F20A8A5FD57ACA79762020A41',
+  apiTicketingServer: 'rimo-dev2.rimo-saas.com',
   apiTicketingServerToken:
-    'FCD377B4B47F45FC020773BEA1A918A74E303EBAEC3887F1FDB93CD6899EDA57',
+    'E073875D3773662FD86B9FBD2CD2826BEC6F522F20A8A5FD57ACA79762020A41',
 }
 
 /*

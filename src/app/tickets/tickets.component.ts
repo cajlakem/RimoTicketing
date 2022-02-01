@@ -12,6 +12,7 @@ import { RimoTicketingClientService } from '../rimo-ticketing-client.service'
 import { AuthserviceService } from '../authservice.service'
 import { NgxSpinnerService } from 'ngx-spinner'
 import { GlobalSearchServiceService } from '../global-search-service.service'
+import { User } from '../_models/User'
 
 @Component({
   selector: 'app-tickets',
@@ -27,6 +28,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject()
   subscriptionName: any
   ids: any
+  user: User = this.authService.getCurrentUser()
 
   constructor(
     private ticketClient: RimoTicketingClientService,
@@ -53,6 +55,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.filterKey = lsk as string
     this.dtOptions = {
       pagingType: 'full_numbers',
+      retrieve: true,
       pageLength: 25,
       scrollY: '60vh',
       processing: true,
@@ -64,8 +67,8 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 10000)
     this.ticketClient
       .queryOpenTickets(
-        this.authService.currentUser?.getUserProfilesMITAsString as string,
-        this.filterKey,
+        this.user,
+        this.filterKey
       )
       .subscribe((data) => {
         this.tickets = data
@@ -143,8 +146,8 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 10000)
     this.ticketClient
       .queryOpenTickets(
-        this.authService.currentUser?.getUserProfilesMITAsString as string,
-        "Open",
+        this.user,
+        "Open"
       )
       .subscribe((data) => {
         for (let ticket of data) {

@@ -21,5 +21,5 @@ export class Ticket {
   isOpenAble: boolean
   isNotPending: boolean
   isClosed: boolean
-  hasReadByRequestor: boolean
+  isReadByQueryTicketReporter: boolean
 }

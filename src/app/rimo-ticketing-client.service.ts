@@ -19,24 +19,29 @@ export class RimoTicketingClientService {
 
   headers = { 'content-type': 'application/json' }
 
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) { }
 
   public queryOpenTickets(
-    originMIT: string,
-    filterKey: string,
+    user: User,
+    filterKey: string
   ): Observable<Ticket[]> {
+    var contractIds: string[] = [];
+    for (let contracts of user.getUserProfiles) {
+      contractIds.push(contracts.tenant.id)
+    }
+
     const headers = { 'content-type': 'application/json' }
     var body = {
       operation: 'queryOpenTickets',
       token: this.token,
       appName: null,
       tsSend: null,
-
       tsReceived: null,
       queue: null,
       asOop: null,
       errorText: null,
-      requestBody: { originMIT: 'MIT_Powerlines_SM', filterKey: filterKey },
+      requestBody: { externalIDContracts: contractIds, filterKey: filterKey, userNameTicketingUser: user.user },
       responseBody: {},
     }
     return this.http.post<Ticket[]>(this.url, body, {
@@ -60,13 +65,8 @@ export class RimoTicketingClientService {
   public createTicket(
     text: string,
     subject: string,
-    originMIT: string,
     prio: string,
-    type: string,
-    firstName: string,
-    lastName: string,
-    email: string,
-    mobile: string,
+    contract: string,
     reporter: User,
   ): Observable<Ticket> {
     var body = {
@@ -81,13 +81,9 @@ export class RimoTicketingClientService {
       requestBody: {
         htmlText: text,
         subject: subject,
-        originMIT: 'MIT_Powerlines_SM',
+        externalIDContract: contract,
         prio: prio,
-        firstName: reporter.christianName,
-        lastName: reporter.lastName,
-        email: reporter.email,
-        mobile: reporter.mobile,
-        type: type,
+        userNameTicketingUser: reporter.user
       },
       responseBody: {},
     }

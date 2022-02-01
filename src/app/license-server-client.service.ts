@@ -12,11 +12,11 @@ export class LicenseServerClientService {
   private url =
     'https://' +
     (environment.apiLicenseServer as string) +
-    '/api/MIT/SDRimoWebGlobalLicenseRestService'
+    '/api/DevGenesis/SDRimoGlobalLicenseRestService'
 
   private token: String = environment.apiLicenseServerToken as string
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   async loginUser(user: User): Promise<Observable<any>> {
     const headers = { 'content-type': 'application/json' }

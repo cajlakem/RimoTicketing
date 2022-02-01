@@ -22,7 +22,7 @@ export class ReopenModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthserviceService,
     private httpTicketingClient: RimoTicketingClientService,
-  ) {}
+  ) { }
 
   get f() {
     return this.createCommentForm.controls
@@ -49,7 +49,7 @@ export class ReopenModalComponent implements OnInit {
         .reOpenTicket(
           this.forTicket.name,
           myFormData.get('text') as string,
-          user.getUserProfilesMITAsString!,
+          "asd",
           user.christianName,
           user.lastName,
         )

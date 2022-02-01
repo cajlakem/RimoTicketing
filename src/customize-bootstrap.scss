@@ -20,6 +20,11 @@ $form-floating-padding-x: 0;
 @import 'node_modules/bootstrap/scss/alert';
 @import 'node_modules/bootstrap/scss/buttons';
 
+#changePassword mat-form-field {
+  display: block;
+  color: #000000;
+}
+
 .dataTables_filter label {
   display: none;
 }

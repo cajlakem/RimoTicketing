@@ -1,3 +1,5 @@
+import { UserProfile } from "./UserProfile"
+
 export class User {
   id: string
   user: string
@@ -9,8 +11,9 @@ export class User {
   mobile: string
   password: string
   nameToDisplay: string
-  getUserProfilesMITAsString: string | null
   profilePictureUrl: string
+  lastLogin: number
+  getUserProfiles: UserProfile[]
 
   public getInitials(): string {
     return this.christianName.charAt(0) + this.lastName.charAt(0)!

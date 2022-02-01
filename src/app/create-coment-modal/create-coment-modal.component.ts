@@ -21,7 +21,7 @@ export class CreateComentModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthserviceService,
     private httpTicketingClient: RimoTicketingClientService,
-  ) {}
+  ) { }
 
   get f() {
     return this.createCommentForm.controls
@@ -48,7 +48,7 @@ export class CreateComentModalComponent implements OnInit {
         .createNote(
           myFormData.get('text') as string,
           this.forTicket.name,
-          user.getUserProfilesMITAsString!,
+          "asd",
           user.christianName,
           user.lastName,
         )

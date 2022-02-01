@@ -50,6 +50,7 @@ export class TicketComponent implements OnInit, OnDestroy {
       this.ticket = Object.assign(new Ticket(), data)
       this.bcs.pasivateBreadCrumbId(this.ticket)
       this.bcs.sendUpdate(this.ticket);
+      $('#newTicketContact').modal('show')
     })
   }
 

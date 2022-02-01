@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   invalidCredentialMsg: string
   pwdRequestedMsg: string
   retUrl: any = 'tickets'
+  user: User
 
   isLoginFailed() {
     return this.invalidCredentialMsg == null
@@ -43,6 +44,8 @@ export class LoginComponent implements OnInit {
 
       try {
         await this.userauth.loginUser(myFormData)
+        var user: User = this.userauth.getCurrentUser()
+
         this.router.navigateByUrl(this.retUrl)
       } catch (error) {
         const e = error as Error
@@ -52,6 +55,7 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit(): void {
     if (this.userauth.isLoggedIn()) {
+
       this.router.navigate([this.retUrl])
     }
     this.invalidCredentialMsg = ''
