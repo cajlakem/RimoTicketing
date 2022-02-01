@@ -40,15 +40,16 @@ export class ChangePasswordModalComponent implements OnInit {
     if (this.submitted) {
 
     }
-
-    handleCreationResponse(ticket: Ticket) {
-      this.stateChanged.emit(ticket)
-      $('#newTicketContact').modal('hide')
-      this.ngOnInit()
-    }
-
-    handleCreationErrorResponse(error: any) {
-      const u = error as HttpErrorResponse
-      this.errorMsg = Object.values(u.error)[0] as string
-    }
   }
+  handleCreationResponse(ticket: Ticket) {
+    this.stateChanged.emit(ticket)
+    $('#changePassword').modal('hide')
+    this.ngOnInit()
+  }
+
+  handleCreationErrorResponse(error: any) {
+    const u = error as HttpErrorResponse
+    this.errorMsg = Object.values(u.error)[0] as string
+  }
+
+}

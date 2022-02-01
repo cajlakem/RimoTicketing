@@ -31,7 +31,7 @@ export class CreateTicketComponent implements OnInit {
   errorMsg: string
   retUrl: any = 'tickets'
   user: User = this.authService.getCurrentUser()
-  contracts: any = this.user.getUserProfilesMITAsString?.split(", ")
+  contracts: any = this.user.getUserProfiles
 
 
   get f() {
@@ -44,6 +44,7 @@ export class CreateTicketComponent implements OnInit {
       prio: ['', [Validators.required]],
       shortDsc: ['', [Validators.required]],
       longDsc: ['', [Validators.required]],
+      originMIT: ['', [Validators.required]],
     })
   }
 
@@ -57,6 +58,7 @@ export class CreateTicketComponent implements OnInit {
       myFormData.append('prio', this.registerForm.value.prio)
       myFormData.append('shortDsc', this.registerForm.value.shortDsc)
       myFormData.append('longDsc', this.registerForm.value.longDsc)
+      myFormData.append('originMIT', this.registerForm.value.originMT)
       if (this.createTicket(myFormData) === null) {
         this.router.navigateByUrl(this.retUrl)
       } else this.errorMsg = 'Failed to create Ticket!'
@@ -72,14 +74,9 @@ export class CreateTicketComponent implements OnInit {
       .createTicket(
         fd.get('longDsc') as string,
         fd.get('shortDsc') as string,
-        fd.get('originMIT') as string,
         fd.get('prio') as string,
-        fd.get('type') as string,
-        fd.get('firstName') as string,
-        fd.get('lastName') as string,
-        fd.get('email') as string,
-        fd.get('mobile') as string,
-        this.authService.getCurrentUser(),
+        fd.get('originMIT') as string,
+        this.user
       )
       .subscribe({
         next: (ticket) => this.handleCreationResponse(ticket),
