@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
+import { Contact } from './_models/Contact'
 import { Reporter } from './_models/Reporter'
 import { Ticket } from './_models/Ticket'
 import { User } from './_models/User'
@@ -95,7 +96,7 @@ export class RimoTicketingClientService {
 
   public deleteTicket(ticketID: string): Observable<Ticket> {
     var body = {
-      operation: 'deleteTicket',
+      operation: 'discardTicket',
       token: this.token,
 
       requestBody: {
@@ -193,17 +194,17 @@ export class RimoTicketingClientService {
     })
   }
 
-  public queryContacts(contract: string): Observable<Reporter[]> {
+  public queryContacts(contract: string): Observable<Contact[]> {
     var body = {
       operation: 'queryContacts',
       token: this.token,
       requestBody: {
         externalIDContract: contract,
       },
-      responseBody: {},
+      responseBody: {}
     }
 
-    return this.http.post<Reporter[]>(this.url, body, {
+    return this.http.post<Contact[]>(this.url, body, {
       headers: this.headers,
     })
   }

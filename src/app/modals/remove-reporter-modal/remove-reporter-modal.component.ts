@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { AuthserviceService } from 'src/app/authservice.service';
 import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service';
+import { Contact } from 'src/app/_models/Contact';
 import { Reporter } from 'src/app/_models/Reporter';
 import { Ticket } from 'src/app/_models/Ticket';
 
@@ -19,7 +20,7 @@ export class RemoveReporterModalComponent implements OnInit {
   submitted: boolean = false;
   error: boolean = false
   contacts = new FormControl();
-  contactList: Reporter[];
+  contactList: Contact[];
   errorMsg: string;
 
   constructor(

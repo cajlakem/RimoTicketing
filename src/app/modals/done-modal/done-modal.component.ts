@@ -24,7 +24,7 @@ export class DoneModalComponent implements OnInit {
   }
 
   onSubmit() {
-    this.httpTicketingClient.closeTicket(this.authService.getCurrentUser().user, this.forTicket.name).subscribe({
+    this.httpTicketingClient.closeTicket(this.authService.getCurrentUser().user, this.forTicket.id).subscribe({
       next: (ticket) => this.handleCreationResponse(ticket),
       error: (error) => this.handleCreationErrorResponse(error),
     })

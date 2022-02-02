@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { error } from 'jquery';
 import { AuthserviceService } from 'src/app/authservice.service';
 import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service';
+import { Contact } from 'src/app/_models/Contact';
 import { Reporter } from 'src/app/_models/Reporter';
 import { Ticket } from 'src/app/_models/Ticket';
 
@@ -20,7 +21,7 @@ export class NewRequestorModalComponent implements OnInit {
   submitted: boolean = false;
   error: boolean = false
   contacts = new FormControl();
-  contactList: Reporter[];
+  contactList: Contact[];
   errorMsg: string;
 
   constructor(
@@ -30,8 +31,6 @@ export class NewRequestorModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.forTicket.getTicketingContract.externalID);
-
     this.httpTicketingClient.queryContacts(this.forTicket.getTicketingContract.externalID).subscribe((data) => {
       this.contactList = data;
     })

@@ -47,7 +47,7 @@ export class ReopenModalComponent implements OnInit {
       var user: User = this.authService.getCurrentUser()
       this.httpTicketingClient
         .reOpenTicket(
-          this.forTicket.name,
+          this.forTicket.id,
           myFormData.get('text') as string,
           user.user
         )

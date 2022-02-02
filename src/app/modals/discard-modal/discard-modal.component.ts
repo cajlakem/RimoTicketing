@@ -28,7 +28,7 @@ export class DiscardModalComponent implements OnInit {
   }
 
   onSubmit() {
-    this.httpTicketingClient.deleteTicket(this.forTicket.name).subscribe({
+    this.httpTicketingClient.deleteTicket(this.forTicket.id).subscribe({
       next: () => this.handleCreationResponse(),
       error: (error) => this.handleCreationErrorResponse(error),
     })

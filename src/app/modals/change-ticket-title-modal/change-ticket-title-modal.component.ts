@@ -41,7 +41,7 @@ export class ChangeTicketTitleModalComponent implements OnInit {
     if (this.submitted) {
       this.httpTicketingClient
         .changeTicketTitle(
-          this.forTicket.name,
+          this.forTicket.id,
           this.registerForm.value.username,
         )
         .subscribe({
@@ -60,7 +60,7 @@ export class ChangeTicketTitleModalComponent implements OnInit {
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
-    this.ngOnInit()
+    $('#changeTitelModal').modal('hide')
   }
 
   handleCreationErrorResponse(error: any) {

@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { AuthserviceService } from 'src/app/authservice.service'
 import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service'
+import { Contact } from 'src/app/_models/Contact'
 import { Reporter } from 'src/app/_models/Reporter'
 import { Ticket } from 'src/app/_models/Ticket'
 import { User } from 'src/app/_models/User'
@@ -23,7 +24,7 @@ export class AssignReporterModalComponent implements OnInit {
   submitted: boolean = false;
   error: boolean = false
   contacts = new FormControl();
-  contactList: Reporter[];
+  contactList: Contact[];
   errorMsg: string;
 
   constructor(
@@ -36,7 +37,6 @@ export class AssignReporterModalComponent implements OnInit {
   ngOnInit(): void {
     this.httpTicketingClient.queryContacts('').subscribe((data) => {
       this.contactList = data;
-      console.log(this.contactList);
     });
   }
   getErrorMessage() {

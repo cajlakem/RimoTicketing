@@ -95,14 +95,14 @@
         <div class="row">
           <div class="col-3 align-self-center">
             <ngx-avatar size="35" name="{{
-                !ticket.requestor ? '' : ticket.requestor.nameToDisplay
+                !ticket.requestor ? '' : ticket.requestor.christianName
               }}"></ngx-avatar>
           </div>
 
           <div class="col text-center">
             <div class="row small text-muted">Reporter</div>
             <div class="row">
-              {{ !ticket.requestor ? '' : ticket.requestor.nameToDisplay }}
+              {{ !ticket.requestor ? '' : ticket.requestor.christianName + " " + ticket.requestor.lastName }}
             </div>
           </div>
         </div>
@@ -202,7 +202,7 @@
                   <div class="col d-flex justify-content-start align-items-center">
                     <ngx-avatar class="mx-2" size="35" name="{{ note.createdBy.nameToDisplay }}"></ngx-avatar>
 
-                    {{ !note.createdBy ? '' : note.createdBy.nameToDisplay }}
+                    {{ !note.createdBy ? '' : note.createdBy.christianName + " " + note.createdBy.lastName }}
                   </div>
 
                   <div class="col d-flex justify-content-end">
@@ -250,20 +250,14 @@
               <th>
                 E-mail
               </th>
-              <th>
-                Telefon
-              </th>
             </tr>
             <tr *ngFor="let contact of this.ticket.contacts">
               <td>
-                <ngx-avatar class="me-2 d-inline-flex" size="35" name="{{ contact.nameToDisplay }}"></ngx-avatar>
-                {{ contact.nameToDisplay }}
+                <ngx-avatar class="me-2 d-inline-flex" size="35" name="{{ contact.getFullName() }}"></ngx-avatar>
+                {{ contact.firstName + " " + contact.lastName }}
               </td>
               <td>
                 {{ contact.email }}
-              </td>
-              <td>
-                {{ contact.mobile }}
               </td>
             </tr>
           </table>
