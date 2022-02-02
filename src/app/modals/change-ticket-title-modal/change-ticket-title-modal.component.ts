@@ -22,7 +22,7 @@ export class ChangeTicketTitleModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthserviceService,
     private httpTicketingClient: RimoTicketingClientService,
-  ) {}
+  ) { }
 
   registerForm: any = FormGroup
 
@@ -60,7 +60,6 @@ export class ChangeTicketTitleModalComponent implements OnInit {
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
-
     this.ngOnInit()
   }
 
