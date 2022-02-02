@@ -20,14 +20,18 @@
       <div class="col">
         <div class="form-floating mb-3">
           <div class="form-control shadow rounded-3 ps-2" *ngIf="contracts.length == 1">
-            <option *ngFor="let contract of contracts" [value]="contract" formControlName="originMIT">
-              {{contract.tenant.nameToDisplay}}
-            </option>
+            <select formControlName="originMIT" *ngIf="contracts.length == 1" class="form-select shadow rounded-3"
+              id="floatingSelect" [ngClass]="{ 'is-invalid': submitted && f.prio.errors }"
+              aria-label="Floating label select example">
+              <option *ngFor="let contract of contracts" [value]="contract.tenant.id">
+                {{contract.tenant.nameToDisplay}}
+              </option>
+            </select>
           </div>
-          <select *ngIf="contracts.length > 1" class="form-select shadow rounded-3" id="floatingSelect"
-            formControlName="originMIT" [ngClass]="{ 'is-invalid': submitted && f.prio.errors }"
+          <select formControlName="originMIT" *ngIf="contracts.length > 1" class="form-select shadow rounded-3"
+            id="floatingSelect" [ngClass]="{ 'is-invalid': submitted && f.prio.errors }"
             aria-label="Floating label select example">
-            <option *ngFor="let contract of contracts" [value]="contract">
+            <option *ngFor="let contract of contracts" [value]="contract.tenant.id">
               {{contract.tenant.nameToDisplay}}
             </option>
           </select>

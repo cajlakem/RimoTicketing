@@ -16,14 +16,15 @@ export class DoneModalComponent implements OnInit {
   @Input()
   forTicket: Ticket
   errorMsg: string
-  constructor(private httpTicketingClient: RimoTicketingClientService) {}
+  constructor(private httpTicketingClient: RimoTicketingClientService,
+    private authService: AuthserviceService) { }
 
   ngOnInit(): void {
     this.errorMsg = ''
   }
 
   onSubmit() {
-    this.httpTicketingClient.closeTicket(this.forTicket.name).subscribe({
+    this.httpTicketingClient.closeTicket(this.authService.getCurrentUser().user, this.forTicket.name).subscribe({
       next: (ticket) => this.handleCreationResponse(ticket),
       error: (error) => this.handleCreationErrorResponse(error),
     })

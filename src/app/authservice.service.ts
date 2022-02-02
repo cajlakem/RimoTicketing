@@ -36,7 +36,10 @@ export class AuthserviceService {
       error = Object.values(u.error)[0] as string
       throw new Error(error)
     }
-
+    if (aUser.lastLogin == 0) {
+      $('#changePassword').modal('show')
+      return
+    }
     this.currentUser = Object.assign(new User(), aUser)
     localStorage.setItem('currentUser', JSON.stringify(aUser))
     return this.currentUser

@@ -61,7 +61,8 @@
                   {{ invalidCredentialMsg }}
                 </div>
                 <div class="mt-5 d-flex justify-content-center text-muted gap-2">
-                  <a href="#" class="link-success small text-muted" data-bs-toggle="modal" data-bs-target="#resetPw">
+                  <a href="#" class="link-success small text-muted" data-bs-toggle="modal"
+                    data-bs-target="#forgotPasswordModal">
                     Neues Passwort anfordern
                   </a>
                   ●
@@ -127,25 +128,6 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="resetPw" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            Hinweis
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>Bitte das Passwort in RIMO ändern.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary bg-sm" data-bs-dismiss="modal">
-            Schließen
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <app-change-password-modal></app-change-password-modal>
+  <app-forgot-password-modal></app-forgot-password-modal>

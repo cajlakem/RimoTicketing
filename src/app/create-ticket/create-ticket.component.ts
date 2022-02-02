@@ -58,7 +58,7 @@ export class CreateTicketComponent implements OnInit {
       myFormData.append('prio', this.registerForm.value.prio)
       myFormData.append('shortDsc', this.registerForm.value.shortDsc)
       myFormData.append('longDsc', this.registerForm.value.longDsc)
-      myFormData.append('originMIT', this.registerForm.value.originMT)
+      myFormData.append('originMIT', this.registerForm.value.originMIT)
       if (this.createTicket(myFormData) === null) {
         this.router.navigateByUrl(this.retUrl)
       } else this.errorMsg = 'Failed to create Ticket!'

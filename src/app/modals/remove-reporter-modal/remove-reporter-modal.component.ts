@@ -15,7 +15,7 @@ export class RemoveReporterModalComponent implements OnInit {
   @Output() stateChanged = new EventEmitter<any>()
   @Input()
   forTicket: Ticket;
-  selected: string;
+  selected: string[];
   submitted: boolean = false;
   error: boolean = false
   contacts = new FormControl();
@@ -47,21 +47,11 @@ export class RemoveReporterModalComponent implements OnInit {
       return
     }
     if (this.submitted) {
-      for (let selectedContact of this.selected) {
-        let contact = selectedContact.split(",")
-
-        this.httpTicketingClient.removeCCReporter(
-          "MIT_Powerlines_SM",
-          contact[0],
-          contact[1].trim(),
-          contact[2],
-          this.forTicket.name,
-          contact[3]
-        ).subscribe({
-          next: (ticket) => this.handleCreationResponse(ticket),
-          error: (error) => this.handleCreationErrorResponse(error),
-        })
-      }
+      this.httpTicketingClient.removeCCReporter(this.selected, this.forTicket.id
+      ).subscribe({
+        next: (ticket) => this.handleCreationResponse(ticket),
+        error: (error) => this.handleCreationErrorResponse(error),
+      })
     }
   }
 

@@ -49,9 +49,7 @@ export class ReopenModalComponent implements OnInit {
         .reOpenTicket(
           this.forTicket.name,
           myFormData.get('text') as string,
-          "asd",
-          user.christianName,
-          user.lastName,
+          user.user
         )
         .subscribe({
           next: (ticket) => this.handleCreationResponse(ticket),

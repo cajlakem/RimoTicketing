@@ -1,9 +1,11 @@
+import { Contract } from './Contract'
 import { EnumList } from './EnumList'
 import { Reporter } from './Reporter'
 import { TicketComment } from './TicketComment'
 import { User } from './User'
 
 export class Ticket {
+  [x: string]: any
   id: string
   state: EnumList
   name: string
@@ -22,4 +24,5 @@ export class Ticket {
   isNotPending: boolean
   isClosed: boolean
   isReadByQueryTicketReporter: boolean
+  getTicketingContract: Contract
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthserviceService } from '../authservice.service'
-import { Router, ActivatedRoute } from '@angular/router'
+import { Router } from '@angular/router'
 import { User } from '../_models/User'
 
 @Component({
@@ -14,7 +14,6 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userauth: AuthserviceService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
   ) { }
   registerForm: any = FormGroup
   submitted = false
@@ -44,8 +43,6 @@ export class LoginComponent implements OnInit {
 
       try {
         await this.userauth.loginUser(myFormData)
-        var user: User = this.userauth.getCurrentUser()
-
         this.router.navigateByUrl(this.retUrl)
       } catch (error) {
         const e = error as Error
@@ -55,7 +52,6 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit(): void {
     if (this.userauth.isLoggedIn()) {
-
       this.router.navigate([this.retUrl])
     }
     this.invalidCredentialMsg = ''

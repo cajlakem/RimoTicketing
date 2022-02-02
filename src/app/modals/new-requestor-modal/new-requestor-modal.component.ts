@@ -30,10 +30,12 @@ export class NewRequestorModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.httpTicketingClient.queryContacts('').subscribe((data) => {
+    console.log(this.forTicket.getTicketingContract.externalID);
+
+    this.httpTicketingClient.queryContacts(this.forTicket.getTicketingContract.externalID).subscribe((data) => {
       this.contactList = data;
-  })
-}
+    })
+  }
 
   getErrorMessage() {
     if (this.contacts.hasError('required')) {
@@ -42,26 +44,22 @@ export class NewRequestorModalComponent implements OnInit {
     return this.contacts.hasError('email') ? 'Not a valid email' : '';
   }
 
-  onSubmit() { 
+  onSubmit() {
     this.submitted = true;
     this.contacts.markAllAsTouched()
     if (this.contacts.invalid) {
       return
     }
-    if (this.submitted) { 
-    let contact = this.selected.split(",")
-    this.httpTicketingClient.changeTicketRequestor(
-      '',
-      contact[0],
-      contact[1],
-      contact[2],
-      this.forTicket.name,
-      contact[3]
-    ).subscribe({
-      next: (ticket) => this.handleCreationResponse(ticket),
-      error: (error) => this.handleCreationErrorResponse(error),
-    })
-  }
+    if (this.submitted) {
+      let contact = this.selected.split(",")
+      this.httpTicketingClient.changeTicketRequestor(
+        contact,
+        this.forTicket.name,
+      ).subscribe({
+        next: (ticket) => this.handleCreationResponse(ticket),
+        error: (error) => this.handleCreationErrorResponse(error),
+      })
+    }
   }
 
   handleCreationResponse(ticket: Ticket) {

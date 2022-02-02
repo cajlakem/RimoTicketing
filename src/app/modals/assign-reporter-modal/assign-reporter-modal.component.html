@@ -11,8 +11,7 @@
         <mat-form-field appearance="fill">
           <mat-label>Kontakte</mat-label>
           <mat-select [(value)]="selected" [formControl]="contacts" required multiple>
-            <mat-option *ngFor="let contact of contactList"
-              [value]="contact.christianName + ',' + contact.lastName + ',' + contact.email + ',' + contact.mobile">
+            <mat-option *ngFor="let contact of contactList" [value]="contact">
               {{contact.christianName + ' ' + contact.lastName}}
             </mat-option>
           </mat-select>

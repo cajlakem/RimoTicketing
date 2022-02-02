@@ -37,7 +37,6 @@ export class AssignReporterModalComponent implements OnInit {
     this.httpTicketingClient.queryContacts('').subscribe((data) => {
       this.contactList = data;
       console.log(this.contactList);
-
     });
   }
   getErrorMessage() {
@@ -57,12 +56,8 @@ export class AssignReporterModalComponent implements OnInit {
       for (let selectedContact of this.selected) {
         let contact = selectedContact.split(",")
         this.httpTicketingClient.addCCReporter(
-          "MIT_Powerlines_SM",
-          contact[0],
-          contact[1],
-          contact[2],
+          contact,
           this.forTicket.name,
-          contact[3]
         ).subscribe({
           next: (ticket) => this.handleCreationResponse(ticket),
           error: (error) => this.handleCreationErrorResponse(error),

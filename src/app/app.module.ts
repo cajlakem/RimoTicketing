@@ -39,7 +39,8 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input';
 import { RemoveReporterModalComponent } from './modals/remove-reporter-modal/remove-reporter-modal.component';
 import { NewRequestorModalComponent } from './modals/new-requestor-modal/new-requestor-modal.component';
-import { ChangePasswordModalComponent } from './modals/change-password-modal/change-password-modal.component'
+import { ChangePasswordModalComponent } from './modals/change-password-modal/change-password-modal.component';
+import { ForgotPasswordModalComponent } from './modals/forgot-password-modal/forgot-password-modal.component'
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { ChangePasswordModalComponent } from './modals/change-password-modal/cha
     RemoveReporterModalComponent,
     NewRequestorModalComponent,
     ChangePasswordModalComponent,
+    ForgotPasswordModalComponent,
   ],
   imports: [
     BrowserModule,

@@ -28,6 +28,7 @@ export class CreateComentModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.forTicket);
     this.errorMsg = ''
     this.createCommentForm = this.formBuilder.group({
       text: ['', [Validators.required]],
@@ -47,10 +48,8 @@ export class CreateComentModalComponent implements OnInit {
       this.httpTicketingClient
         .createNote(
           myFormData.get('text') as string,
-          this.forTicket.name,
-          "asd",
-          user.christianName,
-          user.lastName,
+          this.forTicket.id,
+          user.user
         )
         .subscribe({
           next: (ticket) => this.handleCreationResponse(ticket),

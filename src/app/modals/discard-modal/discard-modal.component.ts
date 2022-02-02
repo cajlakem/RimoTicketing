@@ -21,7 +21,7 @@ export class DiscardModalComponent implements OnInit {
   constructor(
     private httpTicketingClient: RimoTicketingClientService,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.errorMsg = ''
@@ -29,12 +29,12 @@ export class DiscardModalComponent implements OnInit {
 
   onSubmit() {
     this.httpTicketingClient.deleteTicket(this.forTicket.name).subscribe({
-      next: (ticket) => this.handleCreationResponse(ticket),
+      next: () => this.handleCreationResponse(),
       error: (error) => this.handleCreationErrorResponse(error),
     })
   }
 
-  handleCreationResponse(ticket: Ticket) {
+  handleCreationResponse() {
     this.router.navigateByUrl('/tickets')
     $('#deleteModal').modal('hide')
   }

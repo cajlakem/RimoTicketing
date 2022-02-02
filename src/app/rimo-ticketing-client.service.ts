@@ -131,9 +131,7 @@ export class RimoTicketingClientService {
   public createNote(
     text: string,
     ticketID: string,
-    originMIT: string,
-    firstName: string,
-    lastName: string,
+    username: string
   ): Observable<Ticket> {
     var body = {
       operation: 'addCommentToTicket',
@@ -148,9 +146,7 @@ export class RimoTicketingClientService {
         htmlCommentText: text,
         ticketID: ticketID,
         sendMail: true,
-        originMIT: 'MIT_Powerlines_SM',
-        firstName: firstName,
-        lastName: lastName,
+        userNameTicketingUser: username
       },
       responseBody: {},
     }
@@ -163,9 +159,7 @@ export class RimoTicketingClientService {
   public reOpenTicket(
     ticketID: string,
     rejectText: string,
-    originMIT: string,
-    firstName: string,
-    lastName: string,
+    user: string
   ): Observable<Ticket> {
     var body = {
       operation: 'reOpenTicket',
@@ -173,9 +167,7 @@ export class RimoTicketingClientService {
       requestBody: {
         ticketID: ticketID,
         rejectText: rejectText,
-        originMIT: 'MIT_Powerlines_SM',
-        firstName: firstName,
-        lastName: lastName,
+        userNameTicketingUser: user
       },
       responseBody: {},
     }
@@ -185,12 +177,13 @@ export class RimoTicketingClientService {
     })
   }
 
-  public closeTicket(ticketID: string): Observable<Ticket> {
+  public closeTicket(user: string, ticketID: string): Observable<Ticket> {
     var body = {
       operation: 'closeTicket',
       token: this.token,
       requestBody: {
         ticketID: ticketID,
+        userNameTicketingUser: user
       },
       responseBody: {},
     }
@@ -200,12 +193,12 @@ export class RimoTicketingClientService {
     })
   }
 
-  public queryContacts(originMIT: string): Observable<Reporter[]> {
+  public queryContacts(contract: string): Observable<Reporter[]> {
     var body = {
       operation: 'queryContacts',
       token: this.token,
       requestBody: {
-        originMIT: 'MIT_Powerlines_SM',
+        externalIDContract: contract,
       },
       responseBody: {},
     }
@@ -216,23 +209,15 @@ export class RimoTicketingClientService {
   }
 
   public changeTicketRequestor(
-    originMIT: string,
-    firstName: string,
-    lastName: string,
-    email: string,
-    ticketID: string,
-    mobile: string,
+    usernames: string[],
+    ticketID: string
   ): Observable<Ticket> {
     var body = {
       operation: 'changeTicketRequestor',
       token: this.token,
       requestBody: {
-        originMIT: 'MIT_Powerlines_SM',
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
+        userNameTicketingUser: usernames,
         ticketID: ticketID,
-        mobile: mobile,
       },
       responseBody: {},
     }
@@ -243,21 +228,15 @@ export class RimoTicketingClientService {
   }
 
   public addCCReporter(
-    originMIT: 'MIT_Powerlines_SM',
-    firstName: string,
-    lastName: string,
-    email: string,
+    usernames: string[],
     ticketID: string,
-    mobile: string,
   ): Observable<Ticket> {
     var body = {
       operation: 'addCCReporter',
       token: this.token,
       requestBody: {
         ticketID: ticketID,
-        reporters: [
-          { firstName: firstName, lastName: lastName, company: originMIT },
-        ],
+        reporters: usernames,
       },
       responseBody: {},
     }
@@ -268,26 +247,41 @@ export class RimoTicketingClientService {
   }
 
   public removeCCReporter(
-    originMIT: string,
-    firstName: string,
-    lastName: string,
-    email: string,
+    usernames: string[],
     ticketID: string,
-    mobile: string,
   ): Observable<Ticket> {
     var body = {
       operation: 'removeCCReporter',
       token: this.token,
       requestBody: {
         ticketID: ticketID,
-        reporters: [
-          { firstName: firstName, lastName: lastName, company: originMIT },
-        ],
+        userNameTicketingUsers: usernames,
       },
       responseBody: {},
     }
 
     return this.http.post<Ticket>(this.url, body, {
+      headers: this.headers,
+    })
+  }
+  public lostPassword(username: string, email: string): Observable<User> {
+    let body = {
+      operation: 'forgotPassword',
+      token: this.token,
+      appName: null,
+      tsSend: null,
+      tsReceived: null,
+      queue: null,
+      asOop: null,
+      errorText: null,
+      requestBody: {
+        userName: username,
+        userEmail: email
+      },
+      responseBody: {},
+    }
+
+    return this.http.post<User>(this.url, body, {
       headers: this.headers,
     })
   }
