@@ -55,7 +55,6 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.filterKey = lsk as string
     this.dtOptions = {
       pagingType: 'full_numbers',
-      retrieve: true,
       pageLength: 25,
       scrollY: '60vh',
       processing: true,
