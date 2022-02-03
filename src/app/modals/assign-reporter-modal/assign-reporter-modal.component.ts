@@ -1,13 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
-import { AuthserviceService } from 'src/app/authservice.service'
+import { FormGroup, FormControl } from '@angular/forms'
 import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service'
 import { Contact } from 'src/app/_models/Contact'
 import { Reporter } from 'src/app/_models/Reporter'
 import { Ticket } from 'src/app/_models/Ticket'
-import { User } from 'src/app/_models/User'
-
 
 
 @Component({
@@ -20,25 +17,24 @@ export class AssignReporterModalComponent implements OnInit {
   createCommentForm: any = FormGroup
   @Input()
   forTicket: Ticket;
-  selected: string;
+  selected: string[];
   submitted: boolean = false;
   error: boolean = false
   contacts = new FormControl();
+  @Input()
   contactList: Contact[];
   errorMsg: string;
 
+
   constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthserviceService,
-    private httpTicketingClient: RimoTicketingClientService,
+    private httpTicketingClient: RimoTicketingClientService
   ) { }
 
 
   ngOnInit(): void {
-    this.httpTicketingClient.queryContacts('').subscribe((data) => {
-      this.contactList = data;
-    });
+    this.contactList.filter(contact => contact.userName !== this.forTicket.requestor.userName)
   }
+
   getErrorMessage() {
     if (this.contacts.hasError('required')) {
       return 'Neue Kontakte auswählen';
@@ -47,29 +43,26 @@ export class AssignReporterModalComponent implements OnInit {
   }
 
   onSubmit() {
+
     this.submitted = true;
     this.contacts.markAllAsTouched()
     if (this.contacts.invalid) {
       return
     }
     if (this.submitted) {
-      for (let selectedContact of this.selected) {
-        let contact = selectedContact.split(",")
-        this.httpTicketingClient.addCCReporter(
-          contact,
-          this.forTicket.name,
-        ).subscribe({
-          next: (ticket) => this.handleCreationResponse(ticket),
-          error: (error) => this.handleCreationErrorResponse(error),
-        })
-      }
+      this.httpTicketingClient.addCCReporter(
+        this.selected,
+        this.forTicket.id,
+      ).subscribe({
+        next: (ticket) => this.handleCreationResponse(ticket),
+        error: (error) => this.handleCreationErrorResponse(error),
+      })
     }
   }
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
     $('#newTicketContact').modal('hide')
-    this.ngOnInit()
   }
 
   handleCreationErrorResponse(error: any) {
