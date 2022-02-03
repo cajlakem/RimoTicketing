@@ -3,6 +3,7 @@ export class Contact {
     firstName: string
     lastName: string
     email: string
+    mobile: string
 
     public getInitials(): string {
         return this.firstName.charAt(0) + this.lastName.charAt(0)

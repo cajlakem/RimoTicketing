@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit, Output } from '@angular/core'
 import { Ticket } from '../_models/Ticket'
-import { CKEditorModule } from 'ckeditor4-angular'
 import { TicketComment } from '../_models/TicketComment'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
@@ -9,6 +8,8 @@ import { Reporter } from '../_models/Reporter'
 import { User } from '../_models/User'
 import { RimoTicketingClientService } from '../rimo-ticketing-client.service'
 import { AuthserviceService } from '../authservice.service'
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 
 @Component({
   selector: 'app-create-ticket',
@@ -16,6 +17,7 @@ import { AuthserviceService } from '../authservice.service'
   styleUrls: ['./create-ticket.component.css'],
 })
 export class CreateTicketComponent implements OnInit {
+  public editorData = '<p>Hello, world!</p>';
   public msg: string | null
 
   constructor(
@@ -58,7 +60,14 @@ export class CreateTicketComponent implements OnInit {
       myFormData.append('prio', this.registerForm.value.prio)
       myFormData.append('shortDsc', this.registerForm.value.shortDsc)
       myFormData.append('longDsc', this.registerForm.value.longDsc)
-      myFormData.append('originMIT', this.registerForm.value.originMIT)
+      if (this.registerForm.originMIT) {
+        myFormData.append('originMIT', this.registerForm.value.originMIT)
+        console.log("formfield eists");
+
+      } else {
+        myFormData.append('originMIT', (<HTMLInputElement>document.getElementById("originMIT")).innerHTML)
+        console.log("works");
+      }
       if (this.createTicket(myFormData) === null) {
         this.router.navigateByUrl(this.retUrl)
       } else this.errorMsg = 'Failed to create Ticket!'

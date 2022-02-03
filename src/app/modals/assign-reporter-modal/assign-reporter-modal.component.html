@@ -9,7 +9,7 @@
       </div>
       <div class="modal-body">
         <mat-form-field appearance="fill">
-          <mat-label>Kontakte</mat-label>
+          <mat-label class="text-dark">Kontakte</mat-label>
           <mat-select [(value)]="selected" [formControl]="contacts" required multiple>
             <mat-option *ngFor="let contact of contactList" [value]="contact.userName">
               {{contact.firstName + ' ' + contact.lastName}}

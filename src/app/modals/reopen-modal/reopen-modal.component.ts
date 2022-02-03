@@ -60,7 +60,6 @@ export class ReopenModalComponent implements OnInit {
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
-
     $('#reopenModal').modal('hide')
     this.ngOnInit()
   }

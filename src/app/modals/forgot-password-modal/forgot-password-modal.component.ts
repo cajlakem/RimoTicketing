@@ -34,8 +34,6 @@ export class ForgotPasswordModalComponent implements OnInit {
   async onSubmit() {
     this.submitted = true
     if (this.registerForm.invalid) {
-      console.log("test");
-
       return
     }
     if (this.submitted) {

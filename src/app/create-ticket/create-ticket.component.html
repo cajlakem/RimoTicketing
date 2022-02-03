@@ -20,13 +20,9 @@
       <div class="col">
         <div class="form-floating mb-3">
           <div class="form-control shadow rounded-3 ps-2" *ngIf="contracts.length == 1">
-            <select formControlName="originMIT" *ngIf="contracts.length == 1" class="form-select shadow rounded-3"
-              id="floatingSelect" [ngClass]="{ 'is-invalid': submitted && f.prio.errors }"
-              aria-label="Floating label select example">
-              <option *ngFor="let contract of contracts" [value]="contract.tenant.id">
-                {{contract.tenant.nameToDisplay}}
-              </option>
-            </select>
+            <div id="originMIT" *ngFor="let contract of contracts">
+              {{contract.tenant.nameToDisplay}}
+            </div>
           </div>
           <select formControlName="originMIT" *ngIf="contracts.length > 1" class="form-select shadow rounded-3"
             id="floatingSelect" [ngClass]="{ 'is-invalid': submitted && f.prio.errors }"
@@ -84,13 +80,7 @@
         <label class="from-label text-muted small">
           Langbeschreibung:
         </label>
-        <ckeditor class="shadow rounded-3" [config]="{
-            height: '400px',
-            filebrowserUploadUrl:
-              'https://rimo-dev.rimo-saas.com/soap/ckupload.php',
-            filebrowserImageUploadUrl:
-              'https://rimo-dev.rimo-saas.com/soap/ckupload.php'
-          }" formControlName="longDsc" [ngClass]="{ 'is-invalid': submitted && f.longDsc.errors }"></ckeditor>
+        <ckeditor [data]="editorData" ...></ckeditor>
       </div>
     </div>
     <div class="row">

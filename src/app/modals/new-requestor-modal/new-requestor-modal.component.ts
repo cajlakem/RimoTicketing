@@ -21,19 +21,15 @@ export class NewRequestorModalComponent implements OnInit {
   submitted: boolean = false;
   error: boolean = false
   contacts = new FormControl();
+  @Input()
   contactList: Contact[];
   errorMsg: string;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthserviceService,
-    private httpTicketingClient: RimoTicketingClientService,
+    private httpTicketingClient: RimoTicketingClientService
   ) { }
 
   ngOnInit(): void {
-    this.httpTicketingClient.queryContacts(this.forTicket.getTicketingContract.externalID).subscribe((data) => {
-      this.contactList = data;
-    })
   }
 
   getErrorMessage() {
@@ -50,10 +46,9 @@ export class NewRequestorModalComponent implements OnInit {
       return
     }
     if (this.submitted) {
-      let contact = this.selected.split(",")
       this.httpTicketingClient.changeTicketRequestor(
-        contact,
-        this.forTicket.name,
+        this.selected,
+        this.forTicket.id,
       ).subscribe({
         next: (ticket) => this.handleCreationResponse(ticket),
         error: (error) => this.handleCreationErrorResponse(error),

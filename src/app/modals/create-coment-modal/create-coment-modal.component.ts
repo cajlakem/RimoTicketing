@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { AuthserviceService } from '../authservice.service'
-import { RimoTicketingClientService } from '../rimo-ticketing-client.service'
-import { Ticket } from '../_models/Ticket'
-import { User } from '../_models/User'
+import { AuthserviceService } from 'src/app/authservice.service'
+import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service'
+import { Ticket } from 'src/app/_models/Ticket'
+import { User } from 'src/app/_models/User'
 
 @Component({
   selector: 'app-create-coment-modal',
@@ -28,7 +28,6 @@ export class CreateComentModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.forTicket);
     this.errorMsg = ''
     this.createCommentForm = this.formBuilder.group({
       text: ['', [Validators.required]],

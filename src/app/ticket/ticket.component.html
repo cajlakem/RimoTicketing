@@ -95,14 +95,14 @@
         <div class="row">
           <div class="col-3 align-self-center">
             <ngx-avatar size="35" name="{{
-                !ticket.requestor ? '' : ticket.requestor.christianName
+                !ticket.requestor ? '' : ticket.requestor.nameToDisplay
               }}"></ngx-avatar>
           </div>
 
           <div class="col text-center">
             <div class="row small text-muted">Reporter</div>
             <div class="row">
-              {{ !ticket.requestor ? '' : ticket.requestor.christianName + " " + ticket.requestor.lastName }}
+              {{ !ticket.requestor ? '' : ticket.requestor.name + " " + ticket.requestor.lastName }}
             </div>
           </div>
         </div>
@@ -250,6 +250,9 @@
               <th>
                 E-mail
               </th>
+              <th>
+                Telefon
+              </th>
             </tr>
             <tr *ngFor="let contact of this.ticket.contacts">
               <td>
@@ -258,6 +261,9 @@
               </td>
               <td>
                 {{ contact.email }}
+              </td>
+              <td>
+                {{ contact.mobile }}
               </td>
             </tr>
           </table>
@@ -271,9 +277,10 @@
 <app-discard-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-discard-modal>
 <app-done-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-done-modal>
 <app-reopen-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-reopen-modal>
-<app-assign-reporter-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-assign-reporter-modal>
+<app-assign-reporter-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket" [contactList]="queryContacts">
+</app-assign-reporter-modal>
 <app-change-ticket-title-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket">
 </app-change-ticket-title-modal>
-<app-assign-reporter-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-assign-reporter-modal>
-<app-new-requestor-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-new-requestor-modal>
+<app-new-requestor-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket" [contactList]="queryContacts">
+</app-new-requestor-modal>
 <app-remove-reporter-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-remove-reporter-modal>

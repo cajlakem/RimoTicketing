@@ -8,6 +8,7 @@ export class Reporter {
   department: string
   asOop: BigInteger
   lastName: string
+  userName: string
 
   public getInitials(): string {
     return this.christianName.charAt(0) + this.name.charAt(0)

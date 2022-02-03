@@ -12,6 +12,9 @@ import * as bootstrap from 'bootstrap'
 import { TicketComment } from '../_models/TicketComment'
 import { tick } from '@angular/core/testing'
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component'
+import { Contact } from '../_models/Contact'
+import { LicenseServerClientService } from '../license-server-client.service'
+import { AuthserviceService } from '../authservice.service'
 
 @Component({
   selector: 'app-ticket',
@@ -24,6 +27,7 @@ export class TicketComponent implements OnInit, OnDestroy {
   bcsSubscrpition: any
   subscription: Subscription
   ticket: Ticket = new Ticket()
+  queryContacts: Contact[];
 
   public editor = CKEditorModule
 
@@ -36,6 +40,7 @@ export class TicketComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private bcs: BreadCrumbService,
     private ticketingClient: RimoTicketingClientService,
+    private authService: AuthserviceService
   ) {
     this.navigationSubscription = this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
@@ -50,6 +55,16 @@ export class TicketComponent implements OnInit, OnDestroy {
       this.ticket = Object.assign(new Ticket(), data)
       this.bcs.pasivateBreadCrumbId(this.ticket)
       this.bcs.sendUpdate(this.ticket)
+      if (!this.ticket.isReadByQueryTicketReporter) {
+        this.ticketingClient.setReadWithUser(
+          this.authService.getCurrentUser().user,
+          this.ticket.id,
+        )
+      }
+      console.log(this.ticket);
+      this.ticketingClient.queryContacts(this.ticket.getTicketingContract.externalID).subscribe((data) => {
+        this.queryContacts = data;
+      })
     })
   }
 

@@ -210,15 +210,34 @@ export class RimoTicketingClientService {
   }
 
   public changeTicketRequestor(
-    usernames: string[],
+    username: string,
     ticketID: string
   ): Observable<Ticket> {
     var body = {
       operation: 'changeTicketRequestor',
       token: this.token,
       requestBody: {
-        userNameTicketingUser: usernames,
+        userNameTicketingUser: username,
         ticketID: ticketID,
+      },
+      responseBody: {},
+    }
+
+    return this.http.post<Ticket>(this.url, body, {
+      headers: this.headers,
+    })
+  }
+
+  public setReadWithUser(
+    username: string,
+    ticketID: string,
+  ): Observable<Ticket> {
+    var body = {
+      operation: 'setReadWithUser',
+      token: this.token,
+      requestBody: {
+        ticketID: ticketID,
+        userNameTicketingUsers: username,
       },
       responseBody: {},
     }
@@ -237,7 +256,7 @@ export class RimoTicketingClientService {
       token: this.token,
       requestBody: {
         ticketID: ticketID,
-        reporters: usernames,
+        userNameTicketingUsers: usernames,
       },
       responseBody: {},
     }
