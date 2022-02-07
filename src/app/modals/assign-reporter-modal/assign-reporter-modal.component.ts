@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
 import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service'
-import { Contact } from 'src/app/_models/Contact'
 import { Reporter } from 'src/app/_models/Reporter'
 import { Ticket } from 'src/app/_models/Ticket'
 
@@ -22,7 +21,7 @@ export class AssignReporterModalComponent implements OnInit {
   error: boolean = false
   contacts = new FormControl();
   @Input()
-  contactList: Contact[];
+  contactList: Reporter[];
   errorMsg: string;
 
 
@@ -32,7 +31,6 @@ export class AssignReporterModalComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.contactList.filter(contact => contact.userName !== this.forTicket.requestor.userName)
   }
 
   getErrorMessage() {

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { BreadCrumbService } from '../bread-crumb.service'
 import { BreadCrumbId } from '../_models/BreadCrumbId'
-import { RouterModule } from '@angular/router'
 import { Subscription } from 'rxjs'
 
 @Component({

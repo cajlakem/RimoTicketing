@@ -1,10 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { error } from 'jquery';
-import { AuthserviceService } from 'src/app/authservice.service';
 import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service';
-import { Contact } from 'src/app/_models/Contact';
 import { Reporter } from 'src/app/_models/Reporter';
 import { Ticket } from 'src/app/_models/Ticket';
 
@@ -22,14 +19,19 @@ export class NewRequestorModalComponent implements OnInit {
   error: boolean = false
   contacts = new FormControl();
   @Input()
-  contactList: Contact[];
+  contactList: Reporter[];
   errorMsg: string;
 
   constructor(
     private httpTicketingClient: RimoTicketingClientService
   ) { }
 
+  ngAfterViewInit() {
+    this.contactList.filter(contact => contact.userName !== this.forTicket.requestor.userName)
+  }
+
   ngOnInit(): void {
+    
   }
 
   getErrorMessage() {
@@ -40,6 +42,7 @@ export class NewRequestorModalComponent implements OnInit {
   }
 
   onSubmit() {
+    this.contactList.filter(contact => contact.userName !== this.forTicket.requestor.userName)
     this.submitted = true;
     this.contacts.markAllAsTouched()
     if (this.contacts.invalid) {

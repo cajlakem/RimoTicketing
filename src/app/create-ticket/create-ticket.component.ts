@@ -25,8 +25,10 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
   ],
 })
 export class CreateTicketComponent implements OnInit {
+  formGroupContract: string;
+  singleOriginMIT: UserProfile;
   contacts: Reporter[]
-  public ckEditorInput: any;
+  ckEditorInput: any;
   public Editor = DecoupledEditorBuild;
   public editorCfg = {}
   contractFormGroup: FormGroup;
@@ -38,6 +40,7 @@ export class CreateTicketComponent implements OnInit {
   emailFormGroup: FormGroup;
   referenceUserFormGroup: FormGroup;
   rightsFormGroup: FormGroup;
+  singleContractFormGroup: FormGroup;
 
   public onReady(editor: any) {
     editor.ui.getEditableElement().parentElement.insertBefore(
@@ -54,7 +57,9 @@ export class CreateTicketComponent implements OnInit {
     private router: Router,
     private ticketingClient: RimoTicketingClientService,
     private authService: AuthserviceService,
-  ) { }
+  ) { 
+    this.contracts.length == 1 ? this.formGroupContract = "singleContractFormGroup" : this.formGroupContract = "contractFormGroup"
+  }
 
   errorMsg: string
   retUrl: any = 'tickets'
@@ -62,7 +67,7 @@ export class CreateTicketComponent implements OnInit {
   contracts: UserProfile[] = this.user.getUserProfiles
 
   ngOnInit(): void {
-    this.contractFormGroup = this.formBuilder.group({
+    this.contractFormGroup = this.formBuilder.group({    
       contractCtrl: ['', Validators.required],
     });
     this.priorityFormGroup = this.formBuilder.group({
@@ -86,57 +91,149 @@ export class CreateTicketComponent implements OnInit {
     this.rightsFormGroup = this.formBuilder.group({
       rightsCtrl: ['', Validators.required],
     });
+    this.singleContractFormGroup = this.formBuilder.group({
+      singleCtrl: [this.contracts[0].tenant.nameToDisplay, Validators.required],
+    });
+    this.phoneFormGroup = this.formBuilder.group({
+      phoneCtrl: [],
+    });
   }
 
-  onSubmit() {
-    if (this.priorityFormGroup.value.priorityCtrl == 'User Request') {
-      if (this.contractFormGroup.invalid ||
-        this.priorityFormGroup.invalid ||
-        this.firstNameFormGroup.invalid ||
-        this.lastNameFormGroup.invalid ||
-        this.emailFormGroup.invalid ||
-        this.referenceUserFormGroup.invalid ||
-        this.rightsFormGroup.invalid) {
-        return
+  ngAfterViewInit() {
+    this.getContactsFromCurrentContract()
+  }
+
+  getContactsFromCurrentContract() {
+    var isSingleContract: any;
+    this.contracts.length == 1 ? isSingleContract = this.contracts[0].tenant.id : isSingleContract = this.contractFormGroup.value.contractCtrl
+    this.ticketingClient.queryContacts(isSingleContract).subscribe((data) => {
+      this.contacts = data;
+    })
+  }
+
+  onSubmit() { 
+    if (this.contracts.length == 1){
+      if (this.priorityFormGroup.value.priorityCtrl == 'User Request') {
+        if (this.referenceUserFormGroup.value.referenceUserCtrl !== 'none') {
+        if (this.singleContractFormGroup.invalid ||
+          this.priorityFormGroup.invalid ||
+          this.firstNameFormGroup.invalid ||
+          this.lastNameFormGroup.invalid ||
+          this.emailFormGroup.invalid ||
+          this.referenceUserFormGroup.invalid) {
+            console.log("first");      
+          return
+        }
+      } else {
+        if (this.singleContractFormGroup.invalid ||
+          this.priorityFormGroup.invalid ||
+          this.firstNameFormGroup.invalid ||
+          this.lastNameFormGroup.invalid ||
+          this.emailFormGroup.invalid ||
+          this.rightsFormGroup.invalid) {
+            console.log("second");
+          return
+        }
+      }
+      } else {
+        if (this.singleContractFormGroup.invalid ||
+          this.priorityFormGroup.invalid ||
+          this.shortDescFormGroup.invalid ||
+          this.ckEditorInput == '') {
+          return
+        }
+      }
+      if (this.priorityFormGroup.value.priorityCtrl == 'User Request') {
+        var longDesc: string =
+          "Vorname: " + this.firstNameFormGroup.value.firstNameCtrl + "\n" +
+          "Nachname: " + this.lastNameFormGroup.value.lastNameCtrl + "\n" +
+          "Telefon: " + this.phoneFormGroup.value.phoneCtrl + "\n" +
+          "Referenzuser: " + this.referenceUserFormGroup.value.referenceUserCtrl + "\n" +
+          "Benutzerrechte: " + this.rightsFormGroup.value.rightsCtrl
+        this.ticketingClient.createTicket(
+          longDesc,
+          "User Request für " + this.firstNameFormGroup.value.firstNameCtrl + " " + this.lastNameFormGroup.value.lastNameCtrl,
+          this.priorityFormGroup.value.priorityCtrl,
+          this.contracts[0].tenant.id,
+          this.user
+        ).
+          subscribe({
+            next: (ticket: any) => this.handleCreationResponse(ticket),
+            error: (error: any) => this.handleCreationErrorResponse(error)
+          })
+      } else {
+        this.ticketingClient.createTicket(
+          this.ckEditorInput,
+          this.shortDescFormGroup.value.shortDescCtrl,
+          this.priorityFormGroup.value.priorityCtrl,
+          this.contracts[0].tenant.id,
+          this.user
+        ).
+          subscribe({
+            next: (ticket: any) => this.handleCreationResponse(ticket),
+            error: (error: any) => this.handleCreationErrorResponse(error)
+          })
       }
     } else {
-      if (this.contractFormGroup.invalid ||
-        this.priorityFormGroup.invalid ||
-        this.shortDescFormGroup.invalid ||
-        this.ckEditorInput == '') {
-        return
+      if (this.priorityFormGroup.value.priorityCtrl == 'User Request') {
+        if (this.referenceUserFormGroup.value.referenceUserCtrl !== 'none') {
+          if (this.singleContractFormGroup.invalid ||
+            this.priorityFormGroup.invalid ||
+            this.firstNameFormGroup.invalid ||
+            this.lastNameFormGroup.invalid ||
+            this.emailFormGroup.invalid ||
+            this.referenceUserFormGroup.invalid) {
+            return
+          }
+        } else {
+          if (this.singleContractFormGroup.invalid ||
+            this.priorityFormGroup.invalid ||
+            this.firstNameFormGroup.invalid ||
+            this.lastNameFormGroup.invalid ||
+            this.emailFormGroup.invalid ||
+            this.rightsFormGroup.invalid) {
+            return
+          }
+        }
+      } else {
+        if (this.contractFormGroup.invalid ||
+          this.priorityFormGroup.invalid ||
+          this.shortDescFormGroup.invalid ||
+          this.ckEditorInput == '') {
+          return
+        }
       }
-    }
-    if (this.priorityFormGroup.value.priorityCtrl == 'User Request') {
-      var longDesc: string =
-        "Vorname: " + this.firstNameFormGroup.value.firstNameCtrl + "\n" +
-        "Nachname: " + this.lastNameFormGroup.value.firstNameCtrl + "\n" +
-        "Telefon: " + this.phoneFormGroup.value.phoneCtrl + "\n" +
-        "Referenzuser: " + this.referenceUserFormGroup.value.referenceUserCtrl + "\n" +
-        "Benutzerrechte: " + this.rightsFormGroup.value.rightsCtrl
-      this.ticketingClient.createTicket(
-        this.ckEditorInput,
-        this.shortDescFormGroup.value.shortDescCtrl,
-        this.priorityFormGroup.value.priorityCtrl,
-        this.contractFormGroup.value.contractCtrl,
-        this.user
-      ).
-        subscribe({
-          next: (ticket: any) => this.handleCreationResponse(ticket),
-          error: (error: any) => this.handleCreationErrorResponse(error)
-        })
-    } else {
-      this.ticketingClient.createTicket(
-        this.ckEditorInput,
-        this.shortDescFormGroup.value.shortDescCtrl,
-        this.priorityFormGroup.value.priorityCtrl,
-        this.contractFormGroup.value.contractCtrl,
-        this.user
-      ).
-        subscribe({
-          next: (ticket: any) => this.handleCreationResponse(ticket),
-          error: (error: any) => this.handleCreationErrorResponse(error)
-        })
+      if (this.priorityFormGroup.value.priorityCtrl == 'User Request') {
+        var longDesc: string =
+          "Vorname: " + this.firstNameFormGroup.value.firstNameCtrl + "\n" +
+          "Nachname: " + this.lastNameFormGroup.value.lastNameCtrl + "\n" +
+          "Telefon: " + this.phoneFormGroup.value.phoneCtrl + "\n" +
+          "Referenzuser: " + this.referenceUserFormGroup.value.referenceUserCtrl + "\n" +
+          "Benutzerrechte: " + this.rightsFormGroup.value.rightsCtrl
+        this.ticketingClient.createTicket(
+          longDesc,
+          "User Request für " + this.firstNameFormGroup.value.firstNameCtrl + " " + this.lastNameFormGroup.value.lastNameCtrl,
+          this.priorityFormGroup.value.priorityCtrl,
+          this.contractFormGroup.value.contractCtrl,
+          this.user
+        ).
+          subscribe({
+            next: (ticket: any) => this.handleCreationResponse(ticket),
+            error: (error: any) => this.handleCreationErrorResponse(error)
+          })
+      } else {
+        this.ticketingClient.createTicket(
+          this.ckEditorInput,
+          this.shortDescFormGroup.value.shortDescCtrl,
+          this.priorityFormGroup.value.priorityCtrl,
+          this.contractFormGroup.value.contractCtrl,
+          this.user
+        ).
+          subscribe({
+            next: (ticket: any) => this.handleCreationResponse(ticket),
+            error: (error: any) => this.handleCreationErrorResponse(error)
+          })
+      }
     }
   }
 

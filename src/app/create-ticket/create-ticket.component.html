@@ -11,27 +11,34 @@
     </div>
   </div>
   <mat-stepper orientation="vertical" #stepper>
-    <mat-step [stepControl]="contractFormGroup" errorMessage="Vertrag muss ausgewählt sein">
-      <form [formGroup]="contractFormGroup">
+    <mat-step [stepControl]="singleContractFormGroup" errorMessage="Vertrag muss ausgewählt sein" *ngIf="contracts.length == 1">
+        <form [formGroup]="singleContractFormGroup" >
         <mat-form-field appearance="fill">
           <ng-template matStepLabel>Vertrag auswählen</ng-template>
-          <div *ngIf="contracts.length == 1">
-            <div id="originMIT" *ngFor="let contract of contracts">
-              {{contract.tenant.nameToDisplay}}
-            </div>
-          </div>
+            <input matInput *ngIf="contracts.length == 1" formControlName="singleCtrl" readonly>
           <mat-label class="text-dark">Vertrag</mat-label>
-          <mat-select *ngIf="contracts.length > 1" required formControlName="contractCtrl">
-            <mat-option *ngFor="let contract of contracts" [value]="contract.tenant.id">
-              {{contract.tenant.nameToDisplay}}
-            </mat-option>
-          </mat-select>
         </mat-form-field>
         <div>
           <button mat-button matStepperNext>Weiter</button>
         </div>
       </form>
     </mat-step>
+    <mat-step [stepControl]="contractFormGroup" errorMessage="Vertrag muss ausgewählt sein" *ngIf="contracts.length !== 1">
+    <form [formGroup]="contractFormGroup" >
+      <mat-form-field appearance="fill">
+        <ng-template matStepLabel>Vertrag auswählen</ng-template>
+        <mat-label class="text-dark">Vertrag</mat-label>
+        <mat-select *ngIf="contracts.length > 1" required formControlName="contractCtrl" (ngModelChange)="getContactsFromCurrentContract()">
+          <mat-option *ngFor="let contract of contracts" [value]="contract.tenant.id">
+            {{contract.tenant.nameToDisplay}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Weiter</button>
+      </div>
+    </form>
+  </mat-step>
     <mat-step [stepControl]="priorityFormGroup" errorMessage="Priorität muss ausgewählt sein">
       <form [formGroup]="priorityFormGroup">
         <ng-template matStepLabel>Priorität auswählen</ng-template>
@@ -94,7 +101,21 @@
         <ng-template matStepLabel>Nachname angeben</ng-template>
         <mat-form-field appearance="fill">
           <mat-label class="text-dark">Nachname</mat-label>
-          <input matInput required formControlName="shortDescCtrl">
+          <input matInput required formControlName="lastNameCtrl">
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Zurück</button>
+          <button mat-button matStepperNext>Weiter</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step *ngIf="this.priorityFormGroup.value.priorityCtrl == 'User Request'" [stepControl]="emailFormGroup"
+      errorMessage="E-Mail Adresse nicht vorhanden oder fehlerhaft">
+      <form [formGroup]="emailFormGroup">
+        <ng-template matStepLabel>Email-Adresse angeben</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label class="text-dark">Email-Adresse</mat-label>
+          <input type="email" matInput formControlName="emailCtrl">
         </mat-form-field>
         <div>
           <button mat-button matStepperPrevious>Zurück</button>
@@ -123,7 +144,12 @@
         <mat-form-field appearance="fill">
           <mat-label class="text-dark">Referenzuser</mat-label>
           <mat-select required formControlName="referenceUserCtrl">
-            <mat-option *ngFor=""></mat-option>
+            <mat-option value="none">
+              Keine/r
+            </mat-option>
+            <mat-option [value]="contact.userName" *ngFor="let contact of contacts">
+              {{ contact.firstName + " " + contact.lastName}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
         <div>

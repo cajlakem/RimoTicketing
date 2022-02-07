@@ -19,12 +19,12 @@
               Kommentar
             </button>
             <button type="button" class="btn btn-secondary shadow btn-sm" href="#" data-bs-toggle="modal"
-              data-bs-target="#reopenModal" [disabled]="!ticket.isOpenAble">
+              data-bs-target="#reopenModal" [disabled]="ticket.isOpenAble">
               <i class="fas fa-undo"></i>
               Erneut öffnen
             </button>
             <button type="button" class="btn btn-secondary shadow btn-sm" href="#" data-bs-toggle="modal"
-              data-bs-target="#doneModal" [disabled]="!ticket.isOpenAble">
+              data-bs-target="#doneModal" [disabled]="ticket.isOpenAble">
               <i class="fas fa-check"></i>
               Erledigt
             </button>
@@ -256,8 +256,8 @@
             </tr>
             <tr *ngFor="let contact of this.ticket.contacts">
               <td>
-                <ngx-avatar class="me-2 d-inline-flex" size="35" name="{{ contact.getFullName() }}"></ngx-avatar>
-                {{ contact.firstName + " " + contact.lastName }}
+                <ngx-avatar class="me-2 d-inline-flex" size="35" name="{{ contact.christianName + ' ' + contact.name }}"></ngx-avatar>
+                {{ contact.christianName + " " + contact.name }}
               </td>
               <td>
                 {{ contact.email }}
