@@ -8,7 +8,9 @@ import { Reporter } from '../_models/Reporter'
 import { User } from '../_models/User'
 import { RimoTicketingClientService } from '../rimo-ticketing-client.service'
 import { AuthserviceService } from '../authservice.service'
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as DecoupledEditorBuild from '@ckeditor/ckeditor5-build-decoupled-document';
+import { MyUploadAdapter } from 'src/app/my-upload-adapter'
+
 
 
 @Component({
@@ -17,7 +19,20 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
   styleUrls: ['./create-ticket.component.css'],
 })
 export class CreateTicketComponent implements OnInit {
-  public editorData = '<p>Hello, world!</p>';
+  public Editor = DecoupledEditorBuild;
+  public editorCfg = {}
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  public onReady( editor: any ) {
+      editor.ui.getEditableElement().parentElement.insertBefore(
+          editor.ui.view.toolbar.element,
+          editor.ui.getEditableElement()
+      );
+      editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader: any ) => {
+        return new MyUploadAdapter( loader );
+    };
+  }
+
   public msg: string | null
 
   constructor(
@@ -48,6 +63,12 @@ export class CreateTicketComponent implements OnInit {
       longDsc: ['', [Validators.required]],
       originMIT: ['', [Validators.required]],
     })
+    this.firstFormGroup = this.formBuilder.group({
+      firstCtrl: ['', Validators.required],
+    });
+    this.secondFormGroup = this.formBuilder.group({
+      secondCtrl: ['', Validators.required],
+    });
   }
 
   onSubmit() {
@@ -88,8 +109,8 @@ export class CreateTicketComponent implements OnInit {
         this.user
       )
       .subscribe({
-        next: (ticket) => this.handleCreationResponse(ticket),
-        error: (error) => this.handleCreationErrorResponse(error),
+        next: (ticket: any) => this.handleCreationResponse(ticket),
+        error: (error: any) => this.handleCreationErrorResponse(error),
       })
   }
 
@@ -103,4 +124,7 @@ export class CreateTicketComponent implements OnInit {
     console.log(error)
     this.errorMsg = 'Failed to create ticket!'
   }
+
+
+
 }

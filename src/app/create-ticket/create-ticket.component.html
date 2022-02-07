@@ -1,5 +1,4 @@
 <div class="container-fluid mt-3 pt-3">
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="row d-flex bd-highlight mb-3">
       <div class="col d-flex justify-content-start">
         <p class="fs-3 m-2">Ticketerstellung</p>
@@ -9,88 +8,86 @@
           <i class="fas fa-window-close"></i>
           Abbrechen
         </button>
-        <button type="submit" class="btn btn-outline-success shadow rounded-3 btn-sm m-2">
-          <i class="fas fa-paper-plane"></i>
-          Abschicken
-        </button>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-floating mb-3">
-          <div class="form-control shadow rounded-3 ps-2" *ngIf="contracts.length == 1">
+  <mat-stepper orientation="horizontal" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <mat-form-field appearance="fill">
+        <ng-template matStepLabel>Vertrag auswählen</ng-template>
+          <div *ngIf="contracts.length == 1">
             <div id="originMIT" *ngFor="let contract of contracts">
               {{contract.tenant.nameToDisplay}}
             </div>
           </div>
-          <select formControlName="originMIT" *ngIf="contracts.length > 1" class="form-select shadow rounded-3"
-            id="floatingSelect" [ngClass]="{ 'is-invalid': submitted && f.prio.errors }"
-            aria-label="Floating label select example">
-            <option *ngFor="let contract of contracts" [value]="contract.tenant.id">
+          <mat-label>Vertrag</mat-label>
+          <mat-select *ngIf="contracts.length > 1"
+            [ngClass]="{ 'is-invalid': submitted && f.prio.errors }">      
+            <mat-option *ngFor="let contract of contracts" [value]="contract.tenant.id">
               {{contract.tenant.nameToDisplay}}
-            </option>
-          </select>
-          <label for="floatingSelect">Vertrag</label>
+            </mat-option>
+          </mat-select>       
           <div *ngIf="submitted && f.prio.errors" class="invalid-feedback">
             <div *ngIf="f.prio.errors.required">
               Vertrag auswählen
             </div>
           </div>
+        </mat-form-field>
+        <div>  
+          <button mat-button matStepperNext>Next</button>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div class="form-floating">
-          <select class="form-select shadow rounded-3" id="floatingSelect" formControlName="prio"
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" labelPosition="bottom">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Priorität auswählen</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Priorität</mat-label>
+          <mat-select
             [ngClass]="{ 'is-invalid': submitted && f.prio.errors }" aria-label="Floating label select example">
-            <option value="Critical Fault">Critical Fault</option>
-            <option value="Major Fault">Major Fault</option>
-            <option value="Minor Fault">Minor Fault</option>
-            <option value="Technical Request">Technical Request</option>
-            <option value="Improvement">Improvement</option>
-            <option value="User Request">User Request</option>
-          </select>
-          <label for="floatingSelect">Priorität</label>
+            <mat-option value="Critical Fault">Critical Fault</mat-option>
+            <mat-option value="Major Fault">Major Fault</mat-option>
+            <mat-option value="Minor Fault">Minor Fault</mat-option>
+            <mat-option value="Technical Request">Technical Request</mat-option>
+            <mat-option value="Improvement">Improvement</mat-option>
+            <mat-option value="User Request">User Request</mat-option>
+          </mat-select>
           <div *ngIf="submitted && f.prio.errors" class="invalid-feedback">
             <div *ngIf="f.prio.errors.required">
               Prio auswählen
             </div>
           </div>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
         </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <ng-template matStepLabel>Kurzbeschreibung angeben</ng-template>
+      <form [formGroup]="firstFormGroup">
+        <mat-label>Kurzbeschreibung</mat-label>
+      <input matInput type="input" [ngClass]="{ 'is-invalid': submitted && f.shortDsc.errors }">
+    <div *ngIf="submitted && (f.shortDsc.errors || f.longDsc.errors)" class="invalid-feedback">
+      <div *ngIf="f.shortDsc.errors.required && f.longDsc.errors.required">
+        Kurz- und Langbeschreibung hinterlegen
       </div>
     </div>
-    <div class="row mt-3">
-      <div class="col">
-        <div class="form-floating mb-3">
-          <input type="input" class="form-control bottom-border shadow rounded-3" id="floatingInput"
-            [ngClass]="{ 'is-invalid': submitted && f.shortDsc.errors }" formControlName="shortDsc" />
-          <label for="floatingInput">Kurzbeschreibung</label>
-          <div *ngIf="submitted && (f.shortDsc.errors || f.longDsc.errors)" class="invalid-feedback">
-            <div *ngIf="f.shortDsc.errors.required && f.longDsc.errors.required">
-              Kurz- und Langbeschreibung hinterlegen
-            </div>
-          </div>
-        </div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
       </div>
-    </div>
-    <div class="row">
-      <div class="col mt-4" class="align-self-center">
-        <label class="from-label text-muted small">
-          Langbeschreibung:
-        </label>
-        <ckeditor [data]="editorData" ...></ckeditor>
+    </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Langbeschreibung angeben</ng-template>
+        <ckeditor [config]="editorCfg" [ngClass]="{ 'is-invalid': submitted && f.longDsc.errors }"
+        [editor]="Editor" (ready)="onReady($event)" ></ckeditor>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Absenden</button>
       </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div class="alert alert-success mt-3" role="alert">
-          <i class="far fa-smile-wink"></i>
-          Bitte den Fehler möglichst gut beschreiben!
-        </div>
-      </div>
-    </div>
-    <div class="row mt-3"></div>
-  </form>
+    </mat-step>
+  </mat-stepper>
 </div>
