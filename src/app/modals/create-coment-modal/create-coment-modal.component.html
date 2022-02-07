@@ -11,14 +11,8 @@
         </div>
         <div class="modal-body">
           <div class="form-floating mb-3">
-            <ckeditor id="comment" class="shadow rounded-3" formControlName="text" [ngClass]="{ 'is-invalid': true }"
-              [config]="{
-                height: '400px',
-                filebrowserUploadUrl:
-                  'https://rimo-dev.rimo-saas.com/soap/ckupload.php',
-                filebrowserImageUploadUrl:
-                  'https://rimo-dev.rimo-saas.com/soap/ckupload.php'
-              }"></ckeditor>
+            <ckeditor [(ngModel)]="ckEditorInput" [config]="editorCfg" [editor]="Editor" (ready)="onReady($event)">
+            </ckeditor>
           </div>
         </div>
         <div class="modal-footer">

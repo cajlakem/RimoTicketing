@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
     "@ckeditor/ckeditor5-angular": "^2.0.2",
+    "@ckeditor/ckeditor5-build-decoupled-document": "^32.0.0",
     "@ng-bootstrap/ng-bootstrap": "^11.0.0-rc.0",
     "@popperjs/core": "^2.11.0",
     "angular-datatables": "^13.0.1",

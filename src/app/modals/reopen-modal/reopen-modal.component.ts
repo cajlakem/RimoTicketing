@@ -5,6 +5,8 @@ import { AuthserviceService } from 'src/app/authservice.service'
 import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service'
 import { Ticket } from 'src/app/_models/Ticket'
 import { User } from 'src/app/_models/User'
+import * as DecoupledEditorBuild from '@ckeditor/ckeditor5-build-decoupled-document';
+import { MyUploadAdapter } from 'src/app/my-upload-adapter'
 
 @Component({
   selector: 'app-reopen-modal',
@@ -12,6 +14,9 @@ import { User } from 'src/app/_models/User'
   styleUrls: ['./reopen-modal.component.css'],
 })
 export class ReopenModalComponent implements OnInit {
+  public ckEditorInput: any;
+  public Editor = DecoupledEditorBuild;
+  public editorCfg = {}
   @Output() stateChanged = new EventEmitter<any>()
   createCommentForm: any = FormGroup
   @Input()
@@ -26,6 +31,16 @@ export class ReopenModalComponent implements OnInit {
 
   get f() {
     return this.createCommentForm.controls
+  }
+
+  public onReady(editor: any) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement()
+    );
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader: any) => {
+      return new MyUploadAdapter(loader);
+    };
   }
 
   ngOnInit(): void {

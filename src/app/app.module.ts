@@ -21,7 +21,7 @@ import { NotificationComponent } from './notification/notification.component'
 import { HttpClientModule } from '@angular/common/http'
 import { AvatarModule } from 'ngx-avatar'
 import { environment } from 'src/environments/environment'
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { NgxSpinnerModule } from 'ngx-spinner'
 import { DayAgoPipe } from './_helpers/day-ago-pipe'
 import { CreateComentModalComponent } from './modals/create-coment-modal/create-coment-modal.component'
@@ -32,7 +32,7 @@ import { ChangeTicketTitleModalComponent } from './modals/change-ticket-title-mo
 import { AssignReporterModalComponent } from './modals/assign-reporter-modal/assign-reporter-modal.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { CommonModule } from '@angular/common';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort'
@@ -93,6 +93,8 @@ import { ForgotPasswordModalComponent } from './modals/forgot-password-modal/for
   ],
   providers: [AuthGuardService],
 
-  bootstrap: [AppComponent],
+  bootstrap: [
+    AppComponent
+  ],
 })
 export class AppModule { }

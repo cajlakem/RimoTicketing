@@ -4,6 +4,8 @@ import { AuthserviceService } from 'src/app/authservice.service'
 import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service'
 import { Ticket } from 'src/app/_models/Ticket'
 import { User } from 'src/app/_models/User'
+import * as DecoupledEditorBuild from '@ckeditor/ckeditor5-build-decoupled-document';
+import { MyUploadAdapter } from 'src/app/my-upload-adapter'
 
 @Component({
   selector: 'app-create-coment-modal',
@@ -11,6 +13,9 @@ import { User } from 'src/app/_models/User'
   styleUrls: ['./create-coment-modal.component.css'],
 })
 export class CreateComentModalComponent implements OnInit {
+  public ckEditorInput: any;
+  public Editor = DecoupledEditorBuild;
+  public editorCfg = {}
   @Output() stateChanged = new EventEmitter<any>()
   createCommentForm: any = FormGroup
   @Input()
@@ -22,6 +27,16 @@ export class CreateComentModalComponent implements OnInit {
     private authService: AuthserviceService,
     private httpTicketingClient: RimoTicketingClientService,
   ) { }
+
+  public onReady(editor: any) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement()
+    );
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader: any) => {
+      return new MyUploadAdapter(loader);
+    };
+  }
 
   get f() {
     return this.createCommentForm.controls

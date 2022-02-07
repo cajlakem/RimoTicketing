@@ -11,6 +11,7 @@ import { Ticket } from 'src/app/_models/Ticket';
   styleUrls: ['./forgot-password-modal.component.css']
 })
 export class ForgotPasswordModalComponent implements OnInit {
+  response: boolean = false;
   @Output() stateChanged = new EventEmitter<any>()
   titleForm: any = FormGroup
   @Input()
@@ -58,7 +59,7 @@ export class ForgotPasswordModalComponent implements OnInit {
   }
 
   handleCreationResponse() {
-
+    this.response = true
   }
 
   handleCreationErrorResponse(error: any) {

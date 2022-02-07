@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core'
+import { Component, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { Ticket } from '../_models/Ticket'
 import { TicketComment } from '../_models/TicketComment'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
@@ -10,30 +10,44 @@ import { RimoTicketingClientService } from '../rimo-ticketing-client.service'
 import { AuthserviceService } from '../authservice.service'
 import * as DecoupledEditorBuild from '@ckeditor/ckeditor5-build-decoupled-document';
 import { MyUploadAdapter } from 'src/app/my-upload-adapter'
-
-
+import { UserProfile } from '../_models/UserProfile'
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-create-ticket',
   templateUrl: './create-ticket.component.html',
   styleUrls: ['./create-ticket.component.css'],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { showError: true },
+    },
+  ],
 })
 export class CreateTicketComponent implements OnInit {
+  contacts: Reporter[]
+  public ckEditorInput: any;
   public Editor = DecoupledEditorBuild;
   public editorCfg = {}
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  public onReady( editor: any ) {
-      editor.ui.getEditableElement().parentElement.insertBefore(
-          editor.ui.view.toolbar.element,
-          editor.ui.getEditableElement()
-      );
-      editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader: any ) => {
-        return new MyUploadAdapter( loader );
+  contractFormGroup: FormGroup;
+  priorityFormGroup: FormGroup;
+  shortDescFormGroup: FormGroup;
+  firstNameFormGroup: FormGroup;
+  lastNameFormGroup: FormGroup;
+  phoneFormGroup: FormGroup;
+  emailFormGroup: FormGroup;
+  referenceUserFormGroup: FormGroup;
+  rightsFormGroup: FormGroup;
+
+  public onReady(editor: any) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement()
+    );
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader: any) => {
+      return new MyUploadAdapter(loader);
     };
   }
-
-  public msg: string | null
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,77 +56,90 @@ export class CreateTicketComponent implements OnInit {
     private authService: AuthserviceService,
   ) { }
 
-  registerForm: any = FormGroup
-  submitted = false
-
   errorMsg: string
   retUrl: any = 'tickets'
   user: User = this.authService.getCurrentUser()
-  contracts: any = this.user.getUserProfiles
-
-
-  get f() {
-    return this.registerForm.controls
-  }
+  contracts: UserProfile[] = this.user.getUserProfiles
 
   ngOnInit(): void {
-    this.errorMsg = ''
-    this.registerForm = this.formBuilder.group({
-      prio: ['', [Validators.required]],
-      shortDsc: ['', [Validators.required]],
-      longDsc: ['', [Validators.required]],
-      originMIT: ['', [Validators.required]],
-    })
-    this.firstFormGroup = this.formBuilder.group({
-      firstCtrl: ['', Validators.required],
+    this.contractFormGroup = this.formBuilder.group({
+      contractCtrl: ['', Validators.required],
     });
-    this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required],
+    this.priorityFormGroup = this.formBuilder.group({
+      priorityCtrl: ['', Validators.required],
+    });
+    this.shortDescFormGroup = this.formBuilder.group({
+      shortDescCtrl: ['', Validators.required],
+    });
+    this.firstNameFormGroup = this.formBuilder.group({
+      firstNameCtrl: ['', Validators.required],
+    });
+    this.lastNameFormGroup = this.formBuilder.group({
+      lastNameCtrl: ['', Validators.required],
+    });
+    this.emailFormGroup = this.formBuilder.group({
+      emailCtrl: ['', Validators.required],
+    });
+    this.referenceUserFormGroup = this.formBuilder.group({
+      referenceUserCtrl: ['', Validators.required],
+    });
+    this.rightsFormGroup = this.formBuilder.group({
+      rightsCtrl: ['', Validators.required],
     });
   }
 
   onSubmit() {
-    this.submitted = true
-    if (this.registerForm.invalid) {
-      return
-    }
-    if (this.submitted) {
-      var myFormData = new FormData()
-      myFormData.append('prio', this.registerForm.value.prio)
-      myFormData.append('shortDsc', this.registerForm.value.shortDsc)
-      myFormData.append('longDsc', this.registerForm.value.longDsc)
-      if (this.registerForm.originMIT) {
-        myFormData.append('originMIT', this.registerForm.value.originMIT)
-        console.log("formfield eists");
-
-      } else {
-        myFormData.append('originMIT', (<HTMLInputElement>document.getElementById("originMIT")).innerHTML)
-        console.log("works");
+    if (this.priorityFormGroup.value.priorityCtrl == 'User Request') {
+      if (this.contractFormGroup.invalid ||
+        this.priorityFormGroup.invalid ||
+        this.firstNameFormGroup.invalid ||
+        this.lastNameFormGroup.invalid ||
+        this.emailFormGroup.invalid ||
+        this.referenceUserFormGroup.invalid ||
+        this.rightsFormGroup.invalid) {
+        return
       }
-      if (this.createTicket(myFormData) === null) {
-        this.router.navigateByUrl(this.retUrl)
-      } else this.errorMsg = 'Failed to create Ticket!'
+    } else {
+      if (this.contractFormGroup.invalid ||
+        this.priorityFormGroup.invalid ||
+        this.shortDescFormGroup.invalid ||
+        this.ckEditorInput == '') {
+        return
+      }
+    }
+    if (this.priorityFormGroup.value.priorityCtrl == 'User Request') {
+      var longDesc: string =
+        "Vorname: " + this.firstNameFormGroup.value.firstNameCtrl + "\n" +
+        "Nachname: " + this.lastNameFormGroup.value.firstNameCtrl + "\n" +
+        "Telefon: " + this.phoneFormGroup.value.phoneCtrl + "\n" +
+        "Referenzuser: " + this.referenceUserFormGroup.value.referenceUserCtrl + "\n" +
+        "Benutzerrechte: " + this.rightsFormGroup.value.rightsCtrl
+      this.ticketingClient.createTicket(
+        this.ckEditorInput,
+        this.shortDescFormGroup.value.shortDescCtrl,
+        this.priorityFormGroup.value.priorityCtrl,
+        this.contractFormGroup.value.contractCtrl,
+        this.user
+      ).
+        subscribe({
+          next: (ticket: any) => this.handleCreationResponse(ticket),
+          error: (error: any) => this.handleCreationErrorResponse(error)
+        })
+    } else {
+      this.ticketingClient.createTicket(
+        this.ckEditorInput,
+        this.shortDescFormGroup.value.shortDescCtrl,
+        this.priorityFormGroup.value.priorityCtrl,
+        this.contractFormGroup.value.contractCtrl,
+        this.user
+      ).
+        subscribe({
+          next: (ticket: any) => this.handleCreationResponse(ticket),
+          error: (error: any) => this.handleCreationErrorResponse(error)
+        })
     }
   }
 
-  save() {
-    this.onSubmit()
-  }
-
-  createTicket(fd: FormData): void {
-    this.ticketingClient
-      .createTicket(
-        fd.get('longDsc') as string,
-        fd.get('shortDsc') as string,
-        fd.get('prio') as string,
-        fd.get('originMIT') as string,
-        this.user
-      )
-      .subscribe({
-        next: (ticket: any) => this.handleCreationResponse(ticket),
-        error: (error: any) => this.handleCreationErrorResponse(error),
-      })
-  }
 
   private handleCreationResponse(ticket: Ticket) {
     if (ticket) {
