@@ -1,4 +1,3 @@
-import { Contact } from './Contact'
 import { Contract } from './Contract'
 import { EnumList } from './EnumList'
 import { Reporter } from './Reporter'
@@ -17,7 +16,7 @@ export class Ticket {
   creationDate: string
   requestor: Reporter
   originMIT: string
-  contacts: Contact[]
+  contacts: Reporter[]
   creationTime: string
   type: EnumList
   notes: TicketComment[]

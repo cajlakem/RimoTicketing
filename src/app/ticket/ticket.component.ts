@@ -6,15 +6,13 @@ import { filter, distinctUntilChanged } from 'rxjs/operators'
 import { BreadCrumbService } from '../bread-crumb.service'
 import { RimoTicketingClientService } from '../rimo-ticketing-client.service'
 import { Ticket } from '../_models/Ticket'
-import { CKEditorModule } from 'ckeditor4-angular'
-
 import * as bootstrap from 'bootstrap'
 import { TicketComment } from '../_models/TicketComment'
 import { tick } from '@angular/core/testing'
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component'
-import { Contact } from '../_models/Contact'
 import { LicenseServerClientService } from '../license-server-client.service'
 import { AuthserviceService } from '../authservice.service'
+import { Reporter } from '../_models/Reporter'
 
 @Component({
   selector: 'app-ticket',
@@ -27,13 +25,7 @@ export class TicketComponent implements OnInit, OnDestroy {
   bcsSubscrpition: any
   subscription: Subscription
   ticket: Ticket = new Ticket()
-  queryContacts: Contact[];
-
-  public editor = CKEditorModule
-
-  public model = {
-    editorData: '',
-  }
+  queryContacts: Reporter[];
 
   constructor(
     private router: Router,
