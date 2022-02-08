@@ -11,7 +11,7 @@ import { AuthserviceService } from '../authservice.service'
 import * as DecoupledEditorBuild from '@ckeditor/ckeditor5-build-decoupled-document';
 import { MyUploadAdapter } from 'src/app/my-upload-adapter'
 import { UserProfile } from '../_models/UserProfile'
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { StepperSelectionEvent, STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-create-ticket',
@@ -25,6 +25,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
   ],
 })
 export class CreateTicketComponent implements OnInit {
+  invalidCredentialMsg: string;
   formGroupContract: string;
   singleOriginMIT: UserProfile;
   contacts: Reporter[]
@@ -41,6 +42,60 @@ export class CreateTicketComponent implements OnInit {
   referenceUserFormGroup: FormGroup;
   rightsFormGroup: FormGroup;
   singleContractFormGroup: FormGroup;
+  hasContract: boolean;
+  hasPriority: boolean;
+  hasFirstName: boolean;
+  hasLastName: boolean;
+  hasEmail: boolean;
+  hasReferenceUser: boolean;
+  hasRights: boolean;
+  hasShortDesc: boolean;
+  hasLongDesc: boolean;
+
+  changeErrorCheck(formField: string) {
+    switch (formField) {
+      case 'contract': {
+        this.hasContract = false;
+        break;
+      }
+      case 'priority': {
+        this.hasPriority = false;
+        break;
+      }
+      case 'firstName': {
+        this.hasFirstName = false;
+        break;
+      }
+      case 'lastName': {
+        this.hasLastName = false;
+        break;
+      }
+      case 'email': {
+        this.hasEmail = false;
+        break;
+      }
+      case 'referenceUser': {
+        this.hasReferenceUser = false;
+        break;
+      }
+      case 'rights': {
+        this.hasRights = false;
+        break;
+      }
+      case 'shortDesc': {
+        this.hasShortDesc = false;
+        break;
+      }
+      case 'longDesc': {
+        this.hasLongDesc = false;
+        break;
+      }
+    }
+  }
+
+  isTicketCreationFailed() {
+    return this.invalidCredentialMsg == null
+  }
 
   public onReady(editor: any) {
     editor.ui.getEditableElement().parentElement.insertBefore(
@@ -57,7 +112,7 @@ export class CreateTicketComponent implements OnInit {
     private router: Router,
     private ticketingClient: RimoTicketingClientService,
     private authService: AuthserviceService,
-  ) { 
+  ) {
     this.contracts.length == 1 ? this.formGroupContract = "singleContractFormGroup" : this.formGroupContract = "contractFormGroup"
   }
 
@@ -67,7 +122,7 @@ export class CreateTicketComponent implements OnInit {
   contracts: UserProfile[] = this.user.getUserProfiles
 
   ngOnInit(): void {
-    this.contractFormGroup = this.formBuilder.group({    
+    this.contractFormGroup = this.formBuilder.group({
       contractCtrl: ['', Validators.required],
     });
     this.priorityFormGroup = this.formBuilder.group({
@@ -104,6 +159,7 @@ export class CreateTicketComponent implements OnInit {
   }
 
   getContactsFromCurrentContract() {
+    this.hasContract = false
     var isSingleContract: any;
     this.contracts.length == 1 ? isSingleContract = this.contracts[0].tenant.id : isSingleContract = this.contractFormGroup.value.contractCtrl
     this.ticketingClient.queryContacts(isSingleContract).subscribe((data) => {
@@ -111,35 +167,54 @@ export class CreateTicketComponent implements OnInit {
     })
   }
 
-  onSubmit() { 
-    if (this.contracts.length == 1){
+
+  onSubmit() {
+
+    if (this.contracts.length == 1) {
       if (this.priorityFormGroup.value.priorityCtrl == 'User Request') {
         if (this.referenceUserFormGroup.value.referenceUserCtrl !== 'none') {
-        if (this.singleContractFormGroup.invalid ||
-          this.priorityFormGroup.invalid ||
-          this.firstNameFormGroup.invalid ||
-          this.lastNameFormGroup.invalid ||
-          this.emailFormGroup.invalid ||
-          this.referenceUserFormGroup.invalid) {
-            console.log("first");      
-          return
+          if (this.singleContractFormGroup.invalid ||
+            this.priorityFormGroup.invalid ||
+            this.firstNameFormGroup.invalid ||
+            this.lastNameFormGroup.invalid ||
+            this.emailFormGroup.invalid ||
+            this.referenceUserFormGroup.invalid) {
+            this.singleContractFormGroup.invalid ? this.hasContract = true : ""
+            this.priorityFormGroup.invalid ? this.hasPriority = true : ""
+            this.firstNameFormGroup.invalid ? this.hasFirstName = true : ""
+            this.lastNameFormGroup.invalid ? this.hasLastName = true : ""
+            this.emailFormGroup.invalid ? this.hasEmail = true : ""
+            this.referenceUserFormGroup.invalid ? this.hasReferenceUser = true : ""
+            this.invalidCredentialMsg = 'Bitte füllen Sie die Form vollständig aus!'
+            return
+          }
+        } else {
+          if (this.singleContractFormGroup.invalid ||
+            this.priorityFormGroup.invalid ||
+            this.firstNameFormGroup.invalid ||
+            this.lastNameFormGroup.invalid ||
+            this.emailFormGroup.invalid ||
+            this.rightsFormGroup.invalid) {
+            this.singleContractFormGroup.invalid ? this.hasContract = true : ""
+            this.priorityFormGroup.invalid ? this.hasPriority = true : ""
+            this.firstNameFormGroup.invalid ? this.hasFirstName = true : ""
+            this.lastNameFormGroup.invalid ? this.hasLastName = true : ""
+            this.emailFormGroup.invalid ? this.hasEmail = true : ""
+            this.rightsFormGroup.invalid ? this.hasRights = true : ""
+            this.invalidCredentialMsg = 'Bitte füllen Sie die Form vollständig aus!'
+            return
+          }
         }
-      } else {
-        if (this.singleContractFormGroup.invalid ||
-          this.priorityFormGroup.invalid ||
-          this.firstNameFormGroup.invalid ||
-          this.lastNameFormGroup.invalid ||
-          this.emailFormGroup.invalid ||
-          this.rightsFormGroup.invalid) {
-            console.log("second");
-          return
-        }
-      }
       } else {
         if (this.singleContractFormGroup.invalid ||
           this.priorityFormGroup.invalid ||
           this.shortDescFormGroup.invalid ||
           this.ckEditorInput == '') {
+          this.singleContractFormGroup.invalid ? this.hasContract = true : ""
+          this.priorityFormGroup.invalid ? this.hasPriority = true : ""
+          this.shortDescFormGroup.invalid ? this.hasShortDesc = true : ""
+          this.ckEditorInput = '' ? this.hasLongDesc = true : ""
+          this.invalidCredentialMsg = 'Bitte füllen Sie die Form vollständig aus!'
           return
         }
       }
@@ -177,21 +252,35 @@ export class CreateTicketComponent implements OnInit {
     } else {
       if (this.priorityFormGroup.value.priorityCtrl == 'User Request') {
         if (this.referenceUserFormGroup.value.referenceUserCtrl !== 'none') {
-          if (this.singleContractFormGroup.invalid ||
+          if (this.contractFormGroup.invalid ||
             this.priorityFormGroup.invalid ||
             this.firstNameFormGroup.invalid ||
             this.lastNameFormGroup.invalid ||
             this.emailFormGroup.invalid ||
             this.referenceUserFormGroup.invalid) {
+            this.contractFormGroup.invalid ? this.hasContract = true : ""
+            this.priorityFormGroup.invalid ? this.hasPriority = true : ""
+            this.firstNameFormGroup.invalid ? this.hasFirstName = true : ""
+            this.lastNameFormGroup.invalid ? this.hasLastName = true : ""
+            this.emailFormGroup.invalid ? this.hasEmail = true : ""
+            this.referenceUserFormGroup.invalid ? this.hasReferenceUser = true : ""
+            this.invalidCredentialMsg = 'Bitte füllen Sie die Form vollständig aus!'
             return
           }
         } else {
-          if (this.singleContractFormGroup.invalid ||
+          if (this.contractFormGroup.invalid ||
             this.priorityFormGroup.invalid ||
             this.firstNameFormGroup.invalid ||
             this.lastNameFormGroup.invalid ||
             this.emailFormGroup.invalid ||
             this.rightsFormGroup.invalid) {
+            this.contractFormGroup.invalid ? this.hasContract = true : ""
+            this.priorityFormGroup.invalid ? this.hasPriority = true : ""
+            this.firstNameFormGroup.invalid ? this.hasFirstName = true : ""
+            this.lastNameFormGroup.invalid ? this.hasLastName = true : ""
+            this.emailFormGroup.invalid ? this.hasEmail = true : ""
+            this.rightsFormGroup.invalid ? this.hasRights = true : ""
+            this.invalidCredentialMsg = 'Bitte füllen Sie die Form vollständig aus!'
             return
           }
         }
@@ -200,6 +289,11 @@ export class CreateTicketComponent implements OnInit {
           this.priorityFormGroup.invalid ||
           this.shortDescFormGroup.invalid ||
           this.ckEditorInput == '') {
+          this.contractFormGroup.invalid ? this.hasContract = true : ""
+          this.priorityFormGroup.invalid ? this.hasPriority = true : ""
+          this.shortDescFormGroup.invalid ? this.hasShortDesc = true : ""
+          this.ckEditorInput = '' ? this.hasLongDesc = true : ""
+          this.invalidCredentialMsg = 'Bitte füllen Sie die Form vollständig aus!'
           return
         }
       }
@@ -245,10 +339,7 @@ export class CreateTicketComponent implements OnInit {
   }
 
   private handleCreationErrorResponse(error: any) {
-    console.log(error)
-    this.errorMsg = 'Failed to create ticket!'
+    const e = error as Error
+    this.invalidCredentialMsg = e.message
   }
-
-
-
 }
