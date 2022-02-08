@@ -43,6 +43,7 @@ import { RemoveReporterModalComponent } from './modals/remove-reporter-modal/rem
 import { NewRequestorModalComponent } from './modals/new-requestor-modal/new-requestor-modal.component';
 import { ChangePasswordModalComponent } from './modals/change-password-modal/change-password-modal.component';
 import { ForgotPasswordModalComponent } from './modals/forgot-password-modal/forgot-password-modal.component'
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { ForgotPasswordModalComponent } from './modals/forgot-password-modal/for
     ForgotPasswordModalComponent,
   ],
   imports: [
+    NgxMatSelectSearchModule,
     MatButtonModule,
     MatStepperModule,
     BrowserModule,
