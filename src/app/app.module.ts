@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { AppComponent } from './app.component'
 import { ReactiveFormsModule } from '@angular/forms'
@@ -44,6 +44,8 @@ import { NewRequestorModalComponent } from './modals/new-requestor-modal/new-req
 import { ChangePasswordModalComponent } from './modals/change-password-modal/change-password-modal.component';
 import { ForgotPasswordModalComponent } from './modals/forgot-password-modal/forgot-password-modal.component'
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { CreateTicketWizardComponent } from './create-ticket-wizard/create-ticket-wizard.component';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -68,8 +70,10 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     NewRequestorModalComponent,
     ChangePasswordModalComponent,
     ForgotPasswordModalComponent,
+    CreateTicketWizardComponent,
   ],
   imports: [
+    MatIconModule,
     NgxMatSelectSearchModule,
     MatButtonModule,
     MatStepperModule,
@@ -98,5 +102,8 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
   bootstrap: [
     AppComponent
   ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class AppModule { }

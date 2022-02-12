@@ -8,6 +8,7 @@ import { CreateTicketComponent } from './create-ticket/create-ticket.component'
 import { TicketComponent } from './ticket/ticket.component'
 import { UserpofileComponent } from './userpofile/userpofile.component'
 import { NotificationComponent } from './notification/notification.component'
+import { CreateTicketWizardComponent } from './create-ticket-wizard/create-ticket-wizard.component'
 
 const routes: Routes = [
   { path: 'main', component: MainComponent, canActivate: [AuthGuardService] },
@@ -15,6 +16,11 @@ const routes: Routes = [
   {
     path: 'createTicket',
     component: CreateTicketComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'createTicketWizard',
+    component: CreateTicketWizardComponent,
     canActivate: [AuthGuardService],
   },
   {

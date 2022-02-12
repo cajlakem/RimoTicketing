@@ -13,6 +13,7 @@ import { AuthserviceService } from '../authservice.service'
 import { NgxSpinnerService } from 'ngx-spinner'
 import { GlobalSearchServiceService } from '../global-search-service.service'
 import { User } from '../_models/User'
+import { HttpErrorResponse } from '@angular/common/http'
 
 @Component({
   selector: 'app-tickets',
@@ -22,9 +23,8 @@ import { User } from '../_models/User'
 export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective
-
+  errorMsg: any
   dtOptions: DataTables.Settings = {}
-
   dtTrigger: Subject<any> = new Subject()
   subscriptionName: any
   ids: any
@@ -61,18 +61,14 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
       order: [[0, 'desc']],
     }
     this.spinner.show()
-    setTimeout(() => {
-      this.spinner.hide()
-    }, 10000)
     this.ticketClient
       .queryOpenTickets(
         this.user,
         this.filterKey
       )
-      .subscribe((data) => {
-        this.tickets = data
-        this.rerender()
-        this.spinner.hide()
+      .subscribe({
+        next: (data) => this.handleCreationResponse(data),
+        error: (error) => this.handleCreationErrorResponse(error),
       })
     this.subscriptionName = this.ticketTable
       .getUpdate()
@@ -140,22 +136,29 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
     this.spinner.show()
-    setTimeout(() => {
-      this.spinner.hide()
-    }, 10000)
     this.ticketClient
       .queryOpenTickets(
         this.user,
         "Open"
       )
-      .subscribe((data) => {
-        for (let ticket of data) {
-          this.tickets.push(ticket)
-        }
-        this.rerender()
-        this.spinner.hide()
+      .subscribe({
+        next: (data) => this.handleCreationResponse(data),
+        error: (error) => this.handleCreationErrorResponse(error),
       })
+    }
+  
+  handleCreationResponse(data: any) {
+    this.spinner.hide()
+    for (let ticket of data) {
+      this.tickets.push(ticket)
+    }
+    this.rerender()
+    
   }
 
-
+  handleCreationErrorResponse(error: any) {
+    const u = error as HttpErrorResponse
+    this.errorMsg = Object.values(u.error)[0] as string
+    this.spinner.hide()
+  }
 }

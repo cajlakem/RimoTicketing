@@ -1,194 +1,97 @@
 <div class="container-fluid mt-3 pt-3">
-  <div class="row d-flex bd-highlight mb-3">
-    <div class="col d-flex justify-content-start">
-      <p class="fs-3 m-2">Ticketerstellung</p>
-    </div>
-    <div class="col d-flex justify-content-end">
-      <button type="submit" class="btn btn-outline-secondary shadow rounded-3 btn-sm m-2" routerLink="/tickets">
-        <i class="fas fa-window-close"></i>
-        Abbrechen
-      </button>
-      <button (click)="onSubmit()" class="btn btn-outline-success shadow rounded-3 btn-sm m-2">
-        <i class="fas fa-paper-plane"></i>
-        Absenden
-      </button>
-    </div>
-  </div>
-  <mat-stepper orientation="vertical" #stepper>
-    <mat-step [stepControl]="singleContractFormGroup" errorMessage="Vertrag muss ausgewählt sein"
-      *ngIf="contracts.length == 1" [hasError]="hasContract">
-      <form [formGroup]="singleContractFormGroup">
-        <mat-form-field appearance="fill">
-          <ng-template matStepLabel>Vertrag auswählen</ng-template>
-          <input matInput *ngIf="contracts.length == 1" formControlName="singleCtrl" readonly>
-          <mat-label class="text-dark">Vertrag</mat-label>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Weiter</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="contractFormGroup" errorMessage="Vertrag muss ausgewählt sein"
-      *ngIf="contracts.length !== 1" [hasError]="hasContract">
-      <form [formGroup]="contractFormGroup">
-        <mat-form-field appearance="fill">
-          <ng-template matStepLabel>Vertrag auswählen</ng-template>
-          <mat-label class="text-dark">Vertrag</mat-label>
-          <mat-select *ngIf="contracts.length > 1" required formControlName="contractCtrl"
-            (ngModelChange)="getContactsFromCurrentContract()">
-            <mat-option *ngFor="let contract of contracts" [value]="contract.tenant.id">
-              {{contract.tenant.nameToDisplay}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Weiter</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="priorityFormGroup" errorMessage="Priorität muss ausgewählt sein" [hasError]="hasPriority">
-      <form [formGroup]="priorityFormGroup">
-        <ng-template matStepLabel>Priorität auswählen</ng-template>
-        <mat-form-field appearance="fill">
-          <mat-label class="text-dark">Priorität</mat-label>
-          <mat-select required formControlName="priorityCtrl" (ngModelChange)="changeErrorCheck('priority')">
-            <mat-option value=" Critical Fault">Critical Fault</mat-option>
-            <mat-option value="Major Fault">Major Fault</mat-option>
-            <mat-option value="Minor Fault">Minor Fault</mat-option>
-            <mat-option value="Technical Request">Technical Request</mat-option>
-            <mat-option value="Improvement">Improvement</mat-option>
-            <mat-option value="User Request">User Request</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Zurück</button>
-          <button mat-button matStepperNext>Weiter</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step *ngIf="this.priorityFormGroup.value.priorityCtrl !== 'User Request'" [stepControl]="shortDescFormGroup"
-      errorMessage="Kurzbeschreibung muss angegeben werden" [hasError]="hasShortDesc">
-      <form [formGroup]="shortDescFormGroup">
-        <ng-template matStepLabel>Kurzbeschreibung angeben</ng-template>
-        <mat-form-field appearance="fill">
-          <mat-label class="text-dark">Kurzbeschreibung</mat-label>
-          <input matInput required formControlName="shortDescCtrl" (ngModelChange)="changeErrorCheck('shortDesc')">
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Zurück</button>
-          <button mat-button matStepperNext>Weiter</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step *ngIf="this.priorityFormGroup.value.priorityCtrl !== 'User Request'" [hasError]="hasLongDesc">
-      <ng-template matStepLabel>Langbeschreibung angeben</ng-template>
-      <ckeditor [(ngModel)]="ckEditorInput" [config]="editorCfg" [editor]="Editor" (ready)="onReady($event)"
-        (ngModelChange)="changeErrorCheck('longDesc')"></ckeditor>
-      <div>
-        <button mat-button matStepperPrevious>Zurück</button>
-        <button mat-button (click)="onSubmit()">Absenden</button>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="row d-flex bd-highlight mb-3">
+      <div class="col d-flex justify-content-start">
+        <p class="fs-3 m-2">Ticketerstellung</p>
       </div>
-    </mat-step>
-    <mat-step *ngIf="this.priorityFormGroup.value.priorityCtrl == 'User Request'" [stepControl]="firstNameFormGroup"
-      errorMessage="Vorname muss eingegeben werden" [hasError]="hasFirstName">
-      <form [formGroup]="firstNameFormGroup">
-        <ng-template matStepLabel>Vorname angeben</ng-template>
-        <mat-form-field appearance="fill">
-          <mat-label class="text-dark">Vorname</mat-label>
-          <input matInput required formControlName="firstNameCtrl" (ngModelChange)="changeErrorCheck('firstName')">
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Zurück</button>
-          <button mat-button matStepperNext>Weiter</button>
+      <div class="col d-flex justify-content-end">
+        <button type="submit" class="btn btn-outline-secondary shadow rounded-3 btn-sm m-2" routerLink="/tickets">
+          <i class="fas fa-window-close"></i>
+          Abbrechen
+        </button>
+        <button type="submit" class="btn btn-outline-success shadow rounded-3 btn-sm m-2">
+          <i class="fas fa-paper-plane"></i>
+          Abschicken
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-floating mb-3">
+            <input class="ps-3 form-control bottom-border shadow rounded-3" [value]="singleContract" *ngIf="singleContract" formControlName="singleOriginMIT" readonly/>    
+          <select formControlName="originMIT" *ngIf="contracts.length > 1 " class="form-select shadow rounded-3"
+            id="floatingSelect" [ngClass]="{ 'is-invalid': submitted && f.originMIT.errors}"
+            aria-label="Floating label select example">
+            <option *ngFor="let contract of contracts" [value]="contract.tenant.id">
+              {{contract.tenant.nameToDisplay}}
+            </option>
+          </select>
+          <label for="floatingSelect">Vertrag</label>
+          <div *ngIf="submitted && f.originMIT.errors" class="invalid-feedback">
+            <div >
+              Vertrag auswählen
+            </div>
+          </div>
         </div>
-      </form>
-    </mat-step>
-    <mat-step *ngIf="this.priorityFormGroup.value.priorityCtrl == 'User Request'" [stepControl]="lastNameFormGroup"
-      errorMessage="Nachname muss eingegeben werden" [hasError]="hasLastName">
-      <form [formGroup]="lastNameFormGroup">
-        <ng-template matStepLabel>Nachname angeben</ng-template>
-        <mat-form-field appearance="fill">
-          <mat-label class="text-dark">Nachname</mat-label>
-          <input matInput required formControlName="lastNameCtrl" (ngModelChange)="changeErrorCheck('lastName')">
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Zurück</button>
-          <button mat-button matStepperNext>Weiter</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-floating">
+          <select class="form-select shadow rounded-3" id="floatingSelect" formControlName="prio"
+            [ngClass]="{ 'is-invalid': submitted && f.prio.errors }" aria-label="Floating label select example">
+            <option value="Critical Fault">Critical Fault</option>
+            <option value="Major Fault">Major Fault</option>
+            <option value="Minor Fault">Minor Fault</option>
+            <option value="Technical Request">Technical Request</option>
+            <option value="Improvement">Improvement</option>
+            <option value="User Request">User Request</option>
+          </select>
+          <label for="floatingSelect">Priorität</label>
+          <div *ngIf="submitted && f.prio.errors" class="invalid-feedback">
+            <div *ngIf="f.prio.errors.required">
+              Prio auswählen
+            </div>
+          </div>
         </div>
-      </form>
-    </mat-step>
-    <mat-step *ngIf="this.priorityFormGroup.value.priorityCtrl == 'User Request'" [stepControl]="emailFormGroup"
-      errorMessage="E-Mail Adresse nicht vorhanden oder fehlerhaft" [hasError]="hasEmail">
-      <form [formGroup]="emailFormGroup">
-        <ng-template matStepLabel>Email-Adresse angeben</ng-template>
-        <mat-form-field appearance="fill">
-          <mat-label class="text-dark">Email-Adresse</mat-label>
-          <input type="email" matInput formControlName="emailCtrl" (ngModelChange)="changeErrorCheck('email')">
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Zurück</button>
-          <button mat-button matStepperNext>Weiter</button>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="input" class="ps-3 form-control bottom-border shadow rounded-3" id="floatingInput"
+            [ngClass]="{ 'is-invalid': submitted && f.shortDsc.errors }" formControlName="shortDsc" />
+          <label for="floatingInput">Kurzbeschreibung</label>
+          <div *ngIf="submitted && (f.shortDsc.errors || f.longDsc.errors)" class="invalid-feedback">
+            <div *ngIf="f.shortDsc.errors.required || f.longDsc.errors.required">
+              Kurz- und Langbeschreibung hinterlegen
+            </div>
+          </div>
         </div>
-      </form>
-    </mat-step>
-    <mat-step *ngIf="this.priorityFormGroup.value.priorityCtrl == 'User Request'" [stepControl]="phoneFormGroup"
-      errorMessage="Vertrag muss ausgewählt sein">
-      <form [formGroup]="phoneFormGroup">
-        <ng-template matStepLabel>Telefon angeben</ng-template>
-        <mat-form-field appearance="fill">
-          <mat-label class="text-dark">Telefon</mat-label>
-          <input type="phone" matInput>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Zurück</button>
-          <button mat-button matStepperNext>Weiter</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col mt-4" class="align-self-center">
+        <label class="from-label text-muted small">
+          Langbeschreibung:
+        </label>
+        <ckeditor [config]="editorCfg" [editor]="Editor" (ready)="onReady($event)" formControlName="longDsc"></ckeditor>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class=" mt-3 alert alert-danger alert-dismissible fade show fade show p-1" role="alert"
+        *ngIf="errorMsg">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ errorMsg }}
+      </div>
+        <div class="alert alert-success mt-3" role="alert">
+          <i class="far fa-smile-wink"></i>
+          Bitte den Fehler möglichst gut beschreiben!
         </div>
-      </form>
-    </mat-step>
-    <mat-step *ngIf="this.priorityFormGroup.value.priorityCtrl == 'User Request'" [stepControl]="referenceUserFormGroup"
-      errorMessage="Referenzuser muss ausgewählt sein" [hasError]="hasReferenceUser">
-      <form [formGroup]="referenceUserFormGroup">
-        <ng-template matStepLabel>Referenzuser angeben</ng-template>
-        <mat-form-field appearance="fill">
-          <mat-label class="text-dark">Referenzuser</mat-label>
-          <mat-select required formControlName="referenceUserCtrl" (ngModelChange)="changeErrorCheck('referenceUser')">
-            <mat-option value="none">
-              Keine/r
-            </mat-option>
-            <mat-option [value]="contact.userName" *ngFor="let contact of contacts">
-              {{ contact.firstName + " " + contact.lastName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Zurück</button>
-          <button *ngIf="this.referenceUserFormGroup.value.referenceUserCtrl ==  'none'" mat-button
-            matStepperNext>Weiter</button>
-          <button
-            *ngIf="this.referenceUserFormGroup.value.referenceUserCtrl !==  'none' && this.referenceUserFormGroup.value.referenceUserCtrl !==  ''"
-            mat-button (click)="onSubmit()">Absenden</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step *ngIf="(this.priorityFormGroup.value.priorityCtrl == 'User Request') &&
-     (this.referenceUserFormGroup.value.referenceUserCtrl ==  'none')" [stepControl]="rightsFormGroup"
-      [hasError]="hasRights" errorMessage="Berechtigungen müssen vergeben werden, wenn kein Referenzuser vorhanden ist">
-      <form [formGroup]="rightsFormGroup">
-        <ng-template matStepLabel>Benutzerrechte angeben</ng-template>
-        <mat-form-field appearance="fill">
-          <mat-label class="text-dark">Benutzerrechte</mat-label>
-          <input matInput required formControlName="rightsCtrl" (ngModelChange)="changeErrorCheck('rights')">
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Zurück</button>
-          <button mat-button (click)="onSubmit()">Absenden</button>
-        </div>
-      </form>
-    </mat-step>
-  </mat-stepper>
-  <div class="mt-3 alert alert-danger alert-dismissible fade show fade show p-1" role="alert"
-    *ngIf="invalidCredentialMsg">
-    <i class="fas fa-exclamation-circle"></i>
-    {{ invalidCredentialMsg }}
-  </div>
+      </div>
+    </div>
+    <div class="row mt-3"></div>
+  </form>
 </div>

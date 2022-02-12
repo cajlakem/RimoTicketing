@@ -44,7 +44,7 @@ export class ForgotPasswordModalComponent implements OnInit {
           this.registerForm.value.email,
         )
         .subscribe({
-          next: () => this.handleCreationResponse(),
+          next: (msg) => this.handleCreationResponse(msg),
           error: (error) => this.handleCreationErrorResponse(error),
         })
     }
@@ -58,11 +58,18 @@ export class ForgotPasswordModalComponent implements OnInit {
     })
   }
 
-  handleCreationResponse() {
-    this.response = true
+  handleCreationResponse(msg: any) {
+    if (msg !== "") {
+    this.errorMsg = msg
+    this.response = false
+    } else {
+      this.errorMsg = ""
+      this.response = true
+    }
   }
 
   handleCreationErrorResponse(error: any) {
+    this.response = false
     const u = error as HttpErrorResponse
     this.errorMsg = Object.values(u.error)[0] as string
   }
