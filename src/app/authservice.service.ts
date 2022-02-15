@@ -14,11 +14,11 @@ export class AuthserviceService {
     this.currentUserloadUserSettingFromLocalStorage()
   }
   currentUserloadUserSettingFromLocalStorage() {
-    var userData = JSON.parse(localStorage.getItem('currentUser')!)
+    var userData = JSON.parse(sessionStorage.getItem('currentUser')!)
     if (userData) {
       this.currentUser = Object.assign(
         new User(),
-        JSON.parse(localStorage.getItem('currentUser')!),
+        JSON.parse(sessionStorage.getItem('currentUser')!),
       )
     } else this.currentUser = null
   }
@@ -41,13 +41,13 @@ export class AuthserviceService {
       return
     }
     this.currentUser = Object.assign(new User(), aUser)
-    localStorage.setItem('currentUser', JSON.stringify(aUser))
+    sessionStorage.setItem('currentUser', JSON.stringify(aUser))
     return this.currentUser
   }
 
   public logout() {
     console.log(this.isLoggedIn)
-    localStorage.removeItem('currentUser')
+    sessionStorage.removeItem('currentUser')
     this.currentUser = null
   }
 

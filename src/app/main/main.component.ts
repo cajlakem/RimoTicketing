@@ -32,7 +32,7 @@ export class MainComponent implements OnInit {
   }
 
   isVisible(): boolean {
-    return localStorage.getItem('currentUser') != null
+    return sessionStorage.getItem('currentUser') != null
   }
 
   getCurrentUser(): User {
