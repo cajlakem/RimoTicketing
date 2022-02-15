@@ -5,7 +5,6 @@ import { TicketComment } from './TicketComment'
 import { User } from './User'
 
 export class Ticket {
-  [x: string]: any
   id: string
   state: EnumList
   name: string

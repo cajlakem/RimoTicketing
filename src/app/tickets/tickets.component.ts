@@ -37,7 +37,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     private ticketTable: GlobalSearchServiceService
   ) { }
   ticket = 'Meine'
-  tickets: Ticket[]
+  tickets: Ticket[] = [];
   filterKey: string
   displaySearchResuts: boolean = false;
 
@@ -145,15 +145,17 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
         next: (data) => this.handleCreationResponse(data),
         error: (error) => this.handleCreationErrorResponse(error),
       })
-    }
-  
+  }
+
   handleCreationResponse(data: any) {
+
+
     this.spinner.hide()
     for (let ticket of data) {
       this.tickets.push(ticket)
     }
     this.rerender()
-    
+
   }
 
   handleCreationErrorResponse(error: any) {
