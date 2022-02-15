@@ -112,12 +112,13 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  updateTicketList(evt: any) {
+  async updateTicketList(evt: any) {
     (<HTMLInputElement>document.getElementById("globalSearch")).value = ""
     this.displaySearchResuts = false;
     this.filterKey = evt.target.value
     localStorage.setItem('ticketFilterKey', this.filterKey)
     this.ngOnInit()
+    this.rerender()
   }
 
   setFilterKey(key: any) { }

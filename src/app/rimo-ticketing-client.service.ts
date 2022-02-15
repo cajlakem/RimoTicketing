@@ -236,7 +236,7 @@ export class RimoTicketingClientService {
       token: this.token,
       requestBody: {
         ticketID: ticketID,
-        userNameTicketingUsers: username,
+        userNameTicketingUser: username,
       },
       responseBody: {},
     }
