@@ -53,6 +53,10 @@ export class TicketComponent implements OnInit, OnDestroy {
         this.ticketingClient.setReadWithUser(
           this.authService.getCurrentUser().user,
           this.ticket.id,
+        ).subscribe((data) => {
+          console.log(data);
+        }
+
         )
       }
       console.log(this.ticket);
