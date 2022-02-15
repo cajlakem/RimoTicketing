@@ -102,7 +102,7 @@
           <div class="col text-center">
             <div class="row small text-muted">Reporter</div>
             <div class="row">
-              {{ !ticket.requestor ? '' : ticket.requestor.name + " " + ticket.requestor.lastName }}
+              {{ !ticket.requestor ? '' : ticket.requestor.christianName + " " + ticket.requestor.lastName }}
             </div>
           </div>
         </div>
@@ -256,8 +256,9 @@
             </tr>
             <tr *ngFor="let contact of this.ticket.contacts">
               <td>
-                <ngx-avatar class="me-2 d-inline-flex" size="35" name="{{ contact.christianName + ' ' + contact.name }}"></ngx-avatar>
-                {{ contact.christianName + " " + contact.name }}
+                <ngx-avatar class="me-2 d-inline-flex" size="35"
+                  name="{{ contact.christianName + ' ' + contact.lastName }}"></ngx-avatar>
+                {{ contact.christianName + " " + contact.lastName }}
               </td>
               <td>
                 {{ contact.email }}
@@ -277,10 +278,12 @@
 <app-discard-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-discard-modal>
 <app-done-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-done-modal>
 <app-reopen-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-reopen-modal>
-<app-assign-reporter-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket" [contactList]="queryContacts">
+<app-assign-reporter-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"
+  [contactList]="contactsWithoutTicketContacts">
 </app-assign-reporter-modal>
 <app-change-ticket-title-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket">
 </app-change-ticket-title-modal>
-<app-new-requestor-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket" [contactList]="queryContacts">
+<app-new-requestor-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"
+  [contactList]="contactsWithoutRequestor">
 </app-new-requestor-modal>
 <app-remove-reporter-modal (stateChanged)="onStateChange($event)" [forTicket]="ticket"></app-remove-reporter-modal>

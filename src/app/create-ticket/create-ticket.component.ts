@@ -19,15 +19,15 @@ import { HttpErrorResponse } from '@angular/common/http'
 export class CreateTicketComponent implements OnInit {
   public Editor = DecoupledEditorBuild;
   public editorCfg = {}
-  public onReady( editor: any ) {
+  public onReady(editor: any) {
     editor.ui.getEditableElement().parentElement.insertBefore(
-        editor.ui.view.toolbar.element,
-        editor.ui.getEditableElement()
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement()
     );
-    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader: any ) => {
-      return new MyUploadAdapter( loader );
-  };
-}
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader: any) => {
+      return new MyUploadAdapter(loader);
+    };
+  }
   public msg: string | null
 
   constructor(
@@ -51,7 +51,7 @@ export class CreateTicketComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.contracts.length == 1) {
-      this.singleContract = this.contracts[0].tenant.id
+      this.singleContract = this.contracts[0].tenant.nameToDisplay
     }
 
     this.errorMsg = ''
@@ -63,16 +63,16 @@ export class CreateTicketComponent implements OnInit {
       singleOriginMIT: [this.singleContract, [Validators.required]]
     })
 
-    if(this.contracts.length == 1) {
+    if (this.contracts.length == 1) {
       this.registerForm.removeControl('originMIT')
     } else {
       this.registerForm.removeControl('singleOriginMIT')
     }
- 
+
   }
 
   onSubmit() {
-    
+
     this.submitted = true
     if (this.registerForm.invalid) {
       return
@@ -82,7 +82,7 @@ export class CreateTicketComponent implements OnInit {
       myFormData.append('prio', this.registerForm.value.prio)
       myFormData.append('shortDsc', this.registerForm.value.shortDsc)
       myFormData.append('longDsc', this.registerForm.value.longDsc)
-  
+
       if (this.registerForm.value.originMIT) {
         myFormData.append('originMIT', this.registerForm.value.originMIT)
       } else {

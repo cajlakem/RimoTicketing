@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service';
 import { Reporter } from 'src/app/_models/Reporter';
 import { Ticket } from 'src/app/_models/Ticket';
@@ -21,48 +21,43 @@ export class NewRequestorModalComponent implements OnInit {
   @Input()
   contactList: Reporter[];
   errorMsg: string;
+  contactFormGroup: FormGroup;
 
   constructor(
-    private httpTicketingClient: RimoTicketingClientService
+    private httpTicketingClient: RimoTicketingClientService,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngAfterViewInit() {
-    this.contactList.filter(contact => contact.userName !== this.forTicket.requestor.userName)
+
   }
 
   ngOnInit(): void {
-    
-  }
-
-  getErrorMessage() {
-    if (this.contacts.hasError('required')) {
-      return 'Neuen Requestor auswählen';
-    }
-    return this.contacts.hasError('email') ? 'Not a valid email' : '';
+    this.contactFormGroup = this.formBuilder.group({
+      contactCtrl: ['', Validators.required],
+    });
   }
 
   onSubmit() {
-    this.contactList.filter(contact => contact.userName !== this.forTicket.requestor.userName)
-    this.submitted = true;
-    this.contacts.markAllAsTouched()
-    if (this.contacts.invalid) {
+    if (this.contactFormGroup.invalid) {
+      if (this.contactFormGroup.value.contactCtrl == "") {
+        this.errorMsg = 'Neuen Requestor auswählen'
+      }
       return
     }
-    if (this.submitted) {
-      this.httpTicketingClient.changeTicketRequestor(
-        this.selected,
-        this.forTicket.id,
-      ).subscribe({
-        next: (ticket) => this.handleCreationResponse(ticket),
-        error: (error) => this.handleCreationErrorResponse(error),
-      })
-    }
+    this.httpTicketingClient.changeTicketRequestor(
+      this.selected,
+      this.forTicket.id,
+    ).subscribe({
+      next: (ticket) => this.handleCreationResponse(ticket),
+      error: (error) => this.handleCreationErrorResponse(error),
+    })
   }
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
     $('#changeTicketRequestorlModal').modal('hide')
-    this.ngOnInit()
+    this.contactList = ticket.contacts
   }
 
   handleCreationErrorResponse(error: any) {

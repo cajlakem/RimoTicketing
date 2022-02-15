@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AddRemoveContactsService } from 'src/app/add-remove-contacts.service';
 import { AuthserviceService } from 'src/app/authservice.service';
 import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service';
 import { Reporter } from 'src/app/_models/Reporter';
@@ -18,52 +19,52 @@ export class RemoveReporterModalComponent implements OnInit {
   selected: string[];
   submitted: boolean = false;
   error: boolean = false
-  contacts = new FormControl();
   contactList: Reporter[];
   errorMsg: string;
+  contactFormGroup: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthserviceService,
     private httpTicketingClient: RimoTicketingClientService,
-  ) { }
-
+    private addedTicketContact: AddRemoveContactsService
+  ) {
+    this.addedTicketContact
+      .getUpdate()
+      .subscribe((newTicketContacts => {
+        this.contactList = newTicketContacts.newTicketContacts
+      }))
+  }
 
 
   ngOnInit(): void {
     this.contactList = this.forTicket.contacts
-  }
-  getErrorMessage() {
-    if (this.contacts.hasError('required')) {
-      return 'Kontakte auswählen';
-    }
-    return this.contacts.hasError('email') ? 'Not a valid email' : '';
+    this.contactFormGroup = this.formBuilder.group({
+      contactCtrl: ['', Validators.required],
+    });
   }
 
   onSubmit() {
-    this.submitted = true;
-    this.contacts.markAllAsTouched()
-    if (this.contacts.invalid) {
+    if (this.contactFormGroup.invalid) {
+      if (this.contactFormGroup.value.contactCtrl == "") {
+        this.errorMsg = 'Zu entfernende Kontakte auswählen'
+      }
       return
     }
-    if (this.submitted) {
-      this.httpTicketingClient.removeCCReporter(this.selected, this.forTicket.id
-      ).subscribe({
-        next: (ticket) => this.handleCreationResponse(ticket),
-        error: (error) => this.handleCreationErrorResponse(error),
-      })
-    }
+    this.httpTicketingClient.removeCCReporter(this.selected, this.forTicket.id
+    ).subscribe({
+      next: (ticket) => this.handleCreationResponse(ticket),
+      error: (error) => this.handleCreationErrorResponse(error),
+    })
   }
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
     $('#removeTicketContact').modal('hide')
-    this.ngOnInit()
+    this.contactList = ticket.contacts
   }
 
   handleCreationErrorResponse(error: any) {
     const u = error as HttpErrorResponse
     this.errorMsg = Object.values(u.error)[0] as string
   }
-
 }

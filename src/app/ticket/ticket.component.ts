@@ -26,6 +26,8 @@ export class TicketComponent implements OnInit, OnDestroy {
   subscription: Subscription
   ticket: Ticket = new Ticket()
   queryContacts: Reporter[];
+  contactsWithoutRequestor: Reporter[];
+  contactsWithoutTicketContacts: Reporter[];
 
   constructor(
     private router: Router,
@@ -56,8 +58,11 @@ export class TicketComponent implements OnInit, OnDestroy {
       console.log(this.ticket);
       this.ticketingClient.queryContacts(this.ticket.getTicketingContract.externalID).subscribe((data) => {
         this.queryContacts = data;
+        this.contactsWithoutRequestor = data.filter(contact => contact.userName !== this.ticket.requestor.userName)
+        this.contactsWithoutTicketContacts = data
       })
     })
+
   }
 
 

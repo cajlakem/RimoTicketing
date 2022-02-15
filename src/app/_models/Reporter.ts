@@ -1,5 +1,4 @@
 export class Reporter {
-  name: string
   userLabel: string
   nameToDisplay: string
   christianName: string
@@ -9,13 +8,13 @@ export class Reporter {
   asOop: BigInteger
   lastName: string
   userName: string
-  firstName: string
+  info1: string
 
   public getInitials(): string {
-    return this.christianName.charAt(0) + this.name.charAt(0)
+    return this.christianName.charAt(0) + this.lastName.charAt(0)
   }
 
   getFullName(): string {
-    return this.christianName + ' ' + this.name
+    return this.christianName + ' ' + this.lastName
   }
 }

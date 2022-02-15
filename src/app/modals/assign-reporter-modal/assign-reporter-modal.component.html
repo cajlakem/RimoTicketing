@@ -8,15 +8,21 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <mat-form-field appearance="fill">
-          <mat-label class="text-dark">Kontakte</mat-label>
-          <mat-select [(value)]="selected" [formControl]="contacts" required multiple>
-            <mat-option *ngFor="let contact of contactList" [value]="contact.userName">
-              {{contact.firstName + ' ' + contact.lastName}}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="contacts.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
+        <form [formGroup]="contactFormGroup">
+          <mat-form-field appearance="fill">
+            <mat-label class="text-dark">Kontakte</mat-label>
+            <mat-select formControlName="contactCtrl" [(value)]="selected" required multiple>
+              <mat-option *ngFor="let contact of contactList" [value]="contact.userName">
+                {{contact.christianName + ' ' + contact.lastName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="mt-3 alert alert-danger alert-dismissible fade show fade show p-1" role="alert"
+            *ngIf="errorMsg !== '' && errorMsg">
+            <i class="fas fa-exclamation-circle"></i>
+            {{ errorMsg }}
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary bg-sm" data-bs-dismiss="modal">

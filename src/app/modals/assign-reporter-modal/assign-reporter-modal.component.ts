@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { FormGroup, FormControl } from '@angular/forms'
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
+import { AddRemoveContactsService } from 'src/app/add-remove-contacts.service'
 import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service'
 import { Reporter } from 'src/app/_models/Reporter'
 import { Ticket } from 'src/app/_models/Ticket'
@@ -23,44 +24,45 @@ export class AssignReporterModalComponent implements OnInit {
   @Input()
   contactList: Reporter[];
   errorMsg: string;
+  contactFormGroup: FormGroup
 
 
   constructor(
-    private httpTicketingClient: RimoTicketingClientService
+    private httpTicketingClient: RimoTicketingClientService,
+    private formBuilder: FormBuilder,
+    private removeCCContacts: AddRemoveContactsService
   ) { }
 
 
   ngOnInit(): void {
-  }
+    this.contactFormGroup = this.formBuilder.group({
+      contactCtrl: ['', Validators.required],
+    });
+    console.log(this.contactList);
 
-  getErrorMessage() {
-    if (this.contacts.hasError('required')) {
-      return 'Neue Kontakte auswählen';
-    }
-    return this.contacts.hasError('email') ? 'Not a valid email' : '';
   }
 
   onSubmit() {
-
-    this.submitted = true;
-    this.contacts.markAllAsTouched()
-    if (this.contacts.invalid) {
+    if (this.contactFormGroup.invalid) {
+      if (this.contactFormGroup.value.contactCtrl == "") {
+        this.errorMsg = 'Zu entfernende Kontakte auswählen'
+      }
       return
     }
-    if (this.submitted) {
-      this.httpTicketingClient.addCCReporter(
-        this.selected,
-        this.forTicket.id,
-      ).subscribe({
-        next: (ticket) => this.handleCreationResponse(ticket),
-        error: (error) => this.handleCreationErrorResponse(error),
-      })
-    }
+    this.httpTicketingClient.addCCReporter(
+      this.selected,
+      this.forTicket.id,
+    ).subscribe({
+      next: (ticket) => this.handleCreationResponse(ticket),
+      error: (error) => this.handleCreationErrorResponse(error),
+    })
   }
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
+    this.removeCCContacts.sendUpdate(ticket.contacts)
     $('#newTicketContact').modal('hide')
+    this.ngOnInit()
   }
 
   handleCreationErrorResponse(error: any) {

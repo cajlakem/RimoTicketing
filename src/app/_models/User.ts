@@ -14,6 +14,7 @@ export class User {
   profilePictureUrl: string
   lastLogin: number
   getUserProfiles: UserProfile[]
+  languageString: string;
 
   public getInitials(): string {
     return this.christianName.charAt(0) + this.lastName.charAt(0)!
