@@ -9,6 +9,7 @@ export class Reporter {
   lastName: string
   userName: string
   info1: string
+  id: any
 
   public getInitials(): string {
     return this.christianName.charAt(0) + this.lastName.charAt(0)
