@@ -59,10 +59,19 @@ export class TicketComponent implements OnInit, OnDestroy {
       this.ticketingClient.queryContacts(this.ticket.getTicketingContract.externalID).subscribe((data) => {
         this.queryContacts = data;
         this.contactsWithoutRequestor = data.filter(contact => contact.userName !== this.ticket.requestor.userName)
-        this.contactsWithoutTicketContacts = data
+        this.contactsWithoutTicketContacts = data.filter(o1 => this.ticket.contacts.some(o2 => o1.userName === o2.userName));
+
       })
     })
 
+  }
+
+  private getDifference(array1: any, array2: any) {
+    return array1.filter((object1: { id: any }) => {
+      return !array2.some((object2: { id: any }) => {
+        return object1.id === object2.id;
+      });
+    });
   }
 
 
