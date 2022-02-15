@@ -11,8 +11,11 @@
         <form [formGroup]="contactFormGroup">
           <mat-form-field appearance="fill">
             <mat-label class="text-dark">Kontakte</mat-label>
-            <mat-select formControlName="contactCtrl" [(value)]="selected" required multiple>
-              <mat-option *ngFor="let contact of contactList" [value]="contact.userName">
+            <mat-select [formControl]="contactCtrl" [(value)]="selected" required [multiple]="true" #multiSelect>
+              <mat-option>
+                <ngx-mat-select-search [formControl]="contactFilterCtrl"></ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let contact of filteredContactList | async" [value]="contact.userName">
                 {{contact.christianName + ' ' + contact.lastName}}
               </mat-option>
             </mat-select>

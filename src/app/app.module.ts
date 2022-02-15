@@ -45,7 +45,7 @@ import { ChangePasswordModalComponent } from './modals/change-password-modal/cha
 import { ForgotPasswordModalComponent } from './modals/forgot-password-modal/forgot-password-modal.component'
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { CreateTicketWizardComponent } from './create-ticket-wizard/create-ticket-wizard.component';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
