@@ -66,16 +66,6 @@ export class TicketComponent implements OnInit, OnDestroy {
 
   }
 
-  private getDifference(array1: any, array2: any) {
-    return array1.filter((object1: { id: any }) => {
-      return !array2.some((object2: { id: any }) => {
-        return object1.id === object2.id;
-      });
-    });
-  }
-
-
-
   ngOnDestroy(): void {
     // Destroy navigationSubscription to avoid memory leaks
     if (this.navigationSubscription) {
