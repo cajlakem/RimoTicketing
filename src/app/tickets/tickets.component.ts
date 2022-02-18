@@ -106,19 +106,17 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy()
-
-      this.dtTrigger.next('')
+      dtInstance.clear().draw()
     })
   }
 
-  async updateTicketList(evt: any) {
+  updateTicketList(evt: any) {
     (<HTMLInputElement>document.getElementById("globalSearch")).value = ""
     this.displaySearchResuts = false;
     this.filterKey = evt.target.value
     localStorage.setItem('ticketFilterKey', this.filterKey)
-    this.ngOnInit()
     this.rerender()
+    this.ngOnInit()
   }
 
   setFilterKey(key: any) { }
