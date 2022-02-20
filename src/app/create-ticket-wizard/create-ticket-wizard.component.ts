@@ -20,14 +20,14 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper'
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: {displayDefaultIndicatorType: false},
+      useValue: { displayDefaultIndicatorType: false },
     },
   ],
 })
 
 
 export class CreateTicketWizardComponent implements OnInit {
-  
+
   invalidCredentialMsg: string;
   formGroupContract: string;
   singleOriginMIT: UserProfile;
@@ -110,14 +110,14 @@ export class CreateTicketWizardComponent implements OnInit {
     private router: Router,
     private ticketingClient: RimoTicketingClientService,
     private authService: AuthserviceService,
-    
+
   ) {
     this.contracts.length == 1 ? this.formGroupContract = "singleContractFormGroup" : this.formGroupContract = "contractFormGroup"
   }
 
   retUrl: any = 'tickets'
   user: User = this.authService.getCurrentUser()
-  contracts: UserProfile[] = this.user.getUserProfiles
+  contracts: UserProfile[] = this.user.getTicketingUserProfiles
 
   ngOnInit(): void {
     this.contractFormGroup = this.formBuilder.group({

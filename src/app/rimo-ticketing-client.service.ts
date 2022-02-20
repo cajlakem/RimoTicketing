@@ -27,7 +27,7 @@ export class RimoTicketingClientService {
     filterKey: string
   ): Observable<Ticket[]> {
     var contractIds: string[] = [];
-    for (let contracts of user.getUserProfiles) {
+    for (let contracts of user.getTicketingUserProfiles) {
       contractIds.push(contracts.tenant.id)
     }
 

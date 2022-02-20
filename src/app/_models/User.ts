@@ -13,7 +13,7 @@ export class User {
   nameToDisplay: string
   profilePictureUrl: string
   lastLogin: number
-  getUserProfiles: UserProfile[]
+  getTicketingUserProfiles: UserProfile[]
   languageString: string;
 
   public getInitials(): string {

@@ -43,7 +43,7 @@ export class CreateTicketComponent implements OnInit {
   retUrl: any = 'tickets'
   user: User = this.authService.getCurrentUser()
   singleContract: string;
-  contracts: UserProfile[] = this.user.getUserProfiles;
+  contracts: UserProfile[] = this.user.getTicketingUserProfiles;
 
   get f() {
     return this.registerForm.controls
@@ -72,7 +72,6 @@ export class CreateTicketComponent implements OnInit {
   }
 
   onSubmit() {
-
     this.submitted = true
     if (this.registerForm.invalid) {
       return
