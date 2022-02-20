@@ -131,15 +131,16 @@
             </span>
           </td>
         </tr>
-     
-      <tr *ngIf="errorMsg">
-      <td colspan="7">
-        <div class=" text-center mt-3 alert alert-danger alert-dismissible fade show fade show p-1" role="alert"
-        *ngIf="errorMsg">
-        <i class="fas fa-exclamation-circle"></i>
-        {{ errorMsg }}
-      </div></td>
-      </tr>
+
+        <tr *ngIf="errorMsg">
+          <td colspan="7">
+            <div class=" text-center mt-3 alert alert-danger alert-dismissible fade show fade show p-1" role="alert"
+              *ngIf="errorMsg">
+              <i class="fas fa-exclamation-circle"></i>
+              {{ errorMsg }}
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>

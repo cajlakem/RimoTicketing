@@ -46,6 +46,8 @@ import { ForgotPasswordModalComponent } from './modals/forgot-password-modal/for
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { CreateTicketWizardComponent } from './create-ticket-wizard/create-ticket-wizard.component';
 import { MatIconModule } from '@angular/material/icon';
+import { SelectDropDownModule } from 'ngx-select-dropdown'
+
 
 @NgModule({
   declarations: [
@@ -73,6 +75,7 @@ import { MatIconModule } from '@angular/material/icon';
     CreateTicketWizardComponent,
   ],
   imports: [
+    SelectDropDownModule,
     MatIconModule,
     NgxMatSelectSearchModule,
     MatButtonModule,
