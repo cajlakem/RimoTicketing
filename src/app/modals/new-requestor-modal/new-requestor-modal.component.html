@@ -10,9 +10,7 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="contactFormGroup">
-          <mat-label class="text-dark">Kontakte</mat-label>
-          <ngx-select-dropdown class="form-select" [multiple]="true" [config]="config" [options]="contactList"
-            [formControl]="contactCtrl">
+          <ngx-select-dropdown [config]="config" [options]="contactList" [formControl]="contactCtrl">
           </ngx-select-dropdown>
           <div class="mt-3 alert alert-danger alert-dismissible fade show fade show p-1" role="alert" *ngIf="errorMsg">
             <i class="fas fa-exclamation-circle"></i>

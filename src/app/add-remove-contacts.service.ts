@@ -9,9 +9,10 @@ export class AddRemoveContactsService {
   private subjectName = new Subject<any>()
   constructor() { }
 
-  sendUpdate(newTicketContacts: Reporter[]) {
+  sendUpdate(newTicketContacts: Reporter[], origin: string) {
     this.subjectName.next({
-      newTicketContacts
+      newTicketContacts,
+      origin
     })
   }
 

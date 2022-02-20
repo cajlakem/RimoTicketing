@@ -28,87 +28,72 @@ export class AssignReporterModalComponent implements OnInit {
   errorMsg: string;
   contactFormGroup: FormGroup
   public contactCtrl: FormControl = new FormControl();
-  public contactFilterCtrl: FormControl = new FormControl();
-  public filteredContactList: ReplaySubject<Reporter[]> = new ReplaySubject<Reporter[]>(1);
-  private _onDestroy = new Subject<void>();
 
 
   @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
 
   constructor(
     private httpTicketingClient: RimoTicketingClientService,
-    private formBuilder: FormBuilder,
     private removeCCContacts: AddRemoveContactsService
   ) { }
 
+  config = {
+    displayFn: (item: any) => { return item.christianName + " " + item.lastName; }, //to support flexible text displaying for each item
+    search: true, //true/false for the search functionlity defaults to false,
+    height: 'auto', //height of the list so that if there are more no of items it can show a scroll defaults to auto. With auto height scroll will never appear
+    placeholder: 'Select', // text to be displayed when no item is selected defaults to Select,
+    customComparator: () => { }, // a custom function using which user wants to sort the items. default is undefined and Array.sort() will be used in that case,
+    limitTo: 0, // number thats limits the no of options displayed in the UI (if zero, options will not be limited)
+    moreText: 'more', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
+    noResultsFound: 'No Contact found', // text to be displayed when no items are found while searching
+    searchPlaceholder: 'Search', // label thats displayed in search input,
+    searchOnKey: 'lastName', // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
+    clearOnSelection: true, // clears search criteria when an option is selected if set to true, default is false
+    inputDirection: 'ltr' // the direction of the search input can be rtl or ltr(default)
+  }
+
+
   ngOnDestroy() {
-    this._onDestroy.next();
-    this._onDestroy.complete();
   }
 
   ngAfterViewInit() {
-    this.setInitialValue();
-  }
-
-  protected setInitialValue() {
-    this.filteredContactList
-      .pipe(take(1), takeUntil(this._onDestroy))
-      .subscribe(() => {
-        // setting the compareWith property to a comparison function
-        // triggers initializing the selection according to the initial value of
-        // the form control (i.e. _initializeSelection())
-        // this needs to be done after the filteredBanks are loaded initially
-        // and after the mat-option elements are available
-        this.multiSelect.compareWith = (a: Reporter, b: Reporter) => a && b && a.userName === b.userName;
-      });
-  }
-
-  private filterContacts() {
-    if (!this.contactList) {
-      return;
-    }
-    let search = this.contactFilterCtrl.value;
-    if (!search) {
-      this.filteredContactList.next(this.contactList.slice());
-      return;
-    } else {
-      search = search.toLowerCase();
-    }
-    this.filteredContactList.next(
-      this.contactList.filter(bank => bank.lastName.toLowerCase().indexOf(search) > -1)
-    );
   }
 
   ngOnInit(): void {
-    this.filteredContactList.next(this.contactList.slice());
-    this.contactFilterCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterContacts();
-      });
+    this.removeCCContacts
+      .getUpdate()
+      .subscribe((message) => {
+        if (message.origin == "addCCReporters") {
+          this.contactList = this.contactList.filter(c => !message.newTicketContacts.map((y: { userName: string }) => y.userName).includes(c.userName));
+        } else if (message.origin == "removeCCReporters") {
+          this.contactList = this.contactList.concat(message.newTicketContacts);
+        }
+      })
   }
 
   onSubmit() {
-    if (this.contactFormGroup.invalid) {
-      if (this.contactFormGroup.value.contactCtrl == "") {
-        this.errorMsg = 'Zu entfernende Kontakte auswählen'
-      }
+    if (this.contactCtrl.value == "") {
+      this.errorMsg = 'Neue Kontakte auswählen'
       return
     }
+    let newTicketContacts: string[] = [];
+    for (let c of this.contactCtrl.value) {
+      newTicketContacts.push(c.userName)
+    }
     this.httpTicketingClient.addCCReporter(
-      this.selected,
+      newTicketContacts,
       this.forTicket.id,
     ).subscribe({
-      next: (ticket) => this.handleCreationResponse(ticket),
-      error: (error) => this.handleCreationErrorResponse(error),
+      next: (ticket: Ticket) => this.handleCreationResponse(ticket),
+      error: (error: any) => this.handleCreationErrorResponse(error),
     })
   }
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
-    this.removeCCContacts.sendUpdate(ticket.contacts)
+    this.removeCCContacts.sendUpdate(ticket.contacts, 'addCCReporters')
     $('#newTicketContact').modal('hide')
-    this.ngOnInit()
+    this.contactCtrl.reset()
   }
 
   handleCreationErrorResponse(error: any) {

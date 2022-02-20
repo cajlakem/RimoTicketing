@@ -5,6 +5,7 @@ import { ReplaySubject, Subject, takeUntil } from 'rxjs';
 import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service';
 import { Reporter } from 'src/app/_models/Reporter';
 import { Ticket } from 'src/app/_models/Ticket';
+import { AddRemoveContactsService } from 'src/app/add-remove-contacts.service';
 
 @Component({
   selector: 'app-new-requestor-modal',
@@ -24,6 +25,12 @@ export class NewRequestorModalComponent implements OnInit {
   errorMsg: string;
   contactFormGroup: FormGroup;
   public contactCtrl: FormControl = new FormControl();
+  oldRequestorUserName: Reporter;
+
+  constructor(
+    private httpTicketingClient: RimoTicketingClientService,
+    private addRemoveCCReporterService: AddRemoveContactsService
+  ) { }
 
   config = {
     displayFn: (item: any) => { return item.christianName + " " + item.lastName; }, //to support flexible text displaying for each item
@@ -36,13 +43,9 @@ export class NewRequestorModalComponent implements OnInit {
     noResultsFound: 'No Contact found', // text to be displayed when no items are found while searching
     searchPlaceholder: 'Search', // label thats displayed in search input,
     searchOnKey: 'lastName', // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
-    clearOnSelection: false, // clears search criteria when an option is selected if set to true, default is false
+    clearOnSelection: true, // clears search criteria when an option is selected if set to true, default is false
     inputDirection: 'ltr' // the direction of the search input can be rtl or ltr(default)
   }
-
-  constructor(
-    private httpTicketingClient: RimoTicketingClientService
-  ) { }
 
   ngOnDestroy() {
   }
@@ -52,19 +55,23 @@ export class NewRequestorModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.oldRequestorUserName = this.forTicket.requestor;
+    this.addRemoveCCReporterService
+      .getUpdate()
+      .subscribe((message) => {
+        if (message.origin == "newRequestor") {
+          this.contactList = message.newTicketContacts;
+        }
+      })
   }
 
   onSubmit() {
-    console.log(this.contactFormGroup.invalid);
-
-    if (this.contactFormGroup.invalid) {
-      if (this.contactFormGroup.value.contactCtrl == "") {
-        this.errorMsg = 'Neuen Requestor auswählen'
-      }
+    if (this.contactCtrl.value == "") {
+      this.errorMsg = 'Neuen Requestor auswählen'
       return
     }
     this.httpTicketingClient.changeTicketRequestor(
-      this.selected,
+      this.contactCtrl.value.userName,
       this.forTicket.id,
     ).subscribe({
       next: (ticket) => this.handleCreationResponse(ticket),
@@ -74,11 +81,14 @@ export class NewRequestorModalComponent implements OnInit {
 
   handleCreationResponse(ticket: Ticket) {
     this.stateChanged.emit(ticket)
+    this.contactList.push(this.oldRequestorUserName)
+    this.addRemoveCCReporterService.sendUpdate(this.contactList.filter(r => r.userName !== ticket.requestor.userName), "newRequestor")
     $('#changeTicketRequestorlModal').modal('hide')
-    this.contactList = ticket.contacts
+    this.contactCtrl.reset()
   }
 
   handleCreationErrorResponse(error: any) {
+    this.contactCtrl.reset()
     const u = error as HttpErrorResponse
     this.errorMsg = Object.values(u.error)[0] as string
   }
