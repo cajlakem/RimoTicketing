@@ -43,6 +43,8 @@ export class TicketComponent implements OnInit, OnDestroy {
     })
   }
 
+
+
   ngOnInit(): void {
     var id = this.activatedRoute.snapshot.paramMap.get('id')
     this.ticketingClient.queryTicketWithlId(id as string).subscribe(async (data) => {
@@ -61,6 +63,8 @@ export class TicketComponent implements OnInit, OnDestroy {
       console.log(this.ticket);
       this.ticketingClient.queryContacts(this.ticket.getTicketingContract.externalID).subscribe((data) => {
         this.queryContacts = data;
+        console.log(this.queryContacts);
+
         this.contactsWithoutRequestor = data.filter(contact => contact.userName !== this.ticket.requestor.userName)
         if (this.ticket.contacts.length > 0) {
           this.contactsWithoutTicketContacts = data.filter(o1 => this.ticket.contacts.some(o2 => o1.userName === o2.userName));
