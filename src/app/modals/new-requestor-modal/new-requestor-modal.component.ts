@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ReplaySubject, Subject, takeUntil } from 'rxjs';
 import { RimoTicketingClientService } from 'src/app/rimo-ticketing-client.service';
 import { Reporter } from 'src/app/_models/Reporter';
 import { Ticket } from 'src/app/_models/Ticket';
@@ -22,20 +23,50 @@ export class NewRequestorModalComponent implements OnInit {
   contactList: Reporter[];
   errorMsg: string;
   contactFormGroup: FormGroup;
+  public contactCtrl: FormControl = new FormControl();
+  public contactFilterCtrl: FormControl = new FormControl();
+  public filteredContactList: ReplaySubject<Reporter[]> = new ReplaySubject<Reporter[]>(1);
+  private _onDestroy = new Subject<void>();
+
 
   constructor(
     private httpTicketingClient: RimoTicketingClientService,
     private formBuilder: FormBuilder,
   ) { }
 
+
+  ngOnDestroy() {
+    this._onDestroy.next();
+    this._onDestroy.complete();
+  }
+
+  private filterContacts() {
+    if (!this.contactList) {
+      return;
+    }
+    let search = this.contactFilterCtrl.value;
+    if (!search) {
+      this.filteredContactList.next(this.contactList.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    this.filteredContactList.next(
+      this.contactList.filter(bank => bank.lastName.toLowerCase().indexOf(search) > -1)
+    );
+  }
+
   ngAfterViewInit() {
 
   }
 
   ngOnInit(): void {
-    this.contactFormGroup = this.formBuilder.group({
-      contactCtrl: ['', Validators.required],
-    });
+    this.filteredContactList.next(this.contactList.slice());
+    this.contactFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterContacts();
+      });
   }
 
   onSubmit() {

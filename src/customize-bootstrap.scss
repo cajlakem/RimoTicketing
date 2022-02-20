@@ -20,6 +20,10 @@ $form-floating-padding-x: 0;
 @import 'node_modules/bootstrap/scss/alert';
 @import 'node_modules/bootstrap/scss/buttons';
 
+
+  .cdk-global-overlay-wrapper, .cdk-overlay-container {
+     z-index: 99999 !important;
+  }
 .mat-step-header .mat-step-icon-selected {
   background-color: #27526e;
 }
