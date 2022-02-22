@@ -46,18 +46,21 @@ export class BreadcrumbComponent implements OnInit {
     return this.getCurrentBCId() == item.id
   }
 
-  public isIdsEmpty(): Boolean {
-    return this.ids.length === 0
-  }
-
   ngOnDestroy() {
     this.subscriptionName.unsubscribe()
   }
 
   async ticketExists(id: string) {
     let result: boolean = false;
-    const response = await this.ticketingApi.queryTicketWithlId(id, this.userName).toPromise();
-    response !== undefined ? result = true : result = false;
+    try {
+      const response = await this.ticketingApi.queryTicketWithlId(id, this.userName).toPromise()
+      console.log(response);
+      result = true
+    } catch (e) {
+      console.log(e);
+      result = false
+    }
+
     return result;
   }
 }

@@ -1,5 +1,5 @@
 <div class="container-fluid max-width shadow " style="background-color: #e8eaed;">
-  <ol class="breadcrumb" *ngIf="isIdsEmpty()"></ol>
+  <ol class="breadcrumb" *ngIf="ids.length == 0"></ol>
   <ol class="breadcrumb d-flex justify-content-center">
     <li class="active breadcrumb-item {{
           getCurrentBCId() === bci.id ? 'active' : ''
