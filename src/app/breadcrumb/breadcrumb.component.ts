@@ -54,10 +54,8 @@ export class BreadcrumbComponent implements OnInit {
     let result: boolean = false;
     try {
       const response = await this.ticketingApi.queryTicketWithlId(id, this.userName).toPromise()
-      console.log(response);
       result = true
     } catch (e) {
-      console.log(e);
       result = false
     }
 
