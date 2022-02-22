@@ -22,7 +22,33 @@ export class RimoTicketingClientService {
 
   constructor(private http: HttpClient) { }
 
-  public queryOpenTickets(
+  public queryAllTickets(
+    user: User
+  ): Observable<Ticket[]> {
+    var contractIds: string[] = [];
+    for (let contracts of user.getTicketingUserProfiles) {
+      contractIds.push(contracts.tenant.id)
+    }
+
+    const headers = { 'content-type': 'application/json' }
+    var body = {
+      operation: 'queryAllTickets',
+      token: this.token,
+      appName: null,
+      tsSend: null,
+      tsReceived: null,
+      queue: null,
+      asOop: null,
+      errorText: null,
+      requestBody: { externalIDContracts: contractIds, userNameTicketingUser: user.user },
+      responseBody: {},
+    }
+    return this.http.post<Ticket[]>(this.url, body, {
+      headers: headers,
+    })
+  }
+
+  public queryTickets(
     user: User,
     filterKey: string
   ): Observable<Ticket[]> {
@@ -33,7 +59,7 @@ export class RimoTicketingClientService {
 
     const headers = { 'content-type': 'application/json' }
     var body = {
-      operation: 'queryOpenTickets',
+      operation: 'queryTickets',
       token: this.token,
       appName: null,
       tsSend: null,
@@ -49,11 +75,14 @@ export class RimoTicketingClientService {
     })
   }
 
-  public queryTicketWithlId(id: string): Observable<Ticket> {
+  public queryTicketWithlId(id: string, userName: string): Observable<Ticket> {
     var body = {
       operation: 'queryTicketWithlId',
       token: this.token,
-      requestBody: { id: id },
+      requestBody: {
+        id: id,
+        userNameTicketingUser: userName
+      },
       responseBody: {},
     }
 

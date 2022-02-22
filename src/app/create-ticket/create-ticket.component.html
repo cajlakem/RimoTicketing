@@ -9,89 +9,96 @@
           <i class="fas fa-window-close"></i>
           Abbrechen
         </button>
-        <button type="submit" class="btn btn-outline-success shadow rounded-3 btn-sm m-2">
+        <button *ngIf="contracts.length > 0" type="submit" class="btn btn-outline-success shadow rounded-3 btn-sm m-2">
           <i class="fas fa-paper-plane"></i>
           Abschicken
         </button>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-floating mb-3">
-          <input class="ps-3 form-control bottom-border shadow rounded-3" [value]="singleContract"
-            *ngIf="singleContract" formControlName="singleOriginMIT" readonly />
-          <select formControlName="originMIT" *ngIf="contracts.length > 1 " class="form-select shadow rounded-3"
-            id="floatingSelect" [ngClass]="{ 'is-invalid': submitted && f.originMIT.errors}"
-            aria-label="Floating label select example">
-            <option *ngFor="let contract of contracts" [value]="contract.tenant.id">
-              {{contract.tenant.nameToDisplay}}
-            </option>
-          </select>
-          <label for="floatingSelect">Vertrag</label>
-          <div *ngIf="submitted && f.originMIT.errors" class="invalid-feedback">
-            <div>
-              Vertrag auswählen
+    <div class=" mt-3 alert alert-danger alert-dismissible fade show fade show p-1" role="alert"
+      *ngIf="contracts.length == 0">
+      <i class="fas fa-exclamation-circle"></i>
+      Sie können kein Ticket erstellen, weil Sie keinen Vertrag haben.
+    </div>
+    <div *ngIf="contracts.length > 1">
+      <div class="row">
+        <div class="col">
+          <div class="form-floating mb-3">
+            <input class="ps-3 form-control bottom-border shadow rounded-3" [value]="singleContract"
+              *ngIf="singleContract" formControlName="singleOriginMIT" readonly />
+            <select formControlName="originMIT" *ngIf="contracts.length > 1 " class="form-select shadow rounded-3"
+              id="floatingSelect" [ngClass]="{ 'is-invalid': submitted && f.originMIT.errors}"
+              aria-label="Floating label select example">
+              <option *ngFor="let contract of contracts" [value]="contract.tenant.id">
+                {{contract.tenant.nameToDisplay}}
+              </option>
+            </select>
+            <label for="floatingSelect">Vertrag</label>
+            <div *ngIf="submitted && f.originMIT.errors" class="invalid-feedback">
+              <div>
+                Vertrag auswählen
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div class="form-floating">
-          <select class="form-select shadow rounded-3" id="floatingSelect" formControlName="prio"
-            [ngClass]="{ 'is-invalid': submitted && f.prio.errors }" aria-label="Floating label select example">
-            <option value="Critical Fault">Critical Fault</option>
-            <option value="Major Fault">Major Fault</option>
-            <option value="Minor Fault">Minor Fault</option>
-            <option value="Technical Request">Technical Request</option>
-            <option value="Improvement">Improvement</option>
-            <option value="User Request">User Request</option>
-          </select>
-          <label for="floatingSelect">Priorität</label>
-          <div *ngIf="submitted && f.prio.errors" class="invalid-feedback">
-            <div *ngIf="f.prio.errors.required">
-              Prio auswählen
+      <div class="row">
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select shadow rounded-3" id="floatingSelect" formControlName="prio"
+              [ngClass]="{ 'is-invalid': submitted && f.prio.errors }" aria-label="Floating label select example">
+              <option value="Critical Fault">Critical Fault</option>
+              <option value="Major Fault">Major Fault</option>
+              <option value="Minor Fault">Minor Fault</option>
+              <option value="Technical Request">Technical Request</option>
+              <option value="Improvement">Improvement</option>
+            </select>
+            <label for="floatingSelect">Priorität</label>
+            <div *ngIf="submitted && f.prio.errors" class="invalid-feedback">
+              <div *ngIf="f.prio.errors.required">
+                Prio auswählen
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row mt-3">
-      <div class="col">
-        <div class="form-floating mb-3">
-          <input type="input" class="ps-3 form-control bottom-border shadow rounded-3" id="floatingInput"
-            [ngClass]="{ 'is-invalid': submitted && f.shortDsc.errors }" formControlName="shortDsc" />
-          <label for="floatingInput">Kurzbeschreibung</label>
-          <div *ngIf="submitted && (f.shortDsc.errors || f.longDsc.errors)" class="invalid-feedback">
-            <div *ngIf="f.shortDsc.errors.required || f.longDsc.errors.required">
-              Kurz- und Langbeschreibung hinterlegen
+      <div class="row mt-3">
+        <div class="col">
+          <div class="form-floating mb-3">
+            <input type="input" class="ps-3 form-control bottom-border shadow rounded-3" id="floatingInput"
+              [ngClass]="{ 'is-invalid': submitted && f.shortDsc.errors }" formControlName="shortDsc" />
+            <label for="floatingInput">Kurzbeschreibung</label>
+            <div *ngIf="submitted && (f.shortDsc.errors || f.longDsc.errors)" class="invalid-feedback">
+              <div *ngIf="f.shortDsc.errors.required || f.longDsc.errors.required">
+                Kurz- und Langbeschreibung hinterlegen
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col mt-4" class="align-self-center">
-        <label class="from-label text-muted small">
-          Langbeschreibung:
-        </label>
-        <ckeditor [config]="editorCfg" [editor]="Editor" (ready)="onReady($event)" formControlName="longDsc"></ckeditor>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div class=" mt-3 alert alert-danger alert-dismissible fade show fade show p-1" role="alert" *ngIf="errorMsg">
-          <i class="fas fa-exclamation-circle"></i>
-          {{ errorMsg }}
-        </div>
-        <div class="alert alert-success mt-3" role="alert">
-          <i class="far fa-smile-wink"></i>
-          Bitte den Fehler möglichst gut beschreiben!
+      <div class="row">
+        <div class="col mt-4" class="align-self-center">
+          <label class="from-label text-muted small">
+            Langbeschreibung:
+          </label>
+          <ckeditor [config]="editorCfg" [editor]="Editor" (ready)="onReady($event)" formControlName="longDsc">
+          </ckeditor>
         </div>
       </div>
+      <div class="row">
+        <div class="col">
+          <div class=" mt-3 alert alert-danger alert-dismissible fade show fade show p-1" role="alert" *ngIf="errorMsg">
+            <i class="fas fa-exclamation-circle"></i>
+            {{ errorMsg }}
+          </div>
+          <div class="alert alert-success mt-3" role="alert">
+            <i class="far fa-smile-wink"></i>
+            Bitte den Fehler möglichst gut beschreiben!
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3"></div>
     </div>
-    <div class="row mt-3"></div>
   </form>
+
 </div>

@@ -9,4 +9,5 @@ export class TicketComment {
   creationTime: string
   createdBy: Reporter
   state: EnumList
+  getTsCreation: number
 }

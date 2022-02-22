@@ -22,7 +22,6 @@ export class RemoveReporterModalComponent implements OnInit {
   error: boolean = false
   contactList: Reporter[];
   errorMsg: string;
-  contactFormGroup: FormGroup;
   public contactCtrl: FormControl = new FormControl();
 
 
@@ -64,8 +63,12 @@ export class RemoveReporterModalComponent implements OnInit {
       })
   }
 
+  removeError(): void {
+    this.errorMsg = "";
+  }
+
   onSubmit() {
-    if (this.contactCtrl.value == "") {
+    if (this.contactCtrl.value === null) {
       this.errorMsg = 'Zu entfernende Kontakte auswählen'
       return
     }

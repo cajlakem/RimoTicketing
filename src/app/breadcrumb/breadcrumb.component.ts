@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { BreadCrumbService } from '../bread-crumb.service'
 import { BreadCrumbId } from '../_models/BreadCrumbId'
 import { Subscription } from 'rxjs'
+import { RimoTicketingClientService } from '../rimo-ticketing-client.service'
+import { AuthserviceService } from '../authservice.service'
 
 @Component({
   selector: 'app-breadcrumb',
@@ -9,13 +11,20 @@ import { Subscription } from 'rxjs'
   styleUrls: ['./breadcrumb.component.css'],
 })
 export class BreadcrumbComponent implements OnInit {
-  ids: BreadCrumbId[]
+  ids: BreadCrumbId[] = []
   private subscriptionName: Subscription
+  userName: string = this.authService.getCurrentUser().user;
 
-  constructor(private breadCrumbService: BreadCrumbService) {}
+  constructor(
+    private breadCrumbService: BreadCrumbService,
+    private ticketingApi: RimoTicketingClientService,
+    private authService: AuthserviceService) { }
 
-  ngOnInit(): void {
-    this.ids = this.breadCrumbService.getBreadCrumIds()
+  async ngOnInit(): Promise<void> {
+
+    for (let id of this.breadCrumbService.getBreadCrumIds()) {
+      await this.ticketExists(id.id) ? this.ids.push(id) : this.breadCrumbService.removeBreadCrumbId(id)
+    }
     this.subscriptionName = this.breadCrumbService
       .getUpdate()
       .subscribe((message) => {
@@ -40,7 +49,15 @@ export class BreadcrumbComponent implements OnInit {
   public isIdsEmpty(): Boolean {
     return this.ids.length === 0
   }
+
   ngOnDestroy() {
     this.subscriptionName.unsubscribe()
+  }
+
+  async ticketExists(id: string) {
+    let result: boolean = false;
+    const response = await this.ticketingApi.queryTicketWithlId(id, this.userName).toPromise();
+    response !== undefined ? result = true : result = false;
+    return result;
   }
 }

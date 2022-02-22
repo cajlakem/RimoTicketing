@@ -33,7 +33,9 @@ export class DayAgoPipe implements PipeTransform {
       if (diffDays === 0) {
         return 'Heute'
       } else {
-        return 'vor ' + diffDays + ' Tagen'
+        let key
+        diffDays == 1 ? key = "Tag" : key = "Tagen"
+        return 'vor ' + diffDays + ' ' + key
       }
     }
     return value

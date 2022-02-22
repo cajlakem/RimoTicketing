@@ -141,9 +141,11 @@ export class CreateTicketWizardComponent implements OnInit {
     this.rightsFormGroup = this.formBuilder.group({
       rightsCtrl: ['', Validators.required],
     });
-    this.singleContractFormGroup = this.formBuilder.group({
-      singleCtrl: [this.contracts[0].tenant.nameToDisplay, Validators.required],
-    });
+    if (this.contacts !== undefined) {
+      this.singleContractFormGroup = this.formBuilder.group({
+        singleCtrl: [this.contracts[0].tenant.nameToDisplay, Validators.required],
+      });
+    }
     this.phoneFormGroup = this.formBuilder.group({
       phoneCtrl: [],
     });

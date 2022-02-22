@@ -14,7 +14,6 @@ import { MyUploadAdapter } from 'src/app/my-upload-adapter'
   styleUrls: ['./reopen-modal.component.css'],
 })
 export class ReopenModalComponent implements OnInit {
-  public ckEditorInput: any;
   public Editor = DecoupledEditorBuild;
   public editorCfg = {}
   @Output() stateChanged = new EventEmitter<any>()
@@ -29,10 +28,6 @@ export class ReopenModalComponent implements OnInit {
     private httpTicketingClient: RimoTicketingClientService,
   ) { }
 
-  get f() {
-    return this.createCommentForm.controls
-  }
-
   public onReady(editor: any) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
@@ -43,6 +38,10 @@ export class ReopenModalComponent implements OnInit {
     };
   }
 
+  removeError() {
+    this.errorMsg = ""
+  }
+
   ngOnInit(): void {
     this.errorMsg = ''
     this.createCommentForm = this.formBuilder.group({
@@ -51,26 +50,23 @@ export class ReopenModalComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true
-
     if (this.createCommentForm.invalid) {
+      this.errorMsg = "Begründung erforderlich"
       return
     }
-    if (this.submitted) {
-      var myFormData = new FormData()
-      myFormData.append('text', this.createCommentForm.value.text)
-      var user: User = this.authService.getCurrentUser()
-      this.httpTicketingClient
-        .reOpenTicket(
-          this.forTicket.id,
-          myFormData.get('text') as string,
-          user.user
-        )
-        .subscribe({
-          next: (ticket) => this.handleCreationResponse(ticket),
-          error: (error) => this.handleCreationErrorResponse(error),
-        })
-    }
+    var myFormData = new FormData()
+    myFormData.append('text', this.createCommentForm.value.text)
+    var user: User = this.authService.getCurrentUser()
+    this.httpTicketingClient
+      .reOpenTicket(
+        this.forTicket.id,
+        myFormData.get('text') as string,
+        user.user
+      )
+      .subscribe({
+        next: (ticket) => this.handleCreationResponse(ticket),
+        error: (error) => this.handleCreationErrorResponse(error),
+      })
   }
 
   handleCreationResponse(ticket: Ticket) {

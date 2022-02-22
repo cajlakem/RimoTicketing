@@ -13,7 +13,9 @@ export class AppComponent {
   constructor(
     private authService: AuthserviceService,
     private router: Router,
-  ) {}
+  ) {
+    localStorage.removeItem("currentUser");
+  }
 
   logout() {
     this.authService.logout()

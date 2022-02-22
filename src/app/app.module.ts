@@ -31,7 +31,7 @@ import { DiscardModalComponent } from './modals/discard-modal/discard-modal.comp
 import { ChangeTicketTitleModalComponent } from './modals/change-ticket-title-modal/change-ticket-title-modal.component'
 import { AssignReporterModalComponent } from './modals/assign-reporter-modal/assign-reporter-modal.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { CommonModule } from '@angular/common';
+import { CommonModule, } from '@angular/common';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -98,7 +98,9 @@ import { SelectDropDownModule } from 'ngx-select-dropdown'
     MatFormFieldModule,
     MatSelectModule
   ],
-  providers: [AuthGuardService],
+  providers: [
+    AuthGuardService
+  ],
 
   bootstrap: [
     AppComponent

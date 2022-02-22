@@ -2,8 +2,9 @@
   <ol class="breadcrumb" *ngIf="isIdsEmpty()"></ol>
   <ol class="breadcrumb d-flex justify-content-center">
     <li class="active breadcrumb-item {{
-        getCurrentBCId() === bci.id ? 'active' : ''
-      }}" aria-current="page" *ngFor="let bci of ids.slice().reverse()">
+          getCurrentBCId() === bci.id ? 'active' : ''
+        }}
+        " aria-current="page" *ngFor="let bci of ids.slice().reverse()">
       <a *ngIf="!isActive(bci)" href="/edit/{{ bci.id }}">
         {{ bci.name }}
       </a>

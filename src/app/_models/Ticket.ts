@@ -24,4 +24,6 @@ export class Ticket {
   isClosed: boolean
   isReadByQueryTicketReporter: boolean
   getTicketingContract: Contract
+  tsCreation: number
+  canBeModifiedByUser: boolean
 }

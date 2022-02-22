@@ -8,8 +8,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="contactFormGroup">
-          <ngx-select-dropdown [config]="config" [options]="contactList" [formControl]="contactCtrl" [multiple]="true">
+        <form>
+          <ngx-select-dropdown (change)="removeError()" [config]="config" [options]="contactList"
+            [formControl]="contactCtrl" [multiple]="true">
           </ngx-select-dropdown>
           <div class="mt-3 alert alert-danger alert-dismissible fade show fade show p-1" role="alert"
             *ngIf="errorMsg !== '' && errorMsg">

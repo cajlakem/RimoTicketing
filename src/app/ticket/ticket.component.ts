@@ -14,6 +14,7 @@ import { LicenseServerClientService } from '../license-server-client.service'
 import { AuthserviceService } from '../authservice.service'
 import { Reporter } from '../_models/Reporter'
 
+
 @Component({
   selector: 'app-ticket',
   templateUrl: './ticket.component.html',
@@ -28,6 +29,8 @@ export class TicketComponent implements OnInit, OnDestroy {
   queryContacts: Reporter[];
   contactsWithoutRequestor: Reporter[];
   contactsWithoutTicketContacts: Reporter[];
+  ticketCreationDate: Date;
+  userName: string = this.authService.getCurrentUser().user
 
   constructor(
     private router: Router,
@@ -47,20 +50,21 @@ export class TicketComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     var id = this.activatedRoute.snapshot.paramMap.get('id')
-    this.ticketingClient.queryTicketWithlId(id as string).subscribe(async (data) => {
+    this.ticketingClient.queryTicketWithlId(id as string, this.userName).subscribe(async (data) => {
       this.ticket = Object.assign(new Ticket(), data)
       this.bcs.pasivateBreadCrumbId(this.ticket)
       this.bcs.sendUpdate(this.ticket)
       if (!this.ticket.isReadByQueryTicketReporter) {
         this.ticketingClient.setReadWithUser(
-          this.authService.getCurrentUser().user,
+          this.userName,
           this.ticket.id,
         ).subscribe((data) => {
-          console.log(data);
         }
         )
       }
       console.log(this.ticket);
+      this.ticketCreationDate = new Date(Number(this.ticket.tsCreation.toString() + "000"))
+
       this.ticketingClient.queryContacts(this.ticket.getTicketingContract.externalID).subscribe((data) => {
         this.queryContacts = data;
         this.contactsWithoutRequestor = data.filter(contact => contact.userName !== this.ticket.requestor.userName)
@@ -71,6 +75,8 @@ export class TicketComponent implements OnInit, OnDestroy {
         }
       })
     })
+
+
 
   }
 
@@ -86,6 +92,15 @@ export class TicketComponent implements OnInit, OnDestroy {
   }
 
   onStateChange(ticket: Ticket) {
-    this.ticket = Object.assign(new Ticket(), ticket)
+    this.ngOnInit()
+  }
+
+  secondsToTime(s: number) {
+    const dateObj: Date = new Date(s * 1000);
+
+    const hours = dateObj.getUTCHours() < 10 ? '0' + dateObj.getUTCHours() : dateObj.getUTCHours()
+    const minutes = dateObj.getUTCMinutes() < 10 ? '0' + dateObj.getUTCMinutes() : dateObj.getUTCMinutes()
+
+    return hours + ":" + minutes
   }
 }

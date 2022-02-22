@@ -41,42 +41,22 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   filterKey: string
   displaySearchResuts: boolean = false;
 
-  ngOnInit(): void {
-    $('#example thead #columnSearchesye th').each(function () {
-      var title = $(this).text();
-      $(this).html('<input type="text" placeholder=' + title + ' />');
-    });
+  ngOnInit() {
     if ((<HTMLInputElement>document.getElementById("globalSearch")).value !== "") {
       this.ticketsAfterGlobalSearch((<HTMLInputElement>document.getElementById("globalSearch")).value)
-      return
+    } else {
+      this.drawTicketTable()
     }
-    var lsk = localStorage.getItem('ticketFilterKey')
-    lsk = lsk ? lsk : 'New'
-    this.filterKey = lsk as string
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 25,
-      scrollY: '60vh',
-      processing: true,
-      order: [[0, 'desc']],
-    }
-    this.spinner.show()
-    this.ticketClient
-      .queryOpenTickets(
-        this.user,
-        this.filterKey
-      )
-      .subscribe({
-        next: (data) => this.handleCreationResponse(data),
-        error: (error) => this.handleCreationErrorResponse(error),
-      })
     this.subscriptionName = this.ticketTable
       .getUpdate()
       .subscribe(() => {
-        this.ngOnInit()
+        this.redraw()
+        if ((<HTMLInputElement>document.getElementById("globalSearch")).value !== "") {
+          this.ticketsAfterGlobalSearch((<HTMLInputElement>document.getElementById("globalSearch")).value)
+        } else {
+          this.drawTicketTable()
+        }
       })
-
-
   }
 
 
@@ -102,9 +82,17 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe()
+    this.subscriptionName.unsubscribe()
   }
 
   rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy()
+      this.dtTrigger.next('')
+    })
+  }
+
+  redraw(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.clear().draw()
     })
@@ -115,13 +103,40 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.displaySearchResuts = false;
     this.filterKey = evt.target.value
     localStorage.setItem('ticketFilterKey', this.filterKey)
-    this.rerender()
     this.ngOnInit()
+    this.redraw()
   }
 
   setFilterKey(key: any) { }
 
-  async ticketsAfterGlobalSearch(searchResult: string) {
+  drawTicketTable() {
+    $('#example thead #columnSearchesye th').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder=' + title + ' />');
+    });
+    var lsk = localStorage.getItem('ticketFilterKey')
+    lsk = lsk ? lsk : 'New'
+    this.filterKey = lsk as string
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 25,
+      scrollY: '60vh',
+      processing: true,
+      order: [[0, 'desc']],
+    }
+    this.spinner.show()
+    this.ticketClient
+      .queryTickets(
+        this.user,
+        this.filterKey
+      )
+      .subscribe({
+        next: (data) => this.handleCreationResponse(data),
+        error: (error) => this.handleCreationErrorResponse(error),
+      })
+  }
+
+  ticketsAfterGlobalSearch(searchResult: string) {
     this.displaySearchResuts = true;
     this.filterKey = "Searched"
     this.dtOptions = {
@@ -136,9 +151,8 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.spinner.show()
     this.ticketClient
-      .queryOpenTickets(
-        this.user,
-        "Open"
+      .queryAllTickets(
+        this.user
       )
       .subscribe({
         next: (data) => this.handleCreationResponse(data),
@@ -147,14 +161,11 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handleCreationResponse(data: any) {
-
-
     this.spinner.hide()
     for (let ticket of data) {
       this.tickets.push(ticket)
     }
     this.rerender()
-
   }
 
   handleCreationErrorResponse(error: any) {

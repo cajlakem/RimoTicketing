@@ -26,7 +26,6 @@ export class AssignReporterModalComponent implements OnInit {
   @Input()
   contactList: Reporter[];
   errorMsg: string;
-  contactFormGroup: FormGroup
   public contactCtrl: FormControl = new FormControl();
 
 
@@ -71,8 +70,12 @@ export class AssignReporterModalComponent implements OnInit {
       })
   }
 
+  removeError(): void {
+    this.errorMsg = "";
+  }
+
   onSubmit() {
-    if (this.contactCtrl.value == "") {
+    if (this.contactCtrl.value === null) {
       this.errorMsg = 'Neue Kontakte auswählen'
       return
     }

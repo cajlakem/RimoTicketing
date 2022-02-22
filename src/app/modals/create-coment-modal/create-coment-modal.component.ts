@@ -13,7 +13,6 @@ import { MyUploadAdapter } from 'src/app/my-upload-adapter'
   styleUrls: ['./create-coment-modal.component.css'],
 })
 export class CreateComentModalComponent implements OnInit {
-  public ckEditorInput: any;
   public Editor = DecoupledEditorBuild;
   public editorCfg = {}
   @Output() stateChanged = new EventEmitter<any>()
@@ -38,12 +37,11 @@ export class CreateComentModalComponent implements OnInit {
     };
   }
 
-  get f() {
-    return this.createCommentForm.controls
+  removeError(): void {
+    this.errorMsg = ''
   }
 
   ngOnInit(): void {
-    this.errorMsg = ''
     this.createCommentForm = this.formBuilder.group({
       text: ['', [Validators.required]],
     })

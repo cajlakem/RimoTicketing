@@ -23,7 +23,6 @@ export class NewRequestorModalComponent implements OnInit {
   @Input()
   contactList: Reporter[];
   errorMsg: string;
-  contactFormGroup: FormGroup;
   public contactCtrl: FormControl = new FormControl();
   oldRequestorUserName: Reporter;
 
@@ -55,7 +54,6 @@ export class NewRequestorModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.oldRequestorUserName = this.forTicket.requestor;
     this.addRemoveCCReporterService
       .getUpdate()
       .subscribe((message) => {
@@ -65,8 +63,13 @@ export class NewRequestorModalComponent implements OnInit {
       })
   }
 
+  removeError(): void {
+    this.errorMsg = "";
+  }
+
   onSubmit() {
-    if (this.contactCtrl.value == "") {
+    this.oldRequestorUserName = this.forTicket.requestor;
+    if (this.contactCtrl.value === null) {
       this.errorMsg = 'Neuen Requestor auswählen'
       return
     }

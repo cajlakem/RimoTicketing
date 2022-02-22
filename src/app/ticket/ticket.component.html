@@ -14,22 +14,24 @@
               Erneut laden
             </button>
             <button type="button" class="btn btn-secondary shadow btn-sm" data-bs-target="#commentModal"
-              data-bs-toggle="modal" [disabled]="ticket.isClosed">
+              data-bs-toggle="modal" [disabled]="ticket.isClosed || !ticket.canBeModifiedByUser">
               <i class="far fa-comment"></i>
               Kommentar
             </button>
             <button type="button" class="btn btn-secondary shadow btn-sm" href="#" data-bs-toggle="modal"
-              data-bs-target="#reopenModal" [disabled]="ticket.isOpenAble">
+              data-bs-target="#reopenModal"
+              [disabled]="ticket.isOpenAble || !ticket.isNotPending || !ticket.canBeModifiedByUser">
               <i class="fas fa-undo"></i>
-              Erneut öffnen
+              Reopen
             </button>
             <button type="button" class="btn btn-secondary shadow btn-sm" href="#" data-bs-toggle="modal"
-              data-bs-target="#doneModal" [disabled]="ticket.isOpenAble">
+              data-bs-target="#doneModal"
+              [disabled]="ticket.isOpenAble || !ticket.isNotPending || !ticket.canBeModifiedByUser">
               <i class="fas fa-check"></i>
               Erledigt
             </button>
             <button type="button" class="btn btn-secondary shadow btn-sm" href="#" data-bs-toggle="modal"
-              data-bs-target="#deleteModal" [disabled]="!ticket.isNotPending">
+              data-bs-target="#deleteModal" [disabled]="!ticket.isNotPending || !ticket.canBeModifiedByUser">
               <i class="fas fa-trash-alt"></i>
               Löschen
             </button>
@@ -41,28 +43,29 @@
               <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <li>
                   <button class="dropdown-item" href="#" data-bs-toggle="modal"
-                    data-bs-target="#changeTicketRequestorlModal" [disabled]="ticket.isClosed">
+                    data-bs-target="#changeTicketRequestorlModal"
+                    [disabled]="ticket.isClosed || !ticket.canBeModifiedByUser">
                     <i class="fas fa-user"></i>
                     Requestor ändern
                   </button>
                 </li>
                 <li>
                   <button class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changeTitelModal"
-                    [disabled]="ticket.isClosed">
+                    [disabled]="ticket.isClosed || !ticket.canBeModifiedByUser">
                     <i class="fas fa-edit"></i>
                     Titel ändern
                   </button>
                 </li>
                 <li>
                   <button class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#newTicketContact"
-                    [disabled]="ticket.isClosed">
+                    [disabled]="ticket.isClosed || !ticket.canBeModifiedByUser">
                     <i class="fas fa-user-plus"></i>
                     Kontakte hinzufügen
                   </button>
                 </li>
                 <li>
                   <button class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#removeTicketContact"
-                    [disabled]="ticket.isClosed">
+                    [disabled]="ticket.isClosed || !ticket.canBeModifiedByUser">
                     <i class="fas fa-user-minus"></i>
                     Kontakte entfernen
                   </button>
@@ -84,10 +87,18 @@
         <div class="row">
           <span class="text-left">
             <div class="text-left badge text-wrap" style="width: 6rem;" [style.background-color]="
-                !ticket.state ? 'black' : ticket.state.colorValue
-              ">
+                          !ticket.state ? 'black' : ticket.state.colorValue
+                        ">
               {{ !ticket.state ? '' : ticket.state.nameToDisplay }}
             </div>
+          </span>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="row small text-muted">Kurztext</div>
+        <div class="row text-truncate">
+          <span class="text-start ps-0">
+            {{ ticket.shortText }}
           </span>
         </div>
       </div>
@@ -143,7 +154,8 @@
           <div class="row">
             <span class="text-left">
               <div class="text-muted text-left small">
-                {{ ticket.creationDate }} ({{ ticket.creationDate | DayAgo }})
+                {{ ticketCreationDate | date:'dd.MM.yyyy hh:mm' }} ({{ ticketCreationDate | date:'dd.MM.yyyy' | DayAgo
+                }})
               </div>
             </span>
           </div>
@@ -181,7 +193,7 @@
           <a class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-einmeldetext"
             type="button" role="tab" aria-controls="pills-contact" aria-selected="false">
             <i class="fas fa-sticky-note"></i>
-            Einmeldetext
+            Beschreibung
           </a>
         </li>
         <li class="nav-item">
@@ -207,7 +219,8 @@
 
                   <div class="col d-flex justify-content-end">
                     <div class="text-muted text-center mx-1">
-                      {{ note.creationDate }} ({{ note.creationDate | DayAgo }})
+                      {{ note.creationDate + " " + secondsToTime(note.getTsCreation) }} ({{ note.creationDate |
+                      DayAgo}})
                     </div>
                     <div class="text-left badge text-wrap p-2" [style.background-color]="
                         !note.state ? 'black' : note.state.colorValue
@@ -224,18 +237,7 @@
           </div>
         </div>
         <div class="tab-pane fade" id="pills-einmeldetext" role="tabpanel" aria-labelledby="pills-contact-tab">
-          <div class="row text-muted mt-1">
-            <div>Kurzbeschreibung</div>
-          </div>
-          <div class="row mt-1">
-            <div>
-              {{ ticket.shortText }}
-            </div>
-          </div>
           <div class="row mt-2">
-            <div class="row text-muted mt-1">
-              <div>Langbeschreibung</div>
-            </div>
             <div class="row mt-1 pb-1">
               <div class="scrollable overflow-auto" [innerHTML]="ticket.longText" style="height: auto;"></div>
             </div>
@@ -248,7 +250,7 @@
                 Name
               </th>
               <th>
-                E-mail
+                E-Mail
               </th>
               <th>
                 Telefon

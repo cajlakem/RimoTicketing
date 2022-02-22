@@ -72,6 +72,7 @@ export class CreateTicketComponent implements OnInit {
   }
 
   onSubmit() {
+
     this.submitted = true
     if (this.registerForm.invalid) {
       return
@@ -89,6 +90,7 @@ export class CreateTicketComponent implements OnInit {
       }
 
       if (this.createTicket(myFormData) === null) {
+
         this.router.navigateByUrl(this.retUrl)
       } else this.errorMsg = 'Failed to create Ticket!'
     }
@@ -114,6 +116,8 @@ export class CreateTicketComponent implements OnInit {
   }
 
   private handleCreationResponse(ticket: Ticket) {
+
+
     if (ticket) {
       this.router.navigateByUrl('/edit/' + ticket.id)
     }
