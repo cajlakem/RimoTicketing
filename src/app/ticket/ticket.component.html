@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="col">
-    <div class="row p-2 mb-4 sticky-top">
+    <div class="row p-2 mb-4 sticky-top mx-lg-5">
       <div class="row">
         <div>
           <div class="btn-group d-flex flex-row" role="group" aria-label="Button group with nested dropdown">
@@ -157,7 +157,7 @@
                   Erstelldatum
                 </div>
                 <div class="row">
-                  <div class="text-muted text-left small g-0">
+                  <div class="text-left small g-0">
                     {{ ticketCreationDate | date:'dd.MM.yyyy hh:mm' }} ({{ ticketCreationDate | date:'dd.MM.yyyy' |
                     DayAgo
                     }})
@@ -259,11 +259,9 @@
             <span class="text-left">Erstelldatum</span>
           </div>
           <div class="row">
-            <span class="text-left">
-              <div class="text-muted text-left small">
-                {{ ticketCreationDate | date:'dd.MM.yyyy hh:mm' }} ({{ ticketCreationDate | date:'dd.MM.yyyy' | DayAgo
-                }})
-              </div>
+            <span class="text-left small">
+              {{ ticketCreationDate | date:'dd.MM.yyyy hh:mm' }} ({{ ticketCreationDate | date:'dd.MM.yyyy' | DayAgo
+              }})
             </span>
           </div>
         </div>
