@@ -1,10 +1,22 @@
 <div class="container-fluid max-width shadow " style="background-color: #e8eaed;">
   <ol class="breadcrumb" *ngIf="ids.length == 0"></ol>
-  <ol class="breadcrumb d-flex justify-content-center">
+  <ol class="breadcrumb d-none d-sm-flex justify-content-center">
     <li class="active breadcrumb-item {{
           getCurrentBCId() === bci.id ? 'active' : ''
         }}
         " aria-current="page" *ngFor="let bci of ids.slice().reverse()">
+      <a *ngIf="!isActive(bci)" href="/edit/{{ bci.id }}">
+        {{ bci.name }}
+      </a>
+      <span *ngIf="isActive(bci)">{{ bci.name }}</span>
+    </li>
+  </ol>
+  <!--- we only want to display 3 bcs on mobile --->
+  <ol class="breadcrumb d-sm-none justify-content-center">
+    <li class="active breadcrumb-item {{
+              getCurrentBCId() === bci.id ? 'active' : ''
+            }}
+            " aria-current="page" *ngFor="let bci of ids.slice().reverse() | slice:0:3">
       <a *ngIf="!isActive(bci)" href="/edit/{{ bci.id }}">
         {{ bci.name }}
       </a>

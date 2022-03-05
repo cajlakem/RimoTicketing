@@ -9,18 +9,17 @@
           <i class="fas fa-window-close"></i>
           Abbrechen
         </button>
-        <button *ngIf="contracts.length > 0" type="submit" class="btn btn-outline-success shadow rounded-3 btn-sm m-2">
+        <button *ngIf="renderView" type="submit" class="btn btn-outline-success shadow rounded-3 btn-sm m-2">
           <i class="fas fa-paper-plane"></i>
           Abschicken
         </button>
       </div>
     </div>
-    <div class=" mt-3 alert alert-danger alert-dismissible fade show fade show p-1" role="alert"
-      *ngIf="contracts.length == 0">
-      <i class="fas fa-exclamation-circle"></i>
-      Sie können kein Ticket erstellen, weil Sie keinen Vertrag haben.
+    <div *ngIf="!renderView" class=" mt-3 alert alert-danger alert-dismissible fade show fade show p-1" role="alert">
+      <i class=" fas fa-exclamation-circle"></i>
+      Sie können kein Ticket erstellen, weil Sie keinen Vertrag besitzen.
     </div>
-    <div *ngIf="contracts.length > 1">
+    <div *ngIf="contracts.length >= 1">
       <div class="row">
         <div class="col">
           <div class="form-floating mb-3">
@@ -34,11 +33,20 @@
               </option>
             </select>
             <label for="floatingSelect">Vertrag</label>
-            <div *ngIf="submitted && f.originMIT.errors" class="invalid-feedback">
-              <div>
-                Vertrag auswählen
+            <ng-template *ngIf="registerForm.originMIT">
+              <div *ngIf="submitted && f.singleOriginMIT.errors" class="invalid-feedback">
+                <div>
+                  Vertrag auswählen
+                </div>
               </div>
-            </div>
+            </ng-template>
+            <ng-template *ngIf="registerForm.singleOriginMIT">
+              <div *ngIf="submitted && f.singleOriginMIT.errors" class="invalid-feedback">
+                <div>
+                  Vertrag auswählen
+                </div>
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>

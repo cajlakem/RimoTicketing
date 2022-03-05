@@ -24,7 +24,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective
   errorMsg: any
-  dtOptions: DataTables.Settings = {}
+  dtOptions: any = {}
   dtTrigger: Subject<any> = new Subject()
   subscriptionName: any
   ids: any
@@ -42,6 +42,19 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   displaySearchResuts: boolean = false;
 
   ngOnInit() {
+    $("#example").on('column-sizing.dt', function (e, settings) {
+      $(".dataTables_scrollHeadInner").css("width", "100%");
+    });
+    $('#example thead #columnSearches th').each(function (i) {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+      $('input', this).on('keyup change clear', function () {
+        var that = this as HTMLInputElement
+        if ($("#example").DataTable().column(i).search() !== that.value) {
+          $("#example").DataTable().column(i).search(that.value).draw();
+        }
+      });
+    });
     if ((<HTMLInputElement>document.getElementById("globalSearch")).value !== "") {
       this.ticketsAfterGlobalSearch((<HTMLInputElement>document.getElementById("globalSearch")).value)
     } else {
@@ -50,11 +63,9 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptionName = this.ticketTable
       .getUpdate()
       .subscribe(() => {
-        this.redraw()
+        this.rerender()
         if ((<HTMLInputElement>document.getElementById("globalSearch")).value !== "") {
           this.ticketsAfterGlobalSearch((<HTMLInputElement>document.getElementById("globalSearch")).value)
-        } else {
-          this.drawTicketTable()
         }
       })
   }
@@ -63,26 +74,14 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.dtTrigger.next('')
     this.rerender()
-    this.dtTrigger.subscribe(() => {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.columns().every(function () {
-          const that = this;
-          $('input', this.header()).on('keyup change', function () {
-            var valueElement = this as HTMLInputElement
-            if (that.search() !== valueElement['value']) {
-              that
-                .search(valueElement['value'])
-                .draw();
-            }
-          });
-        });
-      });
-    });
   }
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe()
     this.subscriptionName.unsubscribe()
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy()
+    })
   }
 
   rerender(): void {
@@ -103,17 +102,20 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.displaySearchResuts = false;
     this.filterKey = evt.target.value
     localStorage.setItem('ticketFilterKey', this.filterKey)
-    this.ngOnInit()
-    this.redraw()
+    this.drawTicketTable()
+    this.redraw();
   }
 
-  setFilterKey(key: any) { }
+  stopPropagation(evt: any) {
+    if (evt.stopPropagation !== undefined) {
+      evt.preventDefault();
+      evt.stopPropagation();
+    } else {
+      evt.cancelBubble = true;
+    }
+  }
 
   drawTicketTable() {
-    $('#example thead #columnSearchesye th').each(function () {
-      var title = $(this).text();
-      $(this).html('<input type="text" placeholder=' + title + ' />');
-    });
     var lsk = localStorage.getItem('ticketFilterKey')
     lsk = lsk ? lsk : 'New'
     this.filterKey = lsk as string
@@ -123,6 +125,10 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
       scrollY: '60vh',
       processing: true,
       order: [[0, 'desc']],
+      orderCellsTop: true,
+      fixedColumns: true,
+      fixedHeader: true,
+      scrollX: true
     }
     this.spinner.show()
     this.ticketClient
@@ -147,7 +153,11 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
       order: [[0, 'desc']],
       search: {
         search: searchResult
-      }
+      },
+      orderCellsTop: true,
+      fixedColumns: true,
+      fixedHeader: true,
+      scrollX: true
     }
     this.spinner.show()
     this.ticketClient
@@ -173,4 +183,5 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.errorMsg = Object.values(u.error)[0] as string
     this.spinner.hide()
   }
+
 }

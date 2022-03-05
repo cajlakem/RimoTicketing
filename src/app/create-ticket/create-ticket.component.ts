@@ -10,7 +10,6 @@ import * as DecoupledEditorBuild from '@ckeditor/ckeditor5-build-decoupled-docum
 import { MyUploadAdapter } from '../my-upload-adapter'
 import { HttpErrorResponse } from '@angular/common/http'
 
-
 @Component({
   selector: 'app-create-ticket',
   templateUrl: './create-ticket.component.html',
@@ -35,7 +34,9 @@ export class CreateTicketComponent implements OnInit {
     private router: Router,
     private ticketingClient: RimoTicketingClientService,
     private authService: AuthserviceService,
-  ) { }
+  ) {
+    this.registerForm = this.formBuilder.group({});
+  }
 
   registerForm: any = FormGroup
   submitted = false
@@ -44,29 +45,34 @@ export class CreateTicketComponent implements OnInit {
   user: User = this.authService.getCurrentUser()
   singleContract: string;
   contracts: UserProfile[] = this.user.getTicketingUserProfiles;
+  renderView: Boolean = true;
 
   get f() {
     return this.registerForm.controls
   }
 
   ngOnInit(): void {
-    if (this.contracts.length == 1) {
-      this.singleContract = this.contracts[0].tenant.nameToDisplay
-    }
+    if (this.contracts) {
+      if (this.contracts.length == 1) {
+        this.singleContract = this.contracts[0].tenant.nameToDisplay
+      }
 
-    this.errorMsg = ''
-    this.registerForm = this.formBuilder.group({
-      prio: ['', [Validators.required]],
-      shortDsc: ['', [Validators.required]],
-      longDsc: ['', [Validators.required]],
-      originMIT: ['', [Validators.required]],
-      singleOriginMIT: [this.singleContract, [Validators.required]]
-    })
+      this.errorMsg = ''
+      this.registerForm = this.formBuilder.group({
+        prio: ['', [Validators.required]],
+        shortDsc: ['', [Validators.required]],
+        longDsc: ['', [Validators.required]],
+        originMIT: ['', [Validators.required]],
+        singleOriginMIT: [this.singleContract, [Validators.required]]
+      })
 
-    if (this.contracts.length == 1) {
-      this.registerForm.removeControl('originMIT')
+      if (this.contracts.length == 1) {
+        this.registerForm.removeControl('originMIT')
+      } else {
+        this.registerForm.removeControl('singleOriginMIT')
+      }
     } else {
-      this.registerForm.removeControl('singleOriginMIT')
+      this.renderView = false;
     }
 
   }
