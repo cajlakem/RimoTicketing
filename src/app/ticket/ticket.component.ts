@@ -31,6 +31,7 @@ export class TicketComponent implements OnInit, OnDestroy {
   contactsWithoutTicketContacts: Reporter[];
   ticketCreationDate: Date;
   userName: string = this.authService.getCurrentUser().user
+  width: number
 
   constructor(
     private router: Router,
@@ -49,6 +50,9 @@ export class TicketComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    console.log(this.width);
+
     var id = this.activatedRoute.snapshot.paramMap.get('id')
     this.ticketingClient.queryTicketWithlId(id as string, this.userName).subscribe(async (data) => {
       this.ticket = Object.assign(new Ticket(), data)
