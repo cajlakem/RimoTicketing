@@ -28,9 +28,11 @@ export class Ticket {
   canBeModifiedByUser: boolean
 
   reverseTicketNotes(notes: TicketComment[]) {
-    notes.sort((a: any, b: any) => {
-      return b.creationDate - a.creationDate;
-    })
+    notes.sort(function (a, b) {
+      var aDate = new Date(a.getTsCreation * 1000)
+      var bDate = new Date(b.getTsCreation * 1000)
+      return bDate.getTime() - aDate.getTime();
+    });
     return notes;
   }
 
