@@ -31,7 +31,6 @@ export class TicketComponent implements OnInit, OnDestroy {
   contactsWithoutTicketContacts: Reporter[];
   ticketCreationDate: Date;
   userName: string = this.authService.getCurrentUser().user
-  ticketNotes: any;
 
   constructor(
     private router: Router,
@@ -63,7 +62,6 @@ export class TicketComponent implements OnInit, OnDestroy {
         }
         )
       }
-      this.ticketNotes = this.ticket.notes.reverse();
       this.ticketCreationDate = new Date(Number(this.ticket.tsCreation.toString() + "000"))
       this.ticketingClient.queryContacts(this.ticket.getTicketingContract.externalID).subscribe((data) => {
         this.queryContacts = data;

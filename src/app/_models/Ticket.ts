@@ -26,4 +26,12 @@ export class Ticket {
   getTicketingContract: Contract
   tsCreation: number
   canBeModifiedByUser: boolean
+
+  reverseTicketNotes(notes: TicketComment[]) {
+    notes.sort((a: any, b: any) => {
+      return b.creationDate - a.creationDate;
+    })
+    return notes;
+  }
+
 }
