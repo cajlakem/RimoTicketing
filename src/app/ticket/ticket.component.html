@@ -182,6 +182,19 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col d-lg-none">
+                <div class="row small text-muted">
+                  Vertrag
+                </div>
+                <div class="row">
+                  <div class="text-left small g-0">
+                    {{ ticket.getTicketingContract.displayInfo
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -201,7 +214,7 @@
           </span>
         </div>
       </div>
-      <div class="col d-none d-lg-block" style="max-width: 150px">
+      <div class="col d-none d-lg-block text-truncate" style="max-width: 10%">
         <div class="row small text-muted">Kurztext</div>
         <div class="row text-truncate">
           <span class="text-start ps-0">
@@ -240,7 +253,7 @@
           </div>
         </div>
       </div>
-      <div class="col d-none d-lg-block">
+      <div class="col d-none d-lg-block" style="max-width: 10% !important">
         <div class="col">
           <div class="row small text-muted">Priorität</div>
           <div class="row d-inline-flex">
@@ -266,7 +279,7 @@
           </div>
         </div>
       </div>
-      <div class="col d-none d-lg-block">
+      <div class="col d-none d-lg-block" style="max-width: 10%">
         <div class="col">
           <div class="row small text-muted al">
             <span class="text-left">Typ</span>
@@ -280,6 +293,17 @@
                 <i class="{{ !ticket.type ? '' : ticket.type.faIcon }}"></i>
               </span>
             </span>
+          </div>
+        </div>
+      </div>
+      <div class="col d-none d-lg-block">
+        <div class="row small text-muted">
+          Vertrag
+        </div>
+        <div class="row">
+          <div class="text-left small g-0">
+            {{ ticket.getTicketingContract.displayInfo
+            }})
           </div>
         </div>
       </div>

@@ -62,6 +62,8 @@ export class TicketComponent implements OnInit, OnDestroy {
         }
         )
       }
+      console.log(this.ticket);
+
       this.ticketCreationDate = new Date(Number(this.ticket.tsCreation.toString() + "000"))
       this.ticketingClient.queryContacts(this.ticket.getTicketingContract.externalID).subscribe((data) => {
         this.queryContacts = data;
