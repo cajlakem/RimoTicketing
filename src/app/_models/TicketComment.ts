@@ -10,4 +10,5 @@ export class TicketComment {
   createdBy: Reporter
   state: EnumList
   getTsCreation: number
+
 }
