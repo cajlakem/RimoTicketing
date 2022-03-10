@@ -24,7 +24,7 @@
         <div class="col">
           <div class="form-floating mb-3">
             <input class="ps-3 form-control bottom-border shadow rounded-3" [value]="singleContract"
-              *ngIf="singleContract" formControlName="singleOriginMIT" readonly />
+              *ngIf=" singleContract" formControlName="singleOriginMIT" readonly />
             <select formControlName="originMIT" *ngIf="contracts.length > 1 " class="form-select shadow rounded-3"
               id="floatingSelect" [ngClass]="{ 'is-invalid': submitted && f.originMIT.errors}"
               aria-label="Floating label select example">

@@ -14,7 +14,16 @@ import { MyUploadAdapter } from 'src/app/my-upload-adapter'
 })
 export class CreateComentModalComponent implements OnInit {
   public Editor = DecoupledEditorBuild;
-  public editorCfg = {}
+  public editorCfg = {
+    image: {
+      insert: {
+        type: 'inline'
+      },
+      toolbar: [
+      ]
+
+    }
+  }
   @Output() stateChanged = new EventEmitter<any>()
   createCommentForm: any = FormGroup
   @Input()

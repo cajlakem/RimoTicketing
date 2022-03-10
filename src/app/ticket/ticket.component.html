@@ -115,7 +115,7 @@
                 <div class="row small text-muted">Kurztext</div>
                 <div class="row text-truncate">
                   <span class="text-start ps-0 text-truncate" style="max-width: 200px">
-                    {{ ticket.shortText }}
+                    {{ ticket.shortText.split("Ã¤").join("ä").split("Ã¼").join("ö").split("Ã¶").join("ü") }}
                   </span>
                 </div>
               </div>
@@ -141,7 +141,7 @@
                 <div class="col">
                   <div class="row small text-muted">Priorität</div>
                   <div class="row d-inline-flex">
-                    <span class="badge text-wrap text-light text-left" [style.background-color]="
+                    <span class="badge text-wrap text-dark text-left" [style.background-color]="
                                                             !ticket.priority ? 'black' : ticket.priority.colorValue
                                                           ">
                       {{ !ticket.priority ? '' : ticket.priority.nameToDisplay }}
@@ -218,7 +218,7 @@
         <div class="row small text-muted">Kurztext</div>
         <div class="row text-truncate">
           <span class="text-start ps-0">
-            {{ ticket.shortText }}
+            {{ ticket.shortText.split("Ã¤").join("ä").split("Ã¼").join("ö").split("Ã¶").join("ü") }}
           </span>
         </div>
       </div>
@@ -257,7 +257,7 @@
         <div class="col">
           <div class="row small text-muted">Priorität</div>
           <div class="row d-inline-flex">
-            <span class="badge text-wrap text-light text-left" [style.background-color]="
+            <span class="badge text-wrap text-dark text-left" [style.background-color]="
                 !ticket.priority ? 'black' : ticket.priority.colorValue
               ">
               {{ !ticket.priority ? '' : ticket.priority.nameToDisplay }}
@@ -361,7 +361,9 @@
                 </div>
               </div>
               <div class="card-body bg-light">
-                <div class="scrollable overflow-auto" [innerHTML]="note.text" style="height: auto;"></div>
+                <div class="scrollable overflow-auto" innerHTML=' {{ 
+                  replaceAllAscii(note.text)
+                  }}' style="height: auto;"></div>
               </div>
             </div>
           </div>
@@ -369,7 +371,8 @@
         <div class="tab-pane fade" id="pills-einmeldetext" role="tabpanel" aria-labelledby="pills-contact-tab">
           <div class="row mt-2">
             <div class="row mt-1 pb-1">
-              <div class="scrollable overflow-auto" [innerHTML]="ticket.longText" style="height: auto;"></div>
+              <div class="scrollable overflow-auto" innerHtml='{{ replaceAllAscii(ticket.longText)
+                }}' style="height: auto;"></div>
             </div>
           </div>
         </div>

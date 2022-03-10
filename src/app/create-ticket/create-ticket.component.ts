@@ -17,7 +17,16 @@ import { HttpErrorResponse } from '@angular/common/http'
 })
 export class CreateTicketComponent implements OnInit {
   public Editor = DecoupledEditorBuild;
-  public editorCfg = {}
+  public editorCfg = {
+    image: {
+      insert: {
+        type: 'inline'
+      },
+      toolbar: [
+      ]
+
+    }
+  }
   public onReady(editor: any) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
@@ -92,7 +101,7 @@ export class CreateTicketComponent implements OnInit {
       if (this.registerForm.value.originMIT) {
         myFormData.append('originMIT', this.registerForm.value.originMIT)
       } else {
-        myFormData.append('originMIT', this.registerForm.value.singleOriginMIT)
+        myFormData.append('originMIT', this.contracts[0].tenant.id)
       }
 
       if (this.createTicket(myFormData) === null) {
@@ -125,6 +134,8 @@ export class CreateTicketComponent implements OnInit {
       this.router.navigateByUrl('/edit/' + ticket.id)
     }
   }
+
+
 
   private handleCreationErrorResponse(error: any) {
     const u = error as HttpErrorResponse

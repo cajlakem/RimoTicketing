@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core'
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit } from '@angular/core'
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { fromEvent, Observable, Subscription } from 'rxjs'
@@ -21,6 +21,16 @@ import { Reporter } from '../_models/Reporter'
   styleUrls: ['./ticket.component.css'],
 })
 export class TicketComponent implements OnInit, OnDestroy {
+  @HostListener('document:keyup', ['$event'])
+  onKeyUp(ev: KeyboardEvent) {
+    if (ev.key == "Escape") {
+      this.bcs.removeBreadCrumbId(this.ticket)
+      this.bcs.sendUpdate(this.ticket)
+      this.router.navigateByUrl('/tickets')
+    }
+    // do something meaningful with it
+    console.log(`The user just pressed ${ev.key}!`);
+  }
   report$: Observable<Ticket>
   navigationSubscription: any
   bcsSubscrpition: any
@@ -51,8 +61,6 @@ export class TicketComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-    console.log(this.width);
-
     var id = this.activatedRoute.snapshot.paramMap.get('id')
     this.ticketingClient.queryTicketWithlId(id as string, this.userName).subscribe(async (data) => {
       this.ticket = Object.assign(new Ticket(), data)
@@ -97,6 +105,16 @@ export class TicketComponent implements OnInit, OnDestroy {
 
   onStateChange(ticket: Ticket) {
     this.ngOnInit()
+  }
+
+  replaceAllAscii(str: String) {
+    var a = str.split('Ã¤').join("ä");
+    var b = a.split('Ã¼').join("ö");
+    var c = b.split('Ã¶').join("ü");
+    var d = c.split('Ã\x84').join("Ä");
+    var e = d.split('Ã\x96').join("Ö");
+    var f = e.split('Ã\x9C').join("Ü");
+    return f;
   }
 
   secondsToTime(s: number) {

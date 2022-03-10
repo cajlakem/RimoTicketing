@@ -5,7 +5,7 @@
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Open"
             (change)="updateTicketList($event)" [ngModel]="filterKey" />
-          <label class="form-check-label" for="inlineRadio1">Open</label>
+          <label class="form-check-label" for="inlineRadio1">Offen</label>
         </div>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
@@ -80,10 +80,10 @@
       <thead>
         <tr class="fw-bolder">
           <th>Name</th>
+          <th *ngIf="ticketsHaveMultipleContracts">Vertrag</th>
           <th>Reporter</th>
           <th>Erstelldatum</th>
           <th>Kurztext</th>
-          <th>Zugewiesen</th>
           <th>Type</th>
           <th>Priorität</th>
         </tr>
@@ -91,19 +91,23 @@
 
         <tr id="columnSearches">
           <th>Name</th>
+          <th *ngIf="ticketsHaveMultipleContracts">Vertrag</th>
           <th>Reporter</th>
           <th>Erstelldatum</th>
           <th>Kurztext</th>
-          <th>Zugewiesen</th>
           <th>Type</th>
           <th>Priorität</th>
+
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ticket of tickets" routerLink="/edit/{{ ticket.id }}"
+        <tr *ngFor=" let ticket of tickets" routerLink="/edit/{{ ticket.id }}"
           class="{{ !ticket.isReadByQueryTicketReporter ? ' fw-bold' : ''}}">
           <td class="text-muted">
             {{ ticket.name }}
+          </td>
+          <td class="text-muted" *ngIf="ticketsHaveMultipleContracts">
+            {{ ticket.getTicketingContract.displayInfo }}
           </td>
           <td class="text-muted">
             {{
@@ -115,14 +119,8 @@
             {{ ticket.creationDate }} ({{ ticket.creationDate | DayAgo }})
           </td>
 
-          <td class="text-muted text-truncate" style="max-width: 50px !important;">
-            {{ ticket.shortText }}
-          </td>
-
-          <td class="text-muted">
-            {{
-            ticket.assignedTo === null ? '' : ticket.assignedTo.nameToDisplay
-            }}
+          <td class="text-muted text-truncate" style="max-width: 200px !important;">
+            {{ replaceAllAscii(ticket.shortText) }}
           </td>
 
           <td class="text-muted">

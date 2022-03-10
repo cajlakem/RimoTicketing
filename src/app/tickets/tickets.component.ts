@@ -29,6 +29,8 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   subscriptionName: any
   ids: any
   user: User = this.authService.getCurrentUser()
+  ticketsHaveMultipleContracts: boolean
+
 
   constructor(
     private ticketClient: RimoTicketingClientService,
@@ -40,6 +42,16 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   tickets: Ticket[] = [];
   filterKey: string
   displaySearchResuts: boolean = false;
+
+  hasTicketsFromDifferentContracts() {
+    var ticketsHaveMultipleContracts: boolean = false;
+    var contractsOfCurrentTickets: string[] = [];
+    for (let ticket of this.tickets) {
+      contractsOfCurrentTickets.indexOf(ticket.getTicketingContract.externalID) === -1 ? contractsOfCurrentTickets.push(ticket.getTicketingContract.externalID) : '';
+    }
+    contractsOfCurrentTickets.length > 1 ? ticketsHaveMultipleContracts = true : ticketsHaveMultipleContracts = false
+    return ticketsHaveMultipleContracts;
+  }
 
   ngOnInit() {
     $("#example").on('column-sizing.dt', function (e, settings) {
@@ -68,6 +80,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.ticketsAfterGlobalSearch((<HTMLInputElement>document.getElementById("globalSearch")).value)
         }
       })
+    this.ticketsHaveMultipleContracts = this.hasTicketsFromDifferentContracts()
   }
 
 
@@ -128,7 +141,6 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
       orderCellsTop: true,
       fixedColumns: true,
       fixedHeader: true,
-      scrollX: true,
     }
     this.spinner.show()
     this.ticketClient
@@ -157,7 +169,6 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
       orderCellsTop: true,
       fixedColumns: true,
       fixedHeader: true,
-      scrollX: true,
     }
     this.spinner.show()
     this.ticketClient
@@ -182,6 +193,16 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     const u = error as HttpErrorResponse
     this.errorMsg = Object.values(u.error)[0] as string
     this.spinner.hide()
+  }
+
+  replaceAllAscii(str: String) {
+    var a = str.split('Ã¤').join("ä");
+    var b = a.split('Ã¼').join("ö");
+    var c = b.split('Ã¶').join("ü");
+    var d = c.split('Ã\x84').join("Ä");
+    var e = d.split('Ã\x96').join("Ö");
+    var f = e.split('Ã\x9C').join("Ü");
+    return f;
   }
 
 }
