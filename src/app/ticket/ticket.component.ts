@@ -107,16 +107,6 @@ export class TicketComponent implements OnInit, OnDestroy {
     this.ngOnInit()
   }
 
-  replaceAllAscii(str: String) {
-    var a = str.split('Ã¤').join("ä");
-    var b = a.split('Ã¼').join("ö");
-    var c = b.split('Ã¶').join("ü");
-    var d = c.split('Ã\x84').join("Ä");
-    var e = d.split('Ã\x96').join("Ö");
-    var f = e.split('Ã\x9C').join("Ü");
-    return f;
-  }
-
   secondsToTime(s: number) {
     const dateObj: Date = new Date(s * 1000);
 
