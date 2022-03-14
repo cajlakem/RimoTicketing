@@ -17,7 +17,7 @@ export class RimoTicketingClientService {
 
   private token: String = environment.apiTicketingServerToken as string
 
-  headers = { 'content-type': 'application/json' }
+  headers = { 'content-type': 'application/json;charset=UTF-8' }
 
 
   constructor(private http: HttpClient) { }
