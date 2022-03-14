@@ -23,8 +23,6 @@ export class BreadcrumbComponent implements OnInit {
   async ngOnInit(): Promise<void> {
 
     for (let id of this.breadCrumbService.getBreadCrumIds()) {
-      console.log(id);
-
       await this.ticketExists(id.id) ? this.ids.push(id) : this.breadCrumbService.removeBreadCrumbId(id)
     }
     this.subscriptionName = this.breadCrumbService

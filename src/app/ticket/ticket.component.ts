@@ -28,8 +28,6 @@ export class TicketComponent implements OnInit, OnDestroy {
       this.bcs.sendUpdate(this.ticket)
       this.router.navigateByUrl('/tickets')
     }
-    // do something meaningful with it
-    console.log(`The user just pressed ${ev.key}!`);
   }
   report$: Observable<Ticket>
   navigationSubscription: any

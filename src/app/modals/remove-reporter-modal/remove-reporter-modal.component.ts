@@ -94,7 +94,6 @@ export class RemoveReporterModalComponent implements OnInit {
 
   handleCreationErrorResponse(error: any) {
     const u = error as HttpErrorResponse
-    console.log(u);
     this.errorMsg = Object.values(u.error)[0] as string
   }
 }
