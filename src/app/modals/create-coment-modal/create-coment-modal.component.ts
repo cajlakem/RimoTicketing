@@ -21,8 +21,8 @@ export class CreateComentModalComponent implements OnInit {
       },
       toolbar: [
       ]
-
-    }
+    },
+    toolbar: ['heading', '|', 'fontSize', 'fontColor', '|', 'bold', 'italic', 'underline', 'link', '|', 'bulletedList', 'numberedList', '|', 'imageUpload', '|', 'undo', 'redo']
   }
   @Output() stateChanged = new EventEmitter<any>()
   createCommentForm: any = FormGroup

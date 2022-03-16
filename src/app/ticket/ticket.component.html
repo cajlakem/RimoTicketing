@@ -158,7 +158,8 @@
                 </div>
                 <div class="row">
                   <div class="text-left small g-0">
-                    {{ ticketCreationDate | date:'dd.MM.yyyy hh:mm' }} ({{ ticketCreationDate | date:'dd.MM.yyyy' |
+                    {{ ticketCreationDate | date:'dd.MM.yyyy HH:mm' }} ({{ ticketCreationDate |
+                    date:'dd.MM.yyyy' |
                     DayAgo
                     }})
                   </div>
@@ -231,7 +232,7 @@
           </div>
 
           <div class="col">
-            <div class="row small text-muted">Reporter</div>
+            <div class="row small text-muted">Ersteller</div>
             <div class="row">
               {{ !ticket.requestor ? '' : ticket.requestor.christianName + " " + ticket.requestor.lastName }}
             </div>
@@ -273,7 +274,7 @@
           </div>
           <div class="row">
             <span class="text-left small">
-              {{ ticketCreationDate | date:'dd.MM.yyyy hh:mm' }} ({{ ticketCreationDate | date:'dd.MM.yyyy' | DayAgo
+              {{ ticketCreationDate | date:'dd.MM.yyyy HH:mm' }} ({{ ticketCreationDate | date:'dd.MM.yyyy' | DayAgo
               }})
             </span>
           </div>

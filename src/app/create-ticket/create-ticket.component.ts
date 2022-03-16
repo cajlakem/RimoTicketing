@@ -24,8 +24,8 @@ export class CreateTicketComponent implements OnInit {
       },
       toolbar: [
       ]
-
-    }
+    },
+    toolbar: ['heading', '|', 'fontSize', 'fontColor', '|', 'bold', 'italic', 'underline', 'link', '|', 'bulletedList', 'numberedList', '|', 'imageUpload', '|', 'undo', 'redo'],
   }
   public onReady(editor: any) {
     editor.ui.getEditableElement().parentElement.insertBefore(
@@ -87,7 +87,6 @@ export class CreateTicketComponent implements OnInit {
   }
 
   onSubmit() {
-
     this.submitted = true
     if (this.registerForm.invalid) {
       return

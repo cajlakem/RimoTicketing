@@ -141,6 +141,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
       orderCellsTop: true,
       fixedColumns: true,
       fixedHeader: true,
+      destroy: true,
     }
     this.spinner.show()
     this.ticketClient
@@ -169,6 +170,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
       orderCellsTop: true,
       fixedColumns: true,
       fixedHeader: true,
+      destroy: true,
     }
     this.spinner.show()
     this.ticketClient

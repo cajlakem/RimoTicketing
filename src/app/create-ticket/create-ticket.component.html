@@ -33,20 +33,13 @@
               </option>
             </select>
             <label for="floatingSelect">Vertrag</label>
-            <ng-template *ngIf="registerForm.originMIT">
-              <div *ngIf="submitted && f.singleOriginMIT.errors" class="invalid-feedback">
-                <div>
+            <ng-container *ngIf="contracts.length > 1">
+              <div *ngIf="submitted && f.originMIT.errors" class="invalid-feedback">
+                <div *ngIf="f.originMIT.errors.required">
                   Vertrag auswählen
                 </div>
               </div>
-            </ng-template>
-            <ng-template *ngIf="registerForm.singleOriginMIT">
-              <div *ngIf="submitted && f.singleOriginMIT.errors" class="invalid-feedback">
-                <div>
-                  Vertrag auswählen
-                </div>
-              </div>
-            </ng-template>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -76,21 +69,27 @@
             <input type="input" class="ps-3 form-control bottom-border shadow rounded-3" id="floatingInput"
               [ngClass]="{ 'is-invalid': submitted && f.shortDsc.errors }" formControlName="shortDsc" />
             <label for="floatingInput">Kurzbeschreibung</label>
-            <div *ngIf="submitted && (f.shortDsc.errors || f.longDsc.errors)" class="invalid-feedback">
-              <div *ngIf="f.shortDsc.errors.required || f.longDsc.errors.required">
-                Kurz- und Langbeschreibung hinterlegen
+            <div *ngIf="submitted && f.shortDsc.errors" class="invalid-feedback">
+              <div *ngIf="f.shortDsc.errors.required">
+                Kurzbeschreibung hinterlegen
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col mt-4" class="align-self-center">
+        <div class="col mt-4">
           <label class="from-label text-muted small">
-            Langbeschreibung:
+            Langbeschreibung
           </label>
-          <ckeditor [config]="editorCfg" [editor]="Editor" (ready)="onReady($event)" formControlName="longDsc">
+          <ckeditor [config]="editorCfg" [editor]="Editor" (ready)="onReady($event)" formControlName="longDsc"
+            [ngClass]="{ 'is-invalid': submitted && f.shortDsc.errors }">
           </ckeditor>
+          <div *ngIf="submitted && f.longDsc.errors" class="invalid-feedback">
+            <div *ngIf="f.longDsc.errors.required">
+              Langbeschreibung hinterlegen
+            </div>
+          </div>
         </div>
       </div>
       <div class="row">
