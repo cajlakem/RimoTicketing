@@ -22,6 +22,7 @@ export class Ticket {
   isOpenAble: boolean
   isNotPending: boolean
   isClosed: boolean
+  isSolved: boolean
   isReadByQueryTicketReporter: boolean
   getTicketingContract: Contract
   tsCreation: number

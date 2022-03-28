@@ -18,4 +18,5 @@ export class Reporter {
   getFullName(): string {
     return this.christianName + ' ' + this.lastName
   }
+
 }
