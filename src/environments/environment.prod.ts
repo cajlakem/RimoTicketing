@@ -8,8 +8,6 @@ export const environment = {
   apiTicketingServerToken:
     'B0CD2A044898950EDBE2A5A110D9F58F665EB7AEFD3FFA928D01D67065ED7B98',
 }
-
-
 */
 
 export const environment = {
