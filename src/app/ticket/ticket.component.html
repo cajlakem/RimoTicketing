@@ -20,16 +20,16 @@
 
             </button>
             <button type="button" class="btn btn-secondary shadow btn-sm" href="#" data-bs-toggle="modal"
-              data-bs-target="#reopenModal" [disabled]="!ticket.isSolved || !ticket.canBeModifiedByUser">
+              data-bs-target="#reopenModal"
+              [disabled]="!ticket.isSolved || !ticket.canBeModifiedByUser || ticket.isClosed">
               <i class="fas fa-undo"></i>
               <span class="ps-1 d-none d-md-inline">Reopen</span>
-
             </button>
             <button type="button" class="btn btn-secondary shadow btn-sm" href="#" data-bs-toggle="modal"
-              data-bs-target="#doneModal" [disabled]="!ticket.isSolved || !ticket.canBeModifiedByUser">
+              data-bs-target="#doneModal"
+              [disabled]="!ticket.isSolved || !ticket.canBeModifiedByUser || ticket.isClosed">
               <i class="fas fa-check"></i>
               <span class="ps-1 d-none d-md-inline">Erledigt</span>
-
             </button>
             <button type="button" class="btn btn-secondary shadow btn-sm" href="#" data-bs-toggle="modal"
               data-bs-target="#deleteModal" [disabled]="!ticket.isNotPending || !ticket.canBeModifiedByUser">
