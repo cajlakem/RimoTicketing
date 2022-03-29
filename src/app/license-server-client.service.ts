@@ -12,17 +12,19 @@ export class LicenseServerClientService {
   private url =
     'https://' +
     (environment.apiLicenseServer as string) +
-    '/api/DevGenesis/SDRimoGlobalLicenseRestService'
+    '/api/' +
+    (environment.mit as string) +
+    '/SDRimoGlobalLicenseRestService'
 
   private token: String = environment.apiLicenseServerToken as string
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   changePassword(
     user: string,
     passwordOld: string,
     passwordNew: string,
-    passwordNewConfirm: string
+    passwordNewConfirm: string,
   ): Observable<User> {
     const headers = { 'content-type': 'application/json' }
     let body = {
